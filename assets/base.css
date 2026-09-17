@@ -3761,7 +3761,7 @@ details-disclosure > details {
 }
 
 /* === DIGVOLLY FORCED OVERRIDES === */
-body, .gradient, .color-background-1 {
+body, .gradient, .color-background-1, .color-background-2 {
   background-color: #FFFFFF !important;
   color: #1A1A1A !important;
 }
@@ -3781,7 +3781,9 @@ body, .gradient, .color-background-1 {
   color: #FFFFFF !important;
   border-radius: 12px !important;
   font-family: 'Inter', sans-serif !important;
+  font-weight: 600 !important;
 }
 /* ================================= */
+
 
 
