@@ -28,3 +28,14 @@
   width: 10rem;
   padding: 0.5rem;
 }
+
+.list-menu__item {
+  color: var(--color-foreground) !important;
+  font-family: var(--font-body-family) !important;
+  font-weight: 500 !important;
+  transition: color 0.2s ease !important;
+}
+.list-menu__item:hover, .list-menu__item--active {
+  color: var(--color-accent) !important;
+}
+

@@ -200,3 +200,27 @@ details[open].menu-opening > .menu-drawer__submenu {
     transition: none !important;
   }
 }
+
+.menu-drawer {
+  background-color: #FFFFFF !important;
+}
+.menu-drawer__inner-container {
+  background-color: #FFFFFF !important;
+}
+.menu-drawer__menu-item {
+  color: var(--color-foreground) !important;
+  font-family: var(--font-body-family) !important;
+  border-bottom: 1px solid var(--color-border) !important;
+}
+.menu-drawer__menu-item:hover, .menu-drawer__menu-item--active {
+  color: var(--color-accent) !important;
+  background-color: var(--color-secondary) !important;
+}
+.menu-drawer__close-button {
+  color: var(--color-foreground) !important;
+}
+.menu-drawer__close-button:hover {
+  color: var(--color-accent) !important;
+  background-color: var(--color-secondary) !important;
+}
+
