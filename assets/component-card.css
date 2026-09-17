@@ -1,3 +1,21 @@
+.card-wrapper, .card {
+  background-color: #FFFFFF !important;
+  border-radius: var(--border-radius-card) !important;
+  box-shadow: var(--shadow-card);
+  transition: all 0.3s ease !important;
+  border: 1px solid var(--color-border) !important;
+  overflow: hidden;
+}
+
+.card-wrapper:hover, .card:hover {
+  box-shadow: var(--shadow-card-hover) !important;
+  transform: translateY(-4px);
+}
+
+.card__media img {
+  border-radius: var(--border-radius-image) !important;
+}
+
 .card-wrapper {
   color: inherit;
   height: 100%;
