@@ -1,0 +1,117 @@
+{{ 'section-digvolly-hero.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.5 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.5 | round: 0 }}px;
+    background: linear-gradient(135deg, {{ section.settings.gradient_color_1 }}, {{ section.settings.gradient_color_2 }});
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<section class="digvolly-hero section-{{ section.id }}-padding" aria-label="{{ section.settings.heading | escape }}">
+  <div class="digvolly-hero__glow"></div>
+  <div class="digvolly-hero__container">
+    {%- if section.settings.heading != blank -%}
+      <h1 class="digvolly-hero__heading">
+        {{ section.settings.heading }}
+      </h1>
+    {%- endif -%}
+
+    {%- if section.settings.subtitle != blank -%}
+      <div class="digvolly-hero__subtitle">
+        {{ section.settings.subtitle }}
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.button_label != blank -%}
+      <a
+        {% if section.settings.button_link == blank %}
+          role="link" aria-disabled="true"
+        {% else %}
+          href="{{ section.settings.button_link }}"
+        {% endif %}
+        class="digvolly-hero__button"
+      >
+        {{ section.settings.button_label | escape }}
+      </a>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Digvolly Hero",
+  "tag": "section",
+  "class": "section-digvolly-hero",
+  "settings": [
+    {
+      "type": "color",
+      "id": "gradient_color_1",
+      "label": "Gradient Start Color",
+      "default": "#6366F1"
+    },
+    {
+      "type": "color",
+      "id": "gradient_color_2",
+      "label": "Gradient End Color",
+      "default": "#8B5CF6"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Premium Digital Assets for Creators"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Download instantly. Create without limits."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Text",
+      "default": "Browse Collection"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link",
+      "default": "/collections/all"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 20,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Top Padding",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 20,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom Padding",
+      "default": 80
+    }
+  ],
+  "presets": [
+    {
+      "name": "Digvolly Hero"
+    }
+  ]
+}
+{% endschema %}

@@ -39,6 +39,19 @@
         "show_text_below": false
       }
     },
+    "digvolly_hero": {
+      "type": "digvolly-hero",
+      "settings": {
+        "gradient_color_1": "#6366F1",
+        "gradient_color_2": "#8B5CF6",
+        "heading": "Premium Digital Assets for Creators",
+        "subtitle": "Download instantly. Create without limits.",
+        "button_label": "Browse Collection",
+        "button_link": "shopify://collections/all",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
     "featured_collection": {
       "type": "featured-collection",
       "settings": {
@@ -69,7 +82,7 @@
     }
   },
   "order": [
-    "image_banner",
+    "digvolly_hero",
     "featured_collection"
   ]
 }
