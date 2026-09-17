@@ -3,16 +3,12 @@
     "hero": {
       "type": "hero"
     },
-    "categories": {
-      "type": "categories"
-    },
     "featured_products": {
       "type": "featured-products"
     }
   },
   "order": [
     "hero",
-    "categories",
     "featured_products"
   ]
 }
