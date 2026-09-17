@@ -3703,7 +3703,10 @@ details-disclosure > details {
   }
 }
 
-/* === DIGVOLLY DESIGN SYSTEM - FORCED OVERRIDES === */
+/* ============================================ */
+/* === DIGVOLLY DESIGN SYSTEM - START === */
+/* ============================================ */
+
 :root {
   --color-background: #FFFFFF;
   --color-foreground: #1A1A1A;
@@ -3780,7 +3783,11 @@ h1, h2, h3, h4, h5, h6 {
 .card__media img {
   border-radius: 12px !important;
 }
-/* === END DIGVOLLY DESIGN SYSTEM === */
+
+/* ============================================ */
+/* === DIGVOLLY DESIGN SYSTEM - END === */
+/* ============================================ */
+
 
 
 
