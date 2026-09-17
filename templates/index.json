@@ -1,0 +1,18 @@
+{
+  "sections": {
+    "header": {
+      "type": "header"
+    },
+    "rich_text": {
+      "type": "rich-text"
+    },
+    "footer": {
+      "type": "footer"
+    }
+  },
+  "order": [
+    "header",
+    "rich_text",
+    "footer"
+  ]
+}

@@ -1,0 +1,44 @@
+<section class="rich-text" style="padding: 60px 40px; max-width: 960px; margin: 0 auto; text-align: center;">
+  <div class="card">
+    <h1 style="font-size: 36px; font-weight: 800; margin-bottom: 16px; color: var(--color-foreground);">
+      {{ section.settings.heading | default: 'Welcome to Digvolly' }}
+    </h1>
+    <p style="font-size: 18px; color: #4B5563; margin-bottom: 24px; line-height: 1.6;">
+      {{ section.settings.text | default: 'Discover premium digital products, UI kits, templates, and creative assets designed for modern creators.' }}
+    </p>
+    <a href="{{ routes.all_products_collection_url }}" class="button">
+      {{ section.settings.button_label | default: 'Explore Products' }}
+    </a>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Rich Text",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Welcome to Digvolly"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Text",
+      "default": "Discover premium digital products, UI kits, templates, and creative assets designed for modern creators."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Explore Products"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Rich Text"
+    }
+  ]
+}
+{% endschema %}

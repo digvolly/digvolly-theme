@@ -1,0 +1,69 @@
+/* === DIGVOLLY DESIGN SYSTEM === */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --color-background: #FFFFFF;
+  --color-foreground: #1A1A1A;
+  --color-accent: #6366F1;
+  --color-accent-hover: #4F46E5;
+  --color-button: #6366F1;
+  --color-button-text: #FFFFFF;
+}
+
+body {
+  background-color: var(--color-background) !important;
+  color: var(--color-foreground) !important;
+  font-family: 'Inter', sans-serif !important;
+  margin: 0;
+  padding: 0;
+}
+
+.header-wrapper {
+  background-color: #FFFFFF !important;
+  border-bottom: 1px solid #E5E7EB !important;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header__heading {
+  font-size: 24px;
+  font-weight: 800;
+  color: #1A1A1A !important;
+  text-decoration: none;
+}
+
+.button, .shopify-payment-button__button--unbranded {
+  background-color: var(--color-button) !important;
+  color: var(--color-button-text) !important;
+  border-radius: 12px !important;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 600 !important;
+  padding: 12px 24px;
+  text-decoration: none;
+  display: inline-block;
+  border: none;
+  box-shadow: 0 4px 12px rgba(99,102,241,0.3) !important;
+  transition: all 0.3s ease;
+}
+
+.button:hover {
+  background-color: var(--color-accent-hover) !important;
+  transform: translateY(-2px);
+}
+
+.card, .card-wrapper {
+  background-color: #FFFFFF !important;
+  border-radius: 16px !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
+  border: 1px solid #E5E7EB !important;
+  padding: 20px;
+  transition: all 0.3s ease;
+}
+
+.card:hover, .card-wrapper:hover {
+  box-shadow: 0 8px 24px rgba(99,102,241,0.15) !important;
+  transform: translateY(-4px);
+}
+/* === END DIGVOLLY DESIGN SYSTEM === */

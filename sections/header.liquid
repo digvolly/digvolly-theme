@@ -1,0 +1,17 @@
+<header class="header-wrapper">
+  <div class="header__heading-container">
+    <a href="{{ routes.root_url }}" class="header__heading">
+      {{ shop.name }}
+    </a>
+  </div>
+  <nav class="header__nav" aria-label="Main Navigation">
+    <a href="{{ routes.root_url }}" class="button">Home</a>
+  </nav>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": []
+}
+{% endschema %}
