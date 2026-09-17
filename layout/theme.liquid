@@ -324,6 +324,47 @@
         document.documentElement.classList.add('shopify-design-mode');
       }
     </script>
+
+    <style>
+      /* === DIGVOLLY EMERGENCY OVERRIDES === */
+      body, .gradient, .color-background-1, .color-background-2, .color-scheme-1 {
+        background-color: #FFFFFF !important;
+        color: #1A1A1A !important;
+      }
+      .header-wrapper, .header, .header__wrapper {
+        background-color: #FFFFFF !important;
+        border-bottom: 1px solid #E5E7EB !important;
+      }
+      .header__heading-link, .header__menu-item, .list-menu__item, .menu-drawer__menu-item, .header__active-menu-item {
+        color: #1A1A1A !important;
+        font-family: 'Inter', sans-serif !important;
+      }
+      .header__menu-item:hover, .list-menu__item:hover, .menu-drawer__menu-item:hover, .header__active-menu-item:hover {
+        color: #6366F1 !important;
+      }
+      .button, .shopify-payment-button__button--unbranded, .button--primary {
+        background-color: #6366F1 !important;
+        color: #FFFFFF !important;
+        border-radius: 12px !important;
+        font-family: 'Inter', sans-serif !important;
+        font-weight: 600 !important;
+        border: none !important;
+      }
+      .button:hover, .shopify-payment-button__button--unbranded:hover {
+        background-color: #4F46E5 !important;
+      }
+      .card-wrapper, .card, .card__inner {
+        background-color: #FFFFFF !important;
+        border-radius: 16px !important;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
+        border: 1px solid #E5E7EB !important;
+      }
+      .card-wrapper:hover, .card:hover {
+        box-shadow: 0 8px 24px rgba(99,102,241,0.15) !important;
+        transform: translateY(-4px) !important;
+      }
+      /* ================================= */
+    </style>
   </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
