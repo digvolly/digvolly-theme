@@ -10,7 +10,7 @@
   <!-- 2 Overlapping Mobile Screens -->
   <g transform="translate(140, 30)">
     <!-- Screen 1 (Left) -->
-    <rect x="40" y="20" width="130" height="230" rx="16" fill="#0F172A" filter="drop-shadow(0 15px 25px rgba(0,0,0,0.35))"/>
+    <rect x="40" y="20" width="130" height="230" rx="16" fill="#0F172A" style="filter: drop-shadow(0 15px 25px rgba(0,0,0,0.35));"/>
     <rect x="46" y="32" width="118" height="206" rx="12" fill="#FFFFFF"/>
     <rect x="56" y="48" width="60" height="8" rx="4" fill="#0284C7"/>
     <rect x="56" y="66" width="98" height="50" rx="8" fill="#E0F2FE"/>
@@ -22,7 +22,7 @@
     <rect x="56" y="200" width="98" height="22" rx="6" fill="#0284C7"/>
 
     <!-- Screen 2 (Right, overlapping) -->
-    <rect x="150" y="35" width="130" height="230" rx="16" fill="#0F172A" filter="drop-shadow(0 20px 30px rgba(0,0,0,0.45))"/>
+    <rect x="150" y="35" width="130" height="230" rx="16" fill="#0F172A" style="filter: drop-shadow(0 20px 30px rgba(0,0,0,0.45));"/>
     <rect x="156" y="47" width="118" height="206" rx="12" fill="#0F172A"/>
     <rect x="166" y="63" width="70" height="8" rx="4" fill="#38BDF8"/>
     <circle cx="215" cy="115" r="32" fill="#1E293B"/>
@@ -35,6 +35,6 @@
   <g transform="translate(100, 290)">
     <rect width="400" height="75" rx="12" fill="rgba(15, 23, 42, 0.85)" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
     <text x="200" y="32" font-family="'Inter', sans-serif" font-size="17" font-weight="800" fill="#FFFFFF" text-anchor="middle">MOBILE UI DESIGN SYSTEM</text>
-    <text x="200" y="54" font-family="'Inter', sans-serif" font-size="12" font-weight="500" fill="#BAE6FD" text-anchor="middle">80+ Ready Screens &bull; iOS &amp; Android &bull; Figma Component Library</text>
+    <text x="200" y="54" font-family="'Inter', sans-serif" font-size="12" font-weight="500" fill="#BAE6FD" text-anchor="middle">80+ Ready Screens &#8226; iOS &amp; Android &#8226; Figma Component Library</text>
   </g>
 </svg>

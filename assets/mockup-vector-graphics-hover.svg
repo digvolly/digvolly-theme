@@ -15,6 +15,6 @@
   <g transform="translate(100, 260)">
     <rect width="400" height="90" rx="14" fill="rgba(15, 23, 42, 0.9)" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
     <text x="200" y="38" font-family="'Inter', sans-serif" font-size="16" font-weight="800" fill="#6EE7B7" text-anchor="middle">WIREFRAME &amp; RENDER VARIATIONS</text>
-    <text x="200" y="66" font-family="'Inter', sans-serif" font-size="13" font-weight="500" fill="#D1FAE5" text-anchor="middle">Figma Smart Components &bull; Transparent PNGs</text>
+    <text x="200" y="66" font-family="'Inter', sans-serif" font-size="13" font-weight="500" fill="#D1FAE5" text-anchor="middle">Figma Smart Components &#8226; Transparent PNGs</text>
   </g>
 </svg>

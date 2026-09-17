@@ -14,7 +14,7 @@
     <!-- Middle Slide -->
     <rect x="120" y="30" width="280" height="175" rx="8" fill="#FFFFFF" opacity="0.6" transform="rotate(-5 260 117)"/>
     <!-- Front Main Slide -->
-    <rect x="100" y="50" width="280" height="175" rx="10" fill="#FFFFFF" filter="drop-shadow(0 15px 25px rgba(0,0,0,0.35))"/>
+    <rect x="100" y="50" width="280" height="175" rx="10" fill="#FFFFFF" style="filter: drop-shadow(0 15px 25px rgba(0,0,0,0.35));"/>
     <!-- Slide Content -->
     <rect x="120" y="70" width="90" height="10" rx="5" fill="#7C3AED"/>
     <rect x="120" y="90" width="160" height="6" rx="3" fill="#94A3B8"/>
@@ -33,6 +33,6 @@
   <g transform="translate(100, 290)">
     <rect width="400" height="75" rx="12" fill="rgba(15, 23, 42, 0.85)" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
     <text x="200" y="32" font-family="'Inter', sans-serif" font-size="17" font-weight="800" fill="#FFFFFF" text-anchor="middle">PITCH DECK PRO TEMPLATE</text>
-    <text x="200" y="54" font-family="'Inter', sans-serif" font-size="12" font-weight="500" fill="#C4B5FD" text-anchor="middle">60+ Investor Slides &bull; 16:9 HD &bull; Figma &amp; Keynote</text>
+    <text x="200" y="54" font-family="'Inter', sans-serif" font-size="12" font-weight="500" fill="#C4B5FD" text-anchor="middle">60+ Investor Slides &#8226; 16:9 HD &#8226; Figma &amp; Keynote</text>
   </g>
 </svg>

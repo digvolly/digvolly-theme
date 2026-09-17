@@ -24,7 +24,7 @@
     <rect x="20" y="15" width="280" height="200" rx="4" fill="#FDF2F8" opacity="0.4" transform="rotate(-6 160 115)"/>
     <rect x="20" y="15" width="280" height="200" rx="4" fill="#FDF2F8" opacity="0.7" transform="rotate(4 160 115)"/>
     <!-- Top Paper Sheet -->
-    <rect x="20" y="15" width="280" height="200" rx="4" fill="#FFF1F2" filter="drop-shadow(0 12px 24px rgba(0,0,0,0.3))"/>
+    <rect x="20" y="15" width="280" height="200" rx="4" fill="#FFF1F2" style="filter: drop-shadow(0 12px 24px rgba(0,0,0,0.3));"/>
     <!-- Organic watercolor splatters and waves on top sheet -->
     <path d="M 40 80 Q 90 40 140 70 T 240 60 T 280 110 L 280 190 L 40 190 Z" fill="rgba(244, 114, 182, 0.45)"/>
     <path d="M 60 110 Q 110 80 170 120 T 260 100 L 260 190 L 60 190 Z" fill="rgba(219, 39, 119, 0.35)"/>
@@ -36,6 +36,6 @@
   <g transform="translate(100, 290)">
     <rect width="400" height="75" rx="12" fill="rgba(15, 23, 42, 0.85)" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
     <text x="200" y="32" font-family="'Inter', sans-serif" font-size="17" font-weight="800" fill="#FFFFFF" text-anchor="middle">WATERCOLOR TEXTURED PAPERS</text>
-    <text x="200" y="54" font-family="'Inter', sans-serif" font-size="12" font-weight="500" fill="#FBCFE8" text-anchor="middle">30 High-Res Hand-Painted Sheets &bull; 6000x4000 JPG</text>
+    <text x="200" y="54" font-family="'Inter', sans-serif" font-size="12" font-weight="500" fill="#FBCFE8" text-anchor="middle">30 High-Res Hand-Painted Sheets &#8226; 6000x4000 JPG</text>
   </g>
 </svg>

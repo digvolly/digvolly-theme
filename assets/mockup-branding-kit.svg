@@ -10,7 +10,7 @@
   <!-- Stationery & Brand Mockups -->
   <g transform="translate(100, 35)">
     <!-- Letterhead -->
-    <rect x="50" y="20" width="180" height="230" rx="4" fill="#FFFFFF" filter="drop-shadow(0 15px 25px rgba(0,0,0,0.4))"/>
+    <rect x="50" y="20" width="180" height="230" rx="4" fill="#FFFFFF" style="filter: drop-shadow(0 15px 25px rgba(0,0,0,0.4));"/>
     <circle cx="80" cy="50" r="14" fill="#6366F1"/>
     <rect x="105" y="44" width="80" height="6" rx="3" fill="#0F172A"/>
     <rect x="105" y="54" width="50" height="4" rx="2" fill="#94A3B8"/>
@@ -19,7 +19,7 @@
     <rect x="70" y="120" width="120" height="4" rx="2" fill="#E2E8F0"/>
     <rect x="70" y="135" width="140" height="4" rx="2" fill="#E2E8F0"/>
     <!-- Business Cards Overlapping -->
-    <rect x="220" y="130" width="160" height="95" rx="6" fill="#1E1B4B" filter="drop-shadow(0 12px 20px rgba(0,0,0,0.35))" transform="rotate(-8 300 177)"/>
+    <rect x="220" y="130" width="160" height="95" rx="6" fill="#1E1B4B" style="filter: drop-shadow(0 12px 20px rgba(0,0,0,0.35));" transform="rotate(-8 300 177)"/>
     <circle cx="260" cy="170" r="12" fill="#818CF8"/>
     <rect x="280" y="165" width="60" height="5" rx="2.5" fill="#FFFFFF"/>
     <rect x="280" y="175" width="40" height="3" rx="1.5" fill="#A5B4FC"/>

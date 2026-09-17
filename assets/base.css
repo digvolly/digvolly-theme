@@ -127,188 +127,6 @@ body, .gradient, .color-background-1 {
 }
 /* === END === */
 
-/* === DIGVOLLY HERO ENHANCEMENT === */
-.digvolly-hero {
-  background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
-  padding: 80px 40px;
-  text-align: center;
-  color: #FFFFFF;
-}
-
-.digvolly-hero__title {
-  font-size: 48px;
-  font-weight: 800;
-  margin-bottom: 20px;
-  color: #FFFFFF !important;
-}
-
-.digvolly-hero__subtitle {
-  font-size: 20px;
-  margin-bottom: 40px;
-  opacity: 0.9;
-  color: #FFFFFF !important;
-}
-
-.digvolly-hero__button {
-  display: inline-block;
-  background-color: #FFFFFF;
-  color: #6366F1 !important;
-  padding: 16px 32px;
-  border-radius: 12px;
-  font-weight: 600;
-  font-size: 16px;
-  text-decoration: none;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  transition: all 0.3s ease;
-}
-
-.digvolly-hero__button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-}
-
-/* === CATEGORIES SECTION === */
-.categories-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-  padding: 60px 40px;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.category-card {
-  background: #FFFFFF;
-  border-radius: 16px;
-  padding: 30px 20px;
-  text-align: center;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-  border: 1px solid #E5E7EB;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  text-decoration: none;
-  color: #1A1A1A;
-}
-
-.category-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(99,102,241,0.15);
-}
-
-.category-card__icon {
-  font-size: 40px;
-  margin-bottom: 15px;
-}
-
-.category-card__title {
-  font-size: 16px;
-  font-weight: 600;
-  color: #1A1A1A;
-}
-
-/* === PRODUCTS SECTION === */
-.products-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-  padding: 60px 40px;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.product-card {
-  background: #FFFFFF;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-  border: 1px solid #E5E7EB;
-  transition: all 0.3s ease;
-}
-
-.product-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(99,102,241,0.15);
-}
-
-.product-card__image {
-  width: 100%;
-  height: 200px;
-  background: linear-gradient(135deg, #F3F4F6 0%, #E5E7EB 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 60px;
-}
-
-.product-card__content {
-  padding: 20px;
-}
-
-.product-card__title {
-  font-size: 16px;
-  font-weight: 600;
-  margin-bottom: 8px;
-  color: #1A1A1A;
-}
-
-.product-card__price {
-  font-size: 18px;
-  font-weight: 700;
-  color: #6366F1;
-  margin-bottom: 15px;
-}
-
-.product-card__button {
-  width: 100%;
-  background-color: #6366F1;
-  color: #FFFFFF;
-  padding: 12px;
-  border-radius: 12px;
-  border: none;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.product-card__button:hover {
-  background-color: #4F46E5;
-}
-
-/* === MOBILE RESPONSIVE === */
-@media screen and (max-width: 749px) {
-  .digvolly-hero {
-    padding: 60px 20px;
-  }
-  
-  .digvolly-hero__title {
-    font-size: 28px !important;
-  }
-  
-  .digvolly-hero__subtitle {
-    font-size: 16px;
-  }
-  
-  .digvolly-hero__button {
-    width: 100%;
-    max-width: 300px;
-  }
-  
-  .categories-grid {
-    grid-template-columns: repeat(2, 1fr);
-    padding: 40px 20px;
-    gap: 15px;
-  }
-  
-  .products-grid {
-    grid-template-columns: repeat(2, 1fr);
-    padding: 40px 20px;
-    gap: 15px;
-  }
-  
-  .product-card__image {
-    height: 150px;
-  }
-}
 
 /* === DIGVOLLY EXACT DESIGN === */
 
@@ -335,15 +153,17 @@ body, .gradient, .color-background-1 {
    HERO SECTION & STORE HIGHLIGHTS
    ========================================================================== */
 @keyframes heroGradientShift {
-  0% { transform: scale(1) rotate(0deg); opacity: 0.8; }
-  50% { transform: scale(1.15) rotate(12deg); opacity: 1; }
-  100% { transform: scale(1) rotate(0deg); opacity: 0.8; }
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 .digvolly-hero {
   position: relative;
-  background: #FFFFFF;
-  padding: 100px 40px;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.12) 0%, rgba(139, 92, 246, 0.15) 35%, rgba(236, 72, 153, 0.10) 70%, rgba(244, 114, 182, 0.08) 100%);
+  background-size: 200% 200%;
+  animation: heroGradientShift 14s ease-in-out infinite alternate;
+  padding: 110px 40px;
   overflow: hidden;
   min-height: 480px;
   display: flex;
@@ -352,14 +172,10 @@ body, .gradient, .color-background-1 {
 
 .digvolly-hero__animated-bg {
   position: absolute;
-  top: -20%;
-  right: -10%;
-  width: 750px;
-  height: 750px;
-  border-radius: 50%;
-  filter: blur(70px);
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.22) 0%, rgba(139, 92, 246, 0.25) 50%, rgba(236, 72, 153, 0.18) 100%);
-  animation: heroGradientShift 14s ease-in-out infinite alternate;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 75% 30%, rgba(139, 92, 246, 0.15) 0%, rgba(99, 102, 241, 0.08) 45%, transparent 70%);
   pointer-events: none;
   z-index: 0;
 }
@@ -375,20 +191,28 @@ body, .gradient, .color-background-1 {
 }
 
 .digvolly-hero__title {
-  font-size: clamp(2.5rem, 6vw, 5rem);
-  font-weight: 800;
-  color: #111827;
-  line-height: 1.05;
+  font-size: 48px;
+  font-size: clamp(2.5rem, 6vw, 5rem) !important;
+  font-weight: 800 !important;
+  color: #111827 !important;
+  line-height: 1.05 !important;
   letter-spacing: -0.03em;
-  margin: 0 0 20px;
+  margin: 0 0 20px !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
 .digvolly-hero__subtitle {
-  font-size: clamp(1.1rem, 2vw, 1.35rem);
-  color: #4B5563;
-  margin: 0 0 32px;
-  line-height: 1.6;
+  font-size: 18px;
+  font-size: clamp(1.1rem, 2vw, 1.35rem) !important;
+  color: #4B5563 !important;
+  margin: 0 0 32px !important;
+  line-height: 1.6 !important;
   max-width: 600px;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
 .digvolly-hero__actions {

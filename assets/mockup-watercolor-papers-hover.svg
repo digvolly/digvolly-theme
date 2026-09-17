@@ -16,6 +16,6 @@
   <g transform="translate(100, 260)">
     <rect width="400" height="90" rx="14" fill="rgba(15, 23, 42, 0.9)" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
     <text x="200" y="38" font-family="'Inter', sans-serif" font-size="16" font-weight="800" fill="#F472B6" text-anchor="middle">ZOOM DETAIL // 600 DPI TEXTURE</text>
-    <text x="200" y="66" font-family="'Inter', sans-serif" font-size="13" font-weight="500" fill="#FCE7F3" text-anchor="middle">Cold-Pressed Cotton Rag &bull; Seamless Tiling Options</text>
+    <text x="200" y="66" font-family="'Inter', sans-serif" font-size="13" font-weight="500" fill="#FCE7F3" text-anchor="middle">Cold-Pressed Cotton Rag &#8226; Seamless Tiling Options</text>
   </g>
 </svg>
