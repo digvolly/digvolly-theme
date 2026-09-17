@@ -1,18 +1,18 @@
 {
   "sections": {
-    "header": {
-      "type": "header"
+    "hero": {
+      "type": "hero"
     },
-    "rich_text": {
-      "type": "rich-text"
+    "categories": {
+      "type": "categories"
     },
-    "footer": {
-      "type": "footer"
+    "featured_products": {
+      "type": "featured-products"
     }
   },
   "order": [
-    "header",
-    "rich_text",
-    "footer"
+    "hero",
+    "categories",
+    "featured_products"
   ]
 }

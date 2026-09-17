@@ -1,0 +1,32 @@
+<section class="categories-section" aria-label="Categories">
+  <div class="categories-grid">
+    <a href="{{ routes.all_products_collection_url }}" class="category-card">
+      <div class="category-card__icon">📐</div>
+      <div class="category-card__title">Templates</div>
+    </a>
+    <a href="{{ routes.all_products_collection_url }}" class="category-card">
+      <div class="category-card__icon">✨</div>
+      <div class="category-card__title">Patterns</div>
+    </a>
+    <a href="{{ routes.all_products_collection_url }}" class="category-card">
+      <div class="category-card__icon">📄</div>
+      <div class="category-card__title">Papers</div>
+    </a>
+    <a href="{{ routes.all_products_collection_url }}" class="category-card">
+      <div class="category-card__icon">🎨</div>
+      <div class="category-card__title">Graphics</div>
+    </a>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Categories",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Categories"
+    }
+  ]
+}
+{% endschema %}

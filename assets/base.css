@@ -67,3 +67,246 @@ body {
   transform: translateY(-4px);
 }
 /* === END DIGVOLLY DESIGN SYSTEM === */
+
+/* === DIGVOLLY DESIGN SYSTEM === */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --color-background: #FFFFFF;
+  --color-foreground: #1A1A1A;
+  --color-accent: #6366F1;
+  --color-accent-hover: #4F46E5;
+  --color-button: #6366F1;
+  --color-button-text: #FFFFFF;
+}
+
+body, .gradient, .color-background-1 {
+  background-color: #FFFFFF !important;
+  color: #1A1A1A !important;
+  font-family: 'Inter', sans-serif !important;
+}
+
+.header-wrapper, .header {
+  background-color: #FFFFFF !important;
+  border-bottom: 1px solid #E5E7EB !important;
+}
+
+.header__heading-link, .header__menu-item, .list-menu__item {
+  color: #1A1A1A !important;
+  font-family: 'Inter', sans-serif !important;
+}
+
+.header__menu-item:hover, .header__active-menu-item {
+  color: #6366F1 !important;
+}
+
+.button, .shopify-payment-button__button--unbranded {
+  background-color: #6366F1 !important;
+  color: #FFFFFF !important;
+  border-radius: 12px !important;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 600 !important;
+  box-shadow: 0 4px 12px rgba(99,102,241,0.3) !important;
+}
+
+.button:hover {
+  background-color: #4F46E5 !important;
+  transform: translateY(-2px);
+}
+
+.card-wrapper, .card {
+  background-color: #FFFFFF !important;
+  border-radius: 16px !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
+  border: 1px solid #E5E7EB !important;
+}
+
+.card-wrapper:hover {
+  box-shadow: 0 8px 24px rgba(99,102,241,0.15) !important;
+  transform: translateY(-4px);
+}
+/* === END === */
+
+/* === DIGVOLLY HERO ENHANCEMENT === */
+.digvolly-hero {
+  background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+  padding: 80px 40px;
+  text-align: center;
+  color: #FFFFFF;
+}
+
+.digvolly-hero__title {
+  font-size: 48px;
+  font-weight: 800;
+  margin-bottom: 20px;
+  color: #FFFFFF !important;
+}
+
+.digvolly-hero__subtitle {
+  font-size: 20px;
+  margin-bottom: 40px;
+  opacity: 0.9;
+  color: #FFFFFF !important;
+}
+
+.digvolly-hero__button {
+  display: inline-block;
+  background-color: #FFFFFF;
+  color: #6366F1 !important;
+  padding: 16px 32px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 16px;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transition: all 0.3s ease;
+}
+
+.digvolly-hero__button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+}
+
+/* === CATEGORIES SECTION === */
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  padding: 60px 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.category-card {
+  background: #FFFFFF;
+  border-radius: 16px;
+  padding: 30px 20px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  border: 1px solid #E5E7EB;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  text-decoration: none;
+  color: #1A1A1A;
+}
+
+.category-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(99,102,241,0.15);
+}
+
+.category-card__icon {
+  font-size: 40px;
+  margin-bottom: 15px;
+}
+
+.category-card__title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1A1A1A;
+}
+
+/* === PRODUCTS SECTION === */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  padding: 60px 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.product-card {
+  background: #FFFFFF;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  border: 1px solid #E5E7EB;
+  transition: all 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(99,102,241,0.15);
+}
+
+.product-card__image {
+  width: 100%;
+  height: 200px;
+  background: linear-gradient(135deg, #F3F4F6 0%, #E5E7EB 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 60px;
+}
+
+.product-card__content {
+  padding: 20px;
+}
+
+.product-card__title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #1A1A1A;
+}
+
+.product-card__price {
+  font-size: 18px;
+  font-weight: 700;
+  color: #6366F1;
+  margin-bottom: 15px;
+}
+
+.product-card__button {
+  width: 100%;
+  background-color: #6366F1;
+  color: #FFFFFF;
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.product-card__button:hover {
+  background-color: #4F46E5;
+}
+
+/* === MOBILE RESPONSIVE === */
+@media screen and (max-width: 749px) {
+  .digvolly-hero {
+    padding: 60px 20px;
+  }
+  
+  .digvolly-hero__title {
+    font-size: 28px !important;
+  }
+  
+  .digvolly-hero__subtitle {
+    font-size: 16px;
+  }
+  
+  .digvolly-hero__button {
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .categories-grid {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 40px 20px;
+    gap: 15px;
+  }
+  
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 40px 20px;
+    gap: 15px;
+  }
+  
+  .product-card__image {
+    height: 150px;
+  }
+}
+

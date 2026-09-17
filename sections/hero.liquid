@@ -4,7 +4,7 @@
       {{ section.settings.heading | default: 'Premium Digital Assets for Creators' }}
     </h1>
     <p class="digvolly-hero__subtitle">
-      {{ section.settings.text | default: 'Download instantly. Create without limits.' }}
+      {{ section.settings.subtitle | default: 'Download instantly. Create without limits.' }}
     </p>
     <a href="{{ section.settings.button_link | default: routes.all_products_collection_url }}" class="digvolly-hero__button">
       {{ section.settings.button_label | default: 'Browse Collection' }}
@@ -14,7 +14,7 @@
 
 {% schema %}
 {
-  "name": "Rich Text",
+  "name": "Hero",
   "settings": [
     {
       "type": "text",
@@ -23,9 +23,9 @@
       "default": "Premium Digital Assets for Creators"
     },
     {
-      "type": "textarea",
-      "id": "text",
-      "label": "Text",
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
       "default": "Download instantly. Create without limits."
     },
     {
@@ -42,7 +42,7 @@
   ],
   "presets": [
     {
-      "name": "Rich Text"
+      "name": "Hero"
     }
   ]
 }
