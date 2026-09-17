@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400">
+  <defs>
+    <linearGradient id="bgh5" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#020617"/>
+      <stop offset="50%" stop-color="#0F172A"/>
+      <stop offset="100%" stop-color="#1E293B"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#bgh5)"/>
+  <g transform="translate(100, 40)">
+    <rect x="20" y="20" width="160" height="100" rx="8" fill="#1E293B" stroke="#818CF8" stroke-width="2"/>
+    <text x="100" y="75" font-family="'Inter', sans-serif" font-size="14" font-weight="700" fill="#818CF8" text-anchor="middle">COLOR PALETTES</text>
+    <rect x="200" y="20" width="160" height="100" rx="8" fill="#1E293B" stroke="#818CF8" stroke-width="2"/>
+    <text x="280" y="75" font-family="'Inter', sans-serif" font-size="14" font-weight="700" fill="#818CF8" text-anchor="middle">TYPOGRAPHY RULES</text>
+  </g>
+  <g transform="translate(100, 260)">
+    <rect width="400" height="90" rx="14" fill="rgba(15, 23, 42, 0.9)" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+    <text x="200" y="38" font-family="'Inter', sans-serif" font-size="16" font-weight="800" fill="#818CF8" text-anchor="middle">BRAND BOOK TEMPLATE (40 PAGES)</text>
+    <text x="200" y="66" font-family="'Inter', sans-serif" font-size="13" font-weight="500" fill="#E2E8F0" text-anchor="middle">Figma, InDesign &amp; Illustrator Ready</text>
+  </g>
+</svg>

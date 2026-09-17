@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400">
+  <defs>
+    <linearGradient id="bg4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#064E3B"/>
+      <stop offset="50%" stop-color="#059669"/>
+      <stop offset="100%" stop-color="#34D399"/>
+    </linearGradient>
+    <radialGradient id="sphere1" cx="35%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#A7F3D0"/>
+      <stop offset="40%" stop-color="#10B981"/>
+      <stop offset="100%" stop-color="#064E3B"/>
+    </radialGradient>
+    <radialGradient id="sphere2" cx="35%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#FDE047"/>
+      <stop offset="50%" stop-color="#F59E0B"/>
+      <stop offset="100%" stop-color="#78350F"/>
+    </radialGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#bg4)"/>
+  <!-- 3D Shape Mockup Elements -->
+  <g transform="translate(130, 40)">
+    <!-- Back Cone / Cylinder -->
+    <ellipse cx="260" cy="180" rx="45" ry="15" fill="#047857"/>
+    <path d="M 215 180 L 260 70 L 305 180 Z" fill="url(#bg4)"/>
+    <!-- Central Sphere -->
+    <circle cx="160" cy="120" r="70" fill="url(#sphere1)" filter="drop-shadow(0 20px 25px rgba(0,0,0,0.35))"/>
+    <!-- Small Sphere -->
+    <circle cx="270" cy="140" r="38" fill="url(#sphere2)" filter="drop-shadow(0 15px 20px rgba(0,0,0,0.3))"/>
+    <!-- Floating Ring / Torus -->
+    <ellipse cx="80" cy="90" rx="40" ry="18" fill="none" stroke="#6EE7B7" stroke-width="12" transform="rotate(-25 80 90)" filter="drop-shadow(0 10px 15px rgba(0,0,0,0.25))"/>
+  </g>
+  <!-- Badge -->
+  <g transform="translate(100, 290)">
+    <rect width="400" height="75" rx="12" fill="rgba(15, 23, 42, 0.85)" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+    <text x="200" y="32" font-family="'Inter', sans-serif" font-size="17" font-weight="800" fill="#FFFFFF" text-anchor="middle">3D VECTOR GRAPHICS PACK</text>
+    <text x="200" y="54" font-family="'Inter', sans-serif" font-size="12" font-weight="500" fill="#A7F3D0" text-anchor="middle">50+ Abstract Shapes &bull; Transparent PNG &amp; Blender</text>
+  </g>
+</svg>

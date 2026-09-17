@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400">
+  <defs>
+    <linearGradient id="bg7" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#18181B"/>
+      <stop offset="50%" stop-color="#27272A"/>
+      <stop offset="100%" stop-color="#3F3F46"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#bg7)"/>
+  <!-- Typographic Specimen Mockup -->
+  <g transform="translate(110, 40)">
+    <rect x="20" y="10" width="340" height="220" rx="10" fill="#FAFAFA" filter="drop-shadow(0 15px 25px rgba(0,0,0,0.5))"/>
+    <!-- Specimen Content -->
+    <text x="50" y="80" font-family="Georgia, serif" font-size="52" font-style="italic" font-weight="700" fill="#18181B">Aa</text>
+    <text x="140" y="60" font-family="'Inter', sans-serif" font-size="14" font-weight="800" fill="#6366F1" letter-spacing="2">SERIF &amp; GROTESK</text>
+    <text x="140" y="82" font-family="Georgia, serif" font-size="18" font-weight="400" fill="#52525B">The quick brown fox jumps</text>
+    <line x1="50" y1="110" x2="330" y2="110" stroke="#E4E4E7" stroke-width="1.5"/>
+    <text x="50" y="145" font-family="'Inter', sans-serif" font-size="28" font-weight="900" fill="#09090B">MODERN TYPOGRAPHY</text>
+    <text x="50" y="175" font-family="'Inter', sans-serif" font-size="13" font-weight="500" fill="#71717A" letter-spacing="1">ABCDEFGHIJKLM 0123456789</text>
+    <rect x="50" y="195" width="80" height="18" rx="4" fill="#6366F1"/>
+    <text x="90" y="208" font-family="'Inter', sans-serif" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">12 WEIGHTS</text>
+  </g>
+  <!-- Badge -->
+  <g transform="translate(100, 290)">
+    <rect width="400" height="75" rx="12" fill="rgba(15, 23, 42, 0.85)" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+    <text x="200" y="32" font-family="'Inter', sans-serif" font-size="17" font-weight="800" fill="#FFFFFF" text-anchor="middle">MINIMALIST TYPOGRAPHY KIT</text>
+    <text x="200" y="54" font-family="'Inter', sans-serif" font-size="12" font-weight="500" fill="#D4D4D8" text-anchor="middle">12 Editorial Display &amp; Sans Fonts &bull; OTF, TTF, WOFF2</text>
+  </g>
+</svg>

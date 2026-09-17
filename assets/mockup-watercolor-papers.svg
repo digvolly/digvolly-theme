@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400">
+  <defs>
+    <linearGradient id="bg3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#9D174D"/>
+      <stop offset="50%" stop-color="#DB2777"/>
+      <stop offset="100%" stop-color="#F472B6"/>
+    </linearGradient>
+    <radialGradient id="wash1" cx="30%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#FDE047" stop-opacity="0.6"/>
+      <stop offset="50%" stop-color="#F472B6" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#831843" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="wash2" cx="70%" cy="60%" r="60%">
+      <stop offset="0%" stop-color="#67E8F9" stop-opacity="0.5"/>
+      <stop offset="60%" stop-color="#C084FC" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#4C1D95" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#bg3)"/>
+  <rect width="600" height="400" fill="url(#wash1)"/>
+  <rect width="600" height="400" fill="url(#wash2)"/>
+  <!-- Layered deckled paper stack -->
+  <g transform="translate(140, 50)">
+    <rect x="20" y="15" width="280" height="200" rx="4" fill="#FDF2F8" opacity="0.4" transform="rotate(-6 160 115)"/>
+    <rect x="20" y="15" width="280" height="200" rx="4" fill="#FDF2F8" opacity="0.7" transform="rotate(4 160 115)"/>
+    <!-- Top Paper Sheet -->
+    <rect x="20" y="15" width="280" height="200" rx="4" fill="#FFF1F2" filter="drop-shadow(0 12px 24px rgba(0,0,0,0.3))"/>
+    <!-- Organic watercolor splatters and waves on top sheet -->
+    <path d="M 40 80 Q 90 40 140 70 T 240 60 T 280 110 L 280 190 L 40 190 Z" fill="rgba(244, 114, 182, 0.45)"/>
+    <path d="M 60 110 Q 110 80 170 120 T 260 100 L 260 190 L 60 190 Z" fill="rgba(219, 39, 119, 0.35)"/>
+    <circle cx="90" cy="55" r="8" fill="rgba(244, 114, 182, 0.6)"/>
+    <circle cx="105" cy="45" r="4" fill="rgba(244, 114, 182, 0.6)"/>
+    <circle cx="230" cy="50" r="6" fill="rgba(219, 39, 119, 0.5)"/>
+  </g>
+  <!-- Badge -->
+  <g transform="translate(100, 290)">
+    <rect width="400" height="75" rx="12" fill="rgba(15, 23, 42, 0.85)" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+    <text x="200" y="32" font-family="'Inter', sans-serif" font-size="17" font-weight="800" fill="#FFFFFF" text-anchor="middle">WATERCOLOR TEXTURED PAPERS</text>
+    <text x="200" y="54" font-family="'Inter', sans-serif" font-size="12" font-weight="500" fill="#FBCFE8" text-anchor="middle">30 High-Res Hand-Painted Sheets &bull; 6000x4000 JPG</text>
+  </g>
+</svg>

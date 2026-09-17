@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400">
+  <defs>
+    <linearGradient id="bg2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4C1D95"/>
+      <stop offset="50%" stop-color="#7C3AED"/>
+      <stop offset="100%" stop-color="#A78BFA"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#bg2)"/>
+  <!-- Presentation Slide Mockups in perspective -->
+  <g transform="translate(60, 40)">
+    <!-- Back Slide -->
+    <rect x="180" y="30" width="280" height="175" rx="8" fill="#FFFFFF" opacity="0.3" transform="rotate(8 320 117)"/>
+    <!-- Middle Slide -->
+    <rect x="120" y="30" width="280" height="175" rx="8" fill="#FFFFFF" opacity="0.6" transform="rotate(-5 260 117)"/>
+    <!-- Front Main Slide -->
+    <rect x="100" y="50" width="280" height="175" rx="10" fill="#FFFFFF" filter="drop-shadow(0 15px 25px rgba(0,0,0,0.35))"/>
+    <!-- Slide Content -->
+    <rect x="120" y="70" width="90" height="10" rx="5" fill="#7C3AED"/>
+    <rect x="120" y="90" width="160" height="6" rx="3" fill="#94A3B8"/>
+    <rect x="120" y="102" width="130" height="6" rx="3" fill="#CBD5E1"/>
+    <!-- Chart simulation -->
+    <rect x="120" y="150" width="25" height="55" rx="4" fill="#6366F1"/>
+    <rect x="155" y="130" width="25" height="75" rx="4" fill="#8B5CF6"/>
+    <rect x="190" y="110" width="25" height="95" rx="4" fill="#A855F7"/>
+    <rect x="225" y="90" width="25" height="115" rx="4" fill="#EC4899"/>
+    <!-- Metric circle -->
+    <circle cx="310" cy="145" r="35" fill="#F3F4F6"/>
+    <circle cx="310" cy="145" r="30" fill="none" stroke="#7C3AED" stroke-width="8" stroke-dasharray="140 50"/>
+    <text x="310" y="150" font-family="'Inter', sans-serif" font-size="12" font-weight="800" fill="#4C1D95" text-anchor="middle">+84%</text>
+  </g>
+  <!-- Lower Banner -->
+  <g transform="translate(100, 290)">
+    <rect width="400" height="75" rx="12" fill="rgba(15, 23, 42, 0.85)" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+    <text x="200" y="32" font-family="'Inter', sans-serif" font-size="17" font-weight="800" fill="#FFFFFF" text-anchor="middle">PITCH DECK PRO TEMPLATE</text>
+    <text x="200" y="54" font-family="'Inter', sans-serif" font-size="12" font-weight="500" fill="#C4B5FD" text-anchor="middle">60+ Investor Slides &bull; 16:9 HD &bull; Figma &amp; Keynote</text>
+  </g>
+</svg>

@@ -1,0 +1,215 @@
+<script src="{{ 'collection-filters.js' | asset_url }}" defer="defer"></script>
+
+<section class="collection-wrapper" aria-label="Digital Assets Collection">
+  <div class="collection-header text-center">
+    <span class="hero-tag">Creative Studio Vault</span>
+    <h1 class="collection-title">{{ collection.title | default: 'All Creative Digital Assets' }}</h1>
+    <p class="collection-desc">
+      Explore high-converting presentation decks, seamless tiling pattern packs, artisan textures, and modern 3D vector graphics. Instant commercial licensing on all packs.
+    </p>
+  </div>
+
+  <div class="collection-container">
+    <!-- Filter Sidebar & Toolbar -->
+    <div class="collection-toolbar glass-panel">
+      <div class="collection-toolbar__left">
+        <span class="collection-results-count js-results-count">8 assets found</span>
+        <button type="button" class="clear-filters-btn js-clear-filters" style="display: none;">Clear all filters <span class="js-active-filter-count"></span></button>
+      </div>
+
+      <div class="collection-toolbar__right">
+        <!-- Grid vs Masonry View Switcher -->
+        <div class="view-switcher" role="group" aria-label="Layout view options">
+          <button type="button" class="view-btn js-view-grid is-active" title="Grid View" aria-label="Grid View">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="7" height="7"></rect>
+              <rect x="14" y="3" width="7" height="7"></rect>
+              <rect x="14" y="14" width="7" height="7"></rect>
+              <rect x="3" y="14" width="7" height="7"></rect>
+            </svg>
+            <span>Grid</span>
+          </button>
+          <button type="button" class="view-btn js-view-masonry" title="Masonry View" aria-label="Masonry View">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="7" height="11"></rect>
+              <rect x="14" y="3" width="7" height="6"></rect>
+              <rect x="14" y="13" width="7" height="8"></rect>
+              <rect x="3" y="17" width="7" height="4"></rect>
+            </svg>
+            <span>Masonry</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="collection-layout">
+      <!-- Filter Sidebar -->
+      <aside class="collection-sidebar card glass-panel" aria-label="Filter assets">
+        <div class="filter-group">
+          <h4 class="filter-group__heading">Asset Category</h4>
+          <label class="filter-checkbox-label">
+            <input type="checkbox" class="js-filter-checkbox" data-group="category" value="Patterns">
+            <span>Seamless Patterns</span>
+          </label>
+          <label class="filter-checkbox-label">
+            <input type="checkbox" class="js-filter-checkbox" data-group="category" value="Templates">
+            <span>Presentation &amp; UI Templates</span>
+          </label>
+          <label class="filter-checkbox-label">
+            <input type="checkbox" class="js-filter-checkbox" data-group="category" value="Papers">
+            <span>Textured Papers</span>
+          </label>
+          <label class="filter-checkbox-label">
+            <input type="checkbox" class="js-filter-checkbox" data-group="category" value="Graphics">
+            <span>3D &amp; Vector Graphics</span>
+          </label>
+        </div>
+
+        <div class="filter-group">
+          <h4 class="filter-group__heading">Style &amp; Theme</h4>
+          <label class="filter-checkbox-label">
+            <input type="checkbox" class="js-filter-checkbox" data-group="style" value="Geometric">
+            <span>Abstract &amp; Geometric</span>
+          </label>
+          <label class="filter-checkbox-label">
+            <input type="checkbox" class="js-filter-checkbox" data-group="style" value="Pitch">
+            <span>Corporate &amp; Pitch Decks</span>
+          </label>
+          <label class="filter-checkbox-label">
+            <input type="checkbox" class="js-filter-checkbox" data-group="style" value="Watercolor">
+            <span>Handmade &amp; Watercolor</span>
+          </label>
+          <label class="filter-checkbox-label">
+            <input type="checkbox" class="js-filter-checkbox" data-group="style" value="Minimalist">
+            <span>Minimalist Typography</span>
+          </label>
+          <label class="filter-checkbox-label">
+            <input type="checkbox" class="js-filter-checkbox" data-group="style" value="Identity">
+            <span>Brand Identity</span>
+          </label>
+        </div>
+
+        <div class="filter-group">
+          <h4 class="filter-group__heading">File Format &amp; App</h4>
+          <label class="filter-checkbox-label">
+            <input type="checkbox" class="js-filter-checkbox" data-group="format" value="AI">
+            <span>Adobe Illustrator (.AI)</span>
+          </label>
+          <label class="filter-checkbox-label">
+            <input type="checkbox" class="js-filter-checkbox" data-group="format" value="PPTX">
+            <span>PowerPoint &amp; Keynote</span>
+          </label>
+          <label class="filter-checkbox-label">
+            <input type="checkbox" class="js-filter-checkbox" data-group="format" value="FIGMA">
+            <span>Figma Component Kits</span>
+          </label>
+          <label class="filter-checkbox-label">
+            <input type="checkbox" class="js-filter-checkbox" data-group="format" value="SVG">
+            <span>Vector SVG &bull; EPS</span>
+          </label>
+          <label class="filter-checkbox-label">
+            <input type="checkbox" class="js-filter-checkbox" data-group="format" value="PNG">
+            <span>300 DPI Transparent PNG</span>
+          </label>
+        </div>
+      </aside>
+
+      <!-- Products Grid / Masonry Area -->
+      <main class="collection-main">
+        <div class="products-container products-container--grid js-products-container">
+          {% render 'product-card',
+            title: 'Geometric Repeat Pack',
+            price: '$15.00',
+            category: 'Patterns',
+            formats: 'AI, EPS, SVG, PNG',
+            primary_image: 'mockup-geometric-pack.svg',
+            secondary_image: 'mockup-geometric-pack-hover.svg',
+            url: routes.all_products_collection_url
+          %}
+
+          {% render 'product-card',
+            title: 'Pitch Deck Pro Template',
+            price: '$15.00',
+            category: 'Templates',
+            formats: 'PPTX, KEY, FIGMA',
+            primary_image: 'mockup-pitch-deck.svg',
+            secondary_image: 'mockup-pitch-deck-hover.svg',
+            url: routes.all_products_collection_url
+          %}
+
+          {% render 'product-card',
+            title: 'Watercolor Textured Papers',
+            price: '$15.00',
+            category: 'Papers',
+            formats: 'JPG 600DPI, PNG',
+            primary_image: 'mockup-watercolor-papers.svg',
+            secondary_image: 'mockup-watercolor-papers-hover.svg',
+            url: routes.all_products_collection_url
+          %}
+
+          {% render 'product-card',
+            title: '3D Vector Graphics Pack',
+            price: '$15.00',
+            category: 'Graphics',
+            formats: 'PNG, BLENDER, AI',
+            primary_image: 'mockup-vector-graphics.svg',
+            secondary_image: 'mockup-vector-graphics-hover.svg',
+            url: routes.all_products_collection_url
+          %}
+
+          {% render 'product-card',
+            title: 'Brand Identity Starter Kit',
+            price: '$15.00',
+            category: 'Templates',
+            formats: 'AI, EPS, INDD, FIGMA',
+            primary_image: 'mockup-branding-kit.svg',
+            secondary_image: 'mockup-branding-kit-hover.svg',
+            url: routes.all_products_collection_url
+          %}
+
+          {% render 'product-card',
+            title: 'Social Media Creator Bundle',
+            price: '$15.00',
+            category: 'Templates',
+            formats: 'CANVA, FIGMA, PSD',
+            primary_image: 'mockup-social-templates.svg',
+            secondary_image: 'mockup-social-templates-hover.svg',
+            url: routes.all_products_collection_url
+          %}
+
+          {% render 'product-card',
+            title: 'Minimalist Typography Kit',
+            price: '$15.00',
+            category: 'Graphics',
+            formats: 'OTF, TTF, WOFF2',
+            primary_image: 'mockup-typography-kit.svg',
+            secondary_image: 'mockup-typography-kit-hover.svg',
+            url: routes.all_products_collection_url
+          %}
+
+          {% render 'product-card',
+            title: 'Mobile UI Design System',
+            price: '$15.00',
+            category: 'Templates',
+            formats: 'FIGMA, SKETCH, XD',
+            primary_image: 'mockup-mobile-ui.svg',
+            secondary_image: 'mockup-mobile-ui-hover.svg',
+            url: routes.all_products_collection_url
+          %}
+        </div>
+      </main>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collection Main",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Collection Main"
+    }
+  ]
+}
+{% endschema %}

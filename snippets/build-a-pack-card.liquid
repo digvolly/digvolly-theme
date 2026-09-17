@@ -1,0 +1,36 @@
+{% comment %}
+  Renders an interactive selectable card for Build-a-Pack
+  Accepts:
+  - id: variant or item id
+  - title: item title
+  - category: category tag
+  - formats: formats tag
+  - primary_image: image asset
+  - secondary_image: hover image asset
+{% endcomment %}
+
+<div class="pack-item-card" data-id="{{ id | escape }}" data-title="{{ title | escape }}" data-category="{{ category | escape }}" data-formats="{{ formats | escape }}">
+  <div class="pack-item-card__header">
+    <div class="pack-item-card__checkbox-wrap">
+      <input type="checkbox" id="pack-check-{{ id }}" aria-label="Select {{ title | escape }}">
+      <label for="pack-check-{{ id }}" class="pack-item-card__custom-check" aria-hidden="true"></label>
+    </div>
+    <span class="pack-item-card__badge">{{ category }}</span>
+  </div>
+
+  <div class="pack-item-card__image-wrap">
+    <img src="{{ primary_image | asset_url }}" alt="{{ title | escape }}" class="pack-item-card__img pack-item-card__img--primary" width="300" height="200" loading="lazy">
+    {% if secondary_image %}
+      <img src="{{ secondary_image | asset_url }}" alt="{{ title | escape }} Preview" class="pack-item-card__img pack-item-card__img--secondary" width="300" height="200" loading="lazy">
+    {% endif %}
+  </div>
+
+  <div class="pack-item-card__details">
+    <h4 class="pack-item-card__title">{{ title }}</h4>
+    <div class="pack-item-card__formats">{{ formats }}</div>
+    <div class="pack-item-card__action-hint">
+      <span class="hint-add">+ Click to Add</span>
+      <span class="hint-selected">✓ Selected</span>
+    </div>
+  </div>
+</div>

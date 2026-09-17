@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400">
+  <defs>
+    <linearGradient id="bg5" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A"/>
+      <stop offset="50%" stop-color="#1E293B"/>
+      <stop offset="100%" stop-color="#334155"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#bg5)"/>
+  <!-- Stationery & Brand Mockups -->
+  <g transform="translate(100, 35)">
+    <!-- Letterhead -->
+    <rect x="50" y="20" width="180" height="230" rx="4" fill="#FFFFFF" filter="drop-shadow(0 15px 25px rgba(0,0,0,0.4))"/>
+    <circle cx="80" cy="50" r="14" fill="#6366F1"/>
+    <rect x="105" y="44" width="80" height="6" rx="3" fill="#0F172A"/>
+    <rect x="105" y="54" width="50" height="4" rx="2" fill="#94A3B8"/>
+    <rect x="70" y="90" width="140" height="4" rx="2" fill="#E2E8F0"/>
+    <rect x="70" y="105" width="140" height="4" rx="2" fill="#E2E8F0"/>
+    <rect x="70" y="120" width="120" height="4" rx="2" fill="#E2E8F0"/>
+    <rect x="70" y="135" width="140" height="4" rx="2" fill="#E2E8F0"/>
+    <!-- Business Cards Overlapping -->
+    <rect x="220" y="130" width="160" height="95" rx="6" fill="#1E1B4B" filter="drop-shadow(0 12px 20px rgba(0,0,0,0.35))" transform="rotate(-8 300 177)"/>
+    <circle cx="260" cy="170" r="12" fill="#818CF8"/>
+    <rect x="280" y="165" width="60" height="5" rx="2.5" fill="#FFFFFF"/>
+    <rect x="280" y="175" width="40" height="3" rx="1.5" fill="#A5B4FC"/>
+  </g>
+  <!-- Badge -->
+  <g transform="translate(100, 290)">
+    <rect width="400" height="75" rx="12" fill="rgba(15, 23, 42, 0.85)" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+    <text x="200" y="32" font-family="'Inter', sans-serif" font-size="17" font-weight="800" fill="#FFFFFF" text-anchor="middle">BRAND IDENTITY STARTER KIT</text>
+    <text x="200" y="54" font-family="'Inter', sans-serif" font-size="12" font-weight="500" fill="#CBD5E1" text-anchor="middle">Stationery, Guidelines &amp; Logo Mockup Suite</text>
+  </g>
+</svg>

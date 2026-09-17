@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400">
+  <defs>
+    <linearGradient id="bgh4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#022C22"/>
+      <stop offset="50%" stop-color="#047857"/>
+      <stop offset="100%" stop-color="#10B981"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#bgh4)"/>
+  <g transform="translate(100, 30)">
+    <circle cx="80" cy="80" r="45" fill="none" stroke="#6EE7B7" stroke-width="4"/>
+    <circle cx="200" cy="80" r="50" fill="rgba(16, 185, 129, 0.4)"/>
+    <polygon points="320,35 370,125 270,125" fill="#34D399" opacity="0.8"/>
+  </g>
+  <g transform="translate(100, 260)">
+    <rect width="400" height="90" rx="14" fill="rgba(15, 23, 42, 0.9)" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+    <text x="200" y="38" font-family="'Inter', sans-serif" font-size="16" font-weight="800" fill="#6EE7B7" text-anchor="middle">WIREFRAME &amp; RENDER VARIATIONS</text>
+    <text x="200" y="66" font-family="'Inter', sans-serif" font-size="13" font-weight="500" fill="#D1FAE5" text-anchor="middle">Figma Smart Components &bull; Transparent PNGs</text>
+  </g>
+</svg>

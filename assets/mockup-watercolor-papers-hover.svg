@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400">
+  <defs>
+    <linearGradient id="bgh3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#831843"/>
+      <stop offset="50%" stop-color="#BE185D"/>
+      <stop offset="100%" stop-color="#F43F5E"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#bgh3)"/>
+  <g transform="translate(80, 40)">
+    <circle cx="100" cy="100" r="80" fill="rgba(251, 207, 232, 0.4)" filter="blur(10px)"/>
+    <circle cx="220" cy="90" r="90" fill="rgba(254, 215, 170, 0.4)" filter="blur(12px)"/>
+    <circle cx="340" cy="110" r="75" fill="rgba(236, 72, 153, 0.4)" filter="blur(10px)"/>
+    <text x="220" y="115" font-family="Georgia, serif" font-style="italic" font-size="28" font-weight="700" fill="#FFFFFF" text-anchor="middle">Artisan Paper Textures</text>
+  </g>
+  <g transform="translate(100, 260)">
+    <rect width="400" height="90" rx="14" fill="rgba(15, 23, 42, 0.9)" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+    <text x="200" y="38" font-family="'Inter', sans-serif" font-size="16" font-weight="800" fill="#F472B6" text-anchor="middle">ZOOM DETAIL // 600 DPI TEXTURE</text>
+    <text x="200" y="66" font-family="'Inter', sans-serif" font-size="13" font-weight="500" fill="#FCE7F3" text-anchor="middle">Cold-Pressed Cotton Rag &bull; Seamless Tiling Options</text>
+  </g>
+</svg>

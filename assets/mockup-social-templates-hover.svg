@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400">
+  <defs>
+    <linearGradient id="bgh6" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3B0764"/>
+      <stop offset="50%" stop-color="#6B21A8"/>
+      <stop offset="100%" stop-color="#A855F7"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#bgh6)"/>
+  <g transform="translate(70, 40)">
+    <rect x="0" y="0" width="130" height="130" rx="8" fill="#FFFFFF" opacity="0.9"/>
+    <text x="65" y="70" font-family="'Inter', sans-serif" font-size="12" font-weight="800" fill="#7E22CE" text-anchor="middle">CAROUSEL 01</text>
+    <rect x="155" y="0" width="130" height="130" rx="8" fill="#FFFFFF" opacity="0.9"/>
+    <text x="220" y="70" font-family="'Inter', sans-serif" font-size="12" font-weight="800" fill="#7E22CE" text-anchor="middle">REELS COVER</text>
+    <rect x="310" y="0" width="130" height="130" rx="8" fill="#FFFFFF" opacity="0.9"/>
+    <text x="375" y="70" font-family="'Inter', sans-serif" font-size="12" font-weight="800" fill="#7E22CE" text-anchor="middle">QUOTE POST</text>
+  </g>
+  <g transform="translate(100, 260)">
+    <rect width="400" height="90" rx="14" fill="rgba(15, 23, 42, 0.9)" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+    <text x="200" y="38" font-family="'Inter', sans-serif" font-size="16" font-weight="800" fill="#E9D5FF" text-anchor="middle">CAROUSELS &amp; STORY HIGHLIGHTS</text>
+    <text x="200" y="66" font-family="'Inter', sans-serif" font-size="13" font-weight="500" fill="#F3E8FF" text-anchor="middle">High-Conversion Educational &amp; Sales Layouts</text>
+  </g>
+</svg>

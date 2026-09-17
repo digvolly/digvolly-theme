@@ -1,5 +1,58 @@
-<footer class="footer-wrapper" style="border-top: 1px solid #E5E7EB; padding: 30px 40px; text-align: center; color: #6B7280; font-size: 14px;">
-  <p style="margin: 0;">&copy; {{ "now" | date: "%Y" }} Digvolly. All rights reserved.</p>
+<footer class="footer-wrapper" aria-label="Site Footer">
+  <div class="footer-container">
+    <div class="footer-grid">
+      <!-- Column 1: Studio Brand & Mission -->
+      <div class="footer-col footer-col--brand">
+        <a href="{{ routes.root_url }}" class="footer-brand-logo">Digvolly</a>
+        <p class="footer-tagline">
+          Premium digital assets crafted for creators, agencies, and modern studios. Instant commercial licensing on all packs.
+        </p>
+        <div class="footer-guarantees">
+          <span>⚡ Instant ZIP Downloads</span>
+          <span>🛡️ Commercial License</span>
+          <span>🔄 Lifetime Re-downloads</span>
+        </div>
+      </div>
+
+      <!-- Column 2: Quick Links -->
+      <div class="footer-col">
+        <h4 class="footer-heading">Creative Vault</h4>
+        <ul class="footer-links">
+          <li><a href="/pages/build-a-pack">Build a Custom Pack</a></li>
+          <li><a href="/pages/bundle">Curated Bundles ($29)</a></li>
+          <li><a href="{{ routes.collections_url }}/patterns">Seamless Patterns</a></li>
+          <li><a href="{{ routes.collections_url }}/templates">Presentation Decks</a></li>
+          <li><a href="{{ routes.all_products_collection_url }}">All Design Assets</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 3: Customer Care & Licensing -->
+      <div class="footer-col">
+        <h4 class="footer-heading">Licensing &amp; Help</h4>
+        <ul class="footer-links">
+          <li><a href="/pages/commercial-license">Commercial License Rights</a></li>
+          <li><a href="/pages/faq">Download &amp; Format FAQs</a></li>
+          <li><a href="/pages/contact">Studio Support</a></li>
+          <li><a href="/pages/privacy">Privacy Policy</a></li>
+          <li><a href="/pages/terms">Terms of Service</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 4: Newsletter for Free Design Drops -->
+      <div class="footer-col">
+        <h4 class="footer-heading">Weekly Free Assets</h4>
+        <p class="footer-newsletter-text">Join 12,000+ creators receiving free pattern swatches and design templates every Friday.</p>
+        <form class="footer-newsletter-form" onsubmit="event.preventDefault(); alert('Thank you for subscribing to Digvolly!');">
+          <input type="email" placeholder="Enter your email" required class="newsletter-input" aria-label="Email address">
+          <button type="submit" class="button button--primary newsletter-submit">Subscribe</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; {{ "now" | date: "%Y" }} Digvolly. All rights reserved. Handcrafted for modern creative workflows.</p>
+    </div>
+  </div>
 </footer>
 
 {% schema %}

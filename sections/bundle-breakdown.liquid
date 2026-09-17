@@ -1,0 +1,127 @@
+<section class="bundle-breakdown-section" aria-label="What's Included in Bundle">
+  <div class="bundle-breakdown-container">
+    <div class="bundle-breakdown-header text-center">
+      <span class="hero-tag">Complete Breakdown</span>
+      <h2 class="bundle-breakdown-title">What's Inside This Curated Bundle</h2>
+      <p class="bundle-breakdown-desc">Every individual asset included in this download archive. All organized with clean layer names and vector source files.</p>
+    </div>
+
+    <!-- Included Asset Thumbnails Grid -->
+    <div class="bundle-included-grid">
+      <div class="bundle-included-item card">
+        <div class="bundle-included-item__image">
+          <img src="{{ 'mockup-geometric-pack.svg' | asset_url }}" alt="Geometric Repeat Pack" width="300" height="200" loading="lazy">
+        </div>
+        <div class="bundle-included-item__info">
+          <h4>Geometric Repeat Pack</h4>
+          <p>24 Seamless Vector Repeats &bull; AI, EPS, SVG, PNG</p>
+          <span class="individual-value">Individually $15</span>
+        </div>
+      </div>
+
+      <div class="bundle-included-item card">
+        <div class="bundle-included-item__image">
+          <img src="{{ 'mockup-pitch-deck.svg' | asset_url }}" alt="Pitch Deck Pro Template" width="300" height="200" loading="lazy">
+        </div>
+        <div class="bundle-included-item__info">
+          <h4>Pitch Deck Pro Template</h4>
+          <p>60+ Investor Slides &bull; PPTX, Keynote, Figma</p>
+          <span class="individual-value">Individually $15</span>
+        </div>
+      </div>
+
+      <div class="bundle-included-item card">
+        <div class="bundle-included-item__image">
+          <img src="{{ 'mockup-watercolor-papers.svg' | asset_url }}" alt="Watercolor Textured Papers" width="300" height="200" loading="lazy">
+        </div>
+        <div class="bundle-included-item__info">
+          <h4>Watercolor Textured Papers</h4>
+          <p>30 Hand-Painted Sheets &bull; 6000x4000 JPG, PNG</p>
+          <span class="individual-value">Individually $15</span>
+        </div>
+      </div>
+
+      <div class="bundle-included-item card">
+        <div class="bundle-included-item__image">
+          <img src="{{ 'mockup-vector-graphics.svg' | asset_url }}" alt="3D Vector Graphics Pack" width="300" height="200" loading="lazy">
+        </div>
+        <div class="bundle-included-item__info">
+          <h4>3D Vector Graphics Pack</h4>
+          <p>50+ Abstract Shapes &bull; Transparent PNG, Blender, AI</p>
+          <span class="individual-value">Individually $15</span>
+        </div>
+      </div>
+
+      <div class="bundle-included-item card">
+        <div class="bundle-included-item__image">
+          <img src="{{ 'mockup-branding-kit.svg' | asset_url }}" alt="Brand Identity Starter Kit" width="300" height="200" loading="lazy">
+        </div>
+        <div class="bundle-included-item__info">
+          <h4>Brand Identity Starter Kit</h4>
+          <p>Complete Guidelines &amp; Stationery &bull; AI, EPS, Figma</p>
+          <span class="individual-value">Individually $15</span>
+        </div>
+      </div>
+
+      <div class="bundle-included-item card">
+        <div class="bundle-included-item__image">
+          <img src="{{ 'mockup-social-templates.svg' | asset_url }}" alt="Social Media Creator Bundle" width="300" height="200" loading="lazy">
+        </div>
+        <div class="bundle-included-item__info">
+          <h4>Social Media Creator Bundle</h4>
+          <p>100+ Stories &amp; Posts &bull; Canva &amp; Figma</p>
+          <span class="individual-value">Individually $15</span>
+        </div>
+      </div>
+
+      <div class="bundle-included-item card">
+        <div class="bundle-included-item__image">
+          <img src="{{ 'mockup-typography-kit.svg' | asset_url }}" alt="Minimalist Typography Kit" width="300" height="200" loading="lazy">
+        </div>
+        <div class="bundle-included-item__info">
+          <h4>Minimalist Typography Kit</h4>
+          <p>12 Editorial Fonts &bull; OTF, TTF, WOFF2</p>
+          <span class="individual-value">Individually $15</span>
+        </div>
+      </div>
+
+      <div class="bundle-included-item card">
+        <div class="bundle-included-item__image">
+          <img src="{{ 'mockup-mobile-ui.svg' | asset_url }}" alt="Mobile UI Design System" width="300" height="200" loading="lazy">
+        </div>
+        <div class="bundle-included-item__info">
+          <h4>Mobile UI Design System</h4>
+          <p>80+ Screens &bull; iOS &amp; Android Figma Library</p>
+          <span class="individual-value">Individually $15</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Specifications & License Included -->
+    <div class="bundle-specs-wrapper">
+      {% render 'format-file-info' %}
+      {% render 'commercial-license-badge' %}
+    </div>
+
+    <!-- Bottom Re-anchor CTA -->
+    <div class="bundle-bottom-cta text-center">
+      <h3>Get All 8 Signature Packs Today For Just $29</h3>
+      <p>Save $121 compared to buying each pack separately. Commercial rights included.</p>
+      <button type="button" class="button button--primary bundle-cta-btn" onclick="window.location.href='{{ routes.cart_url }}'">
+        Claim Bundle for $29 (Save 80%)
+      </button>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Bundle Breakdown",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Bundle Breakdown"
+    }
+  ]
+}
+{% endschema %}

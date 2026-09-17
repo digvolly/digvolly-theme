@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400">
+  <defs>
+    <linearGradient id="bgh1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#172554"/>
+      <stop offset="50%" stop-color="#1D4ED8"/>
+      <stop offset="100%" stop-color="#38BDF8"/>
+    </linearGradient>
+    <pattern id="gridSub" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="1"/>
+      <circle cx="10" cy="10" r="1.5" fill="rgba(255,255,255,0.3)"/>
+    </pattern>
+  </defs>
+  <rect width="600" height="400" fill="url(#bgh1)"/>
+  <rect width="600" height="400" fill="url(#gridSub)"/>
+  <!-- Alternate Pattern Detail -->
+  <g transform="translate(60, 40)">
+    <rect x="0" y="0" width="140" height="140" rx="8" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
+    <path d="M 20 70 L 70 20 L 120 70 L 70 120 Z" fill="rgba(96,165,250,0.4)"/>
+    <rect x="170" y="0" width="140" height="140" rx="8" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
+    <circle cx="240" cy="70" r="45" fill="none" stroke="rgba(96,165,250,0.5)" stroke-width="6" stroke-dasharray="8 8"/>
+    <rect x="340" y="0" width="140" height="140" rx="8" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
+    <path d="M 350 10 L 470 130 M 350 130 L 470 10" stroke="rgba(147,197,253,0.5)" stroke-width="4"/>
+  </g>
+  <g transform="translate(100, 260)">
+    <rect width="400" height="90" rx="14" fill="rgba(15, 23, 42, 0.9)" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+    <text x="200" y="38" font-family="'Inter', sans-serif" font-size="16" font-weight="800" fill="#60A5FA" text-anchor="middle">PATTERN VARIATION 02 // INVERTED</text>
+    <text x="200" y="66" font-family="'Inter', sans-serif" font-size="13" font-weight="500" fill="#E2E8F0" text-anchor="middle">Includes Dark &amp; Light Swatches for Web &amp; Print</text>
+  </g>
+</svg>

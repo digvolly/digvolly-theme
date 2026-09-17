@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400">
+  <defs>
+    <linearGradient id="bg8" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0369A1"/>
+      <stop offset="50%" stop-color="#0284C7"/>
+      <stop offset="100%" stop-color="#38BDF8"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#bg8)"/>
+  <!-- 2 Overlapping Mobile Screens -->
+  <g transform="translate(140, 30)">
+    <!-- Screen 1 (Left) -->
+    <rect x="40" y="20" width="130" height="230" rx="16" fill="#0F172A" filter="drop-shadow(0 15px 25px rgba(0,0,0,0.35))"/>
+    <rect x="46" y="32" width="118" height="206" rx="12" fill="#FFFFFF"/>
+    <rect x="56" y="48" width="60" height="8" rx="4" fill="#0284C7"/>
+    <rect x="56" y="66" width="98" height="50" rx="8" fill="#E0F2FE"/>
+    <circle cx="80" cy="91" r="14" fill="#38BDF8"/>
+    <rect x="102" y="84" width="40" height="6" rx="3" fill="#0284C7"/>
+    <rect x="102" y="94" width="30" height="5" rx="2.5" fill="#94A3B8"/>
+    <rect x="56" y="126" width="98" height="28" rx="6" fill="#F8FAFC" stroke="#E2E8F0"/>
+    <rect x="56" y="162" width="98" height="28" rx="6" fill="#F8FAFC" stroke="#E2E8F0"/>
+    <rect x="56" y="200" width="98" height="22" rx="6" fill="#0284C7"/>
+
+    <!-- Screen 2 (Right, overlapping) -->
+    <rect x="150" y="35" width="130" height="230" rx="16" fill="#0F172A" filter="drop-shadow(0 20px 30px rgba(0,0,0,0.45))"/>
+    <rect x="156" y="47" width="118" height="206" rx="12" fill="#0F172A"/>
+    <rect x="166" y="63" width="70" height="8" rx="4" fill="#38BDF8"/>
+    <circle cx="215" cy="115" r="32" fill="#1E293B"/>
+    <circle cx="215" cy="115" r="26" fill="none" stroke="#38BDF8" stroke-width="6" stroke-dasharray="120 40"/>
+    <text x="215" y="120" font-family="'Inter', sans-serif" font-size="12" font-weight="800" fill="#FFFFFF" text-anchor="middle">92%</text>
+    <rect x="166" y="165" width="98" height="24" rx="6" fill="#1E293B"/>
+    <rect x="166" y="197" width="98" height="24" rx="6" fill="#0284C7"/>
+  </g>
+  <!-- Badge -->
+  <g transform="translate(100, 290)">
+    <rect width="400" height="75" rx="12" fill="rgba(15, 23, 42, 0.85)" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+    <text x="200" y="32" font-family="'Inter', sans-serif" font-size="17" font-weight="800" fill="#FFFFFF" text-anchor="middle">MOBILE UI DESIGN SYSTEM</text>
+    <text x="200" y="54" font-family="'Inter', sans-serif" font-size="12" font-weight="500" fill="#BAE6FD" text-anchor="middle">80+ Ready Screens &bull; iOS &amp; Android &bull; Figma Component Library</text>
+  </g>
+</svg>

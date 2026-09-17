@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "hero": {
+      "type": "bundle-hero"
+    },
+    "breakdown": {
+      "type": "bundle-breakdown"
+    }
+  },
+  "order": [
+    "hero",
+    "breakdown"
+  ]
+}

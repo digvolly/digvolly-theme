@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400">
+  <defs>
+    <linearGradient id="bgh7" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#09090B"/>
+      <stop offset="50%" stop-color="#18181B"/>
+      <stop offset="100%" stop-color="#27272A"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#bgh7)"/>
+  <g transform="translate(90, 40)">
+    <text x="210" y="50" font-family="'Inter', sans-serif" font-size="36" font-weight="900" fill="#FFFFFF" text-anchor="middle" letter-spacing="4">HEADING BOLD</text>
+    <text x="210" y="95" font-family="Georgia, serif" font-style="italic" font-size="28" fill="#A1A1AA" text-anchor="middle">Artistic Italic Display</text>
+    <text x="210" y="135" font-family="Courier New, monospace" font-size="20" fill="#6366F1" text-anchor="middle">Mono Code Specimen 01</text>
+  </g>
+  <g transform="translate(100, 260)">
+    <rect width="400" height="90" rx="14" fill="rgba(24, 24, 27, 0.95)" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+    <text x="200" y="38" font-family="'Inter', sans-serif" font-size="16" font-weight="800" fill="#A5B4FC" text-anchor="middle">GLYPHS, LIGATURES &amp; NUMERALS</text>
+    <text x="200" y="66" font-family="'Inter', sans-serif" font-size="13" font-weight="500" fill="#E4E4E7" text-anchor="middle">Multilingual Support &bull; Webfont Kits (.woff2)</text>
+  </g>
+</svg>

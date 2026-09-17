@@ -1,0 +1,103 @@
+<script src="{{ 'product-gallery.js' | asset_url }}" defer="defer"></script>
+
+<section class="main-product-section" aria-label="{{ product.title | default: 'Geometric Repeat Pack' }}">
+  <div class="product-page-container">
+    <div class="product-layout-grid">
+      
+      <!-- Left Column: Multi-Image Slide / Pattern Gallery -->
+      <div class="product-gallery-column js-product-gallery">
+        <div class="product-gallery-main card">
+          <img 
+            src="{{ 'mockup-geometric-pack.svg' | asset_url }}" 
+            alt="{{ product.title | default: 'Geometric Repeat Pack' }} - Main View" 
+            class="product-gallery-main__img js-gallery-main-img"
+            width="600" 
+            height="400"
+            loading="eager"
+          >
+          <div class="product-gallery-badge">High-Res Vector Preview</div>
+        </div>
+
+        <!-- Thumbnail Carousel Strip -->
+        <div class="product-gallery-thumbs" role="tablist" aria-label="Product image slides">
+          <button type="button" class="gallery-thumb js-gallery-thumb is-active" data-full-src="{{ 'mockup-geometric-pack.svg' | asset_url }}" data-alt="Cover View">
+            <img src="{{ 'mockup-geometric-pack.svg' | asset_url }}" alt="Thumbnail 1" width="100" height="70" loading="lazy">
+          </button>
+          <button type="button" class="gallery-thumb js-gallery-thumb" data-full-src="{{ 'mockup-geometric-pack-hover.svg' | asset_url }}" data-alt="Slide 2: Pattern Inverted Detail">
+            <img src="{{ 'mockup-geometric-pack-hover.svg' | asset_url }}" alt="Thumbnail 2" width="100" height="70" loading="lazy">
+          </button>
+          <button type="button" class="gallery-thumb js-gallery-thumb" data-full-src="{{ 'mockup-pitch-deck.svg' | asset_url }}" data-alt="Slide 3: Layout Specs">
+            <img src="{{ 'mockup-pitch-deck.svg' | asset_url }}" alt="Thumbnail 3" width="100" height="70" loading="lazy">
+          </button>
+          <button type="button" class="gallery-thumb js-gallery-thumb" data-full-src="{{ 'mockup-watercolor-papers.svg' | asset_url }}" data-alt="Slide 4: Swatch Zoom">
+            <img src="{{ 'mockup-watercolor-papers.svg' | asset_url }}" alt="Thumbnail 4" width="100" height="70" loading="lazy">
+          </button>
+        </div>
+
+        <!-- Format & File Info Block -->
+        {% render 'format-file-info' %}
+      </div>
+
+      <!-- Right Column: Product Details & Purchase Box -->
+      <div class="product-info-column">
+        <div class="product-buy-box card glass-panel">
+          <div class="product-breadcrumbs">
+            <a href="{{ routes.root_url }}">Home</a> &rsaquo; 
+            <a href="{{ routes.collections_url }}/patterns">Seamless Patterns</a> &rsaquo;
+            <span>{{ product.title | default: 'Geometric Repeat Pack' }}</span>
+          </div>
+
+          <h1 class="product-info__title">{{ product.title | default: 'Geometric Repeat Pack' }}</h1>
+          
+          <div class="product-info__meta-bar">
+            <div class="product-info__price">{{ product.price | default: 1500 | money | default: '$15.00' }}</div>
+            <span class="product-info__save-chip">Instant License</span>
+          </div>
+
+          <p class="product-info__description">
+            {{ product.description | default: 'A comprehensive collection of 24 handcrafted, seamless vector geometric pattern repeats. Perfect for textile design, editorial packaging, branding identity, web backgrounds, and modern print media. Fully editable vector layers in AI and EPS formats.' }}
+          </p>
+
+          <!-- Commercial License Badge & Tooltip -->
+          {% render 'commercial-license-badge' %}
+
+          <!-- Add to Cart Form -->
+          {% form 'product', product, id: 'product_form', class: 'product-form' %}
+            <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id | default: '1' }}">
+
+            <div class="product-form__actions">
+              <button type="submit" name="add" class="button button--primary product-add-btn">
+                Add to Cart &bull; $15.00
+              </button>
+            </div>
+          {% endform %}
+
+          <!-- Instant Download Indicator -->
+          <div class="instant-download-banner">
+            <div class="instant-download-banner__icon">⚡</div>
+            <div class="instant-download-banner__text">
+              <strong>Instant Digital Download</strong>
+              <span>Immediate ZIP file access on the thank-you page + email download link sent immediately.</span>
+            </div>
+          </div>
+
+          <!-- Trust Badges Strip -->
+          {% render 'trust-badges' %}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product Main",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Product Main"
+    }
+  ]
+}
+{% endschema %}

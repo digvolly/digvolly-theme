@@ -1,0 +1,64 @@
+{% comment %}
+  Renders a digital product card with dual-image hover micro-animation
+  Accepts:
+  - product_id: string
+  - title: string
+  - price: string
+  - category: string
+  - formats: string (e.g. "AI, EPS, PNG")
+  - primary_image: string (asset name)
+  - secondary_image: string (asset name)
+  - url: string
+{% endcomment %}
+
+<div class="product-card js-collection-item" data-category="{{ category | escape }}" data-formats="{{ formats | escape }}" data-style="{{ title | escape }}">
+  <div class="product-card__image-container">
+    <a href="{{ url | default: routes.all_products_collection_url }}" class="product-card__media-link" aria-label="{{ title | escape }}">
+      <div class="product-card__image-box">
+        <img 
+          src="{{ primary_image | asset_url }}" 
+          alt="{{ title | escape }} - Primary View" 
+          class="product-card__img product-card__img--primary"
+          width="300" 
+          height="200" 
+          loading="lazy"
+        >
+        {% if secondary_image %}
+          <img 
+            src="{{ secondary_image | asset_url }}" 
+            alt="{{ title | escape }} - Preview Slide" 
+            class="product-card__img product-card__img--secondary"
+            width="300" 
+            height="200" 
+            loading="lazy"
+          >
+        {% endif %}
+      </div>
+    </a>
+    <span class="product-card__category-badge">{{ category | default: 'Digital Pack' }}</span>
+  </div>
+
+  <div class="product-card__content">
+    {% if formats %}
+      <div class="product-card__formats">
+        {% assign format_list = formats | split: ', ' %}
+        {% for fmt in format_list %}
+          <span class="format-chip format-chip--sm">{{ fmt }}</span>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <h3 class="product-card__title">
+      <a href="{{ url | default: routes.all_products_collection_url }}">{{ title }}</a>
+    </h3>
+
+    <div class="product-card__meta">
+      <div class="product-card__price">{{ price | default: '$15.00' }}</div>
+      <div class="product-card__license-tag">Commercial License Included</div>
+    </div>
+
+    <button type="button" class="product-card__button" onclick="window.location.href='{{ url | default: routes.all_products_collection_url }}'">
+      View Pack Details
+    </button>
+  </div>
+</div>

@@ -1,0 +1,87 @@
+<section class="bundle-hero-section" aria-label="Curated Bundle Hero">
+  <div class="bundle-hero-container">
+    <div class="bundle-hero-grid">
+      <!-- Left Content -->
+      <div class="bundle-hero-content">
+        <span class="hero-tag">Curated Creator Bundle</span>
+        <h1 class="bundle-hero-title">{{ section.settings.heading | default: 'Ultimate Creative Assets Vault Bundle' }}</h1>
+        <p class="bundle-hero-subtitle">
+          {{ section.settings.subtitle | default: 'Unlock our top 8 signature design packs in one download. Seamless vector patterns, high-converting investor slide decks, handmade artisan papers, and 3D graphics.' }}
+        </p>
+
+        <!-- Value vs Price Callout Box -->
+        <div class="bundle-value-box card glass-panel">
+          <div class="bundle-value-box__prices">
+            <span class="bundle-value-box__original">Total Value: <s>{{ section.settings.original_price | default: '$150.00' }}</s></span>
+            <span class="bundle-value-box__current">{{ section.settings.bundle_price | default: '$29.00' }}</span>
+          </div>
+          <span class="bundle-value-box__save-badge">Save Over 80% Today</span>
+        </div>
+
+        <!-- CTA & Quick Guarantees -->
+        <div class="bundle-hero-actions">
+          <button type="button" class="button button--primary bundle-cta-btn" onclick="window.location.href='{{ routes.cart_url }}'">
+            Download Bundle Instantly &bull; {{ section.settings.bundle_price | default: '$29.00' }}
+          </button>
+          <div class="bundle-instant-note">
+            <span class="pulse-dot"></span> Instant direct ZIP download after checkout
+          </div>
+        </div>
+
+        {% render 'trust-badges' %}
+      </div>
+
+      <!-- Right Visual Feature Showcase -->
+      <div class="bundle-hero-showcase">
+        <div class="bundle-showcase-stack">
+          <div class="bundle-showcase-card bundle-showcase-card--1">
+            <img src="{{ 'mockup-geometric-pack.svg' | asset_url }}" alt="Geometric Pack Preview" width="300" height="200" loading="eager">
+          </div>
+          <div class="bundle-showcase-card bundle-showcase-card--2">
+            <img src="{{ 'mockup-pitch-deck.svg' | asset_url }}" alt="Pitch Deck Preview" width="300" height="200" loading="eager">
+          </div>
+          <div class="bundle-showcase-card bundle-showcase-card--3">
+            <img src="{{ 'mockup-watercolor-papers.svg' | asset_url }}" alt="Watercolor Papers Preview" width="300" height="200" loading="eager">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Bundle Hero",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Bundle Heading",
+      "default": "Ultimate Creative Assets Vault Bundle"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Bundle Subtitle",
+      "default": "Unlock our top 8 signature design packs in one download. Seamless vector patterns, high-converting investor slide decks, handmade artisan papers, and 3D graphics."
+    },
+    {
+      "type": "text",
+      "id": "original_price",
+      "label": "Original Value",
+      "default": "$150.00"
+    },
+    {
+      "type": "text",
+      "id": "bundle_price",
+      "label": "Bundle Price",
+      "default": "$29.00"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bundle Hero"
+    }
+  ]
+}
+{% endschema %}
