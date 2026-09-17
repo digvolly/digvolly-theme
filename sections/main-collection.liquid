@@ -117,85 +117,99 @@
       <!-- Products Grid / Masonry Area -->
       <main class="collection-main">
         <div class="products-container products-container--grid js-products-container">
-          {% render 'product-card',
-            title: 'Geometric Repeat Pack',
-            price: '$15.00',
-            category: 'Patterns',
-            formats: 'AI, EPS, SVG, PNG',
-            primary_image: 'mockup-geometric-pack.svg',
-            secondary_image: 'mockup-geometric-pack-hover.svg',
-            url: routes.all_products_collection_url
-          %}
+          {%- if collection.products.size > 0 -%}
+            {%- for product in collection.products -%}
+              {% render 'product-card', product: product %}
+            {%- endfor -%}
+          {%- else -%}
+            {% render 'product-card',
+              title: 'Geometric Repeat Pack',
+              price: '$15.00',
+              compare_at_price: '$25.00',
+              badge: 'Save 40%',
+              category: 'Patterns',
+              formats: 'AI, EPS, SVG, PNG',
+              primary_image: 'mockup-geometric-pack.svg',
+              secondary_image: 'mockup-geometric-pack-hover.svg',
+              url: routes.all_products_collection_url
+            %}
 
-          {% render 'product-card',
-            title: 'Pitch Deck Pro Template',
-            price: '$15.00',
-            category: 'Templates',
-            formats: 'PPTX, KEY, FIGMA',
-            primary_image: 'mockup-pitch-deck.svg',
-            secondary_image: 'mockup-pitch-deck-hover.svg',
-            url: routes.all_products_collection_url
-          %}
+            {% render 'product-card',
+              title: 'Pitch Deck Pro Template',
+              price: '$15.00',
+              category: 'Templates',
+              badge: 'Bestseller',
+              formats: 'PPTX, KEY, FIGMA',
+              primary_image: 'mockup-pitch-deck.svg',
+              secondary_image: 'mockup-pitch-deck-hover.svg',
+              url: routes.all_products_collection_url
+            %}
 
-          {% render 'product-card',
-            title: 'Watercolor Textured Papers',
-            price: '$15.00',
-            category: 'Papers',
-            formats: 'JPG 600DPI, PNG',
-            primary_image: 'mockup-watercolor-papers.svg',
-            secondary_image: 'mockup-watercolor-papers-hover.svg',
-            url: routes.all_products_collection_url
-          %}
+            {% render 'product-card',
+              title: 'Watercolor Textured Papers',
+              price: '$15.00',
+              category: 'Papers',
+              badge: 'New',
+              formats: 'JPG 600DPI, PNG',
+              primary_image: 'mockup-watercolor-papers.svg',
+              secondary_image: 'mockup-watercolor-papers-hover.svg',
+              url: routes.all_products_collection_url
+            %}
 
-          {% render 'product-card',
-            title: '3D Vector Graphics Pack',
-            price: '$15.00',
-            category: 'Graphics',
-            formats: 'PNG, BLENDER, AI',
-            primary_image: 'mockup-vector-graphics.svg',
-            secondary_image: 'mockup-vector-graphics-hover.svg',
-            url: routes.all_products_collection_url
-          %}
+            {% render 'product-card',
+              title: '3D Vector Graphics Pack',
+              price: '$15.00',
+              category: 'Graphics',
+              formats: 'PNG, BLENDER, AI',
+              primary_image: 'mockup-vector-graphics.svg',
+              secondary_image: 'mockup-vector-graphics-hover.svg',
+              url: routes.all_products_collection_url
+            %}
 
-          {% render 'product-card',
-            title: 'Brand Identity Starter Kit',
-            price: '$15.00',
-            category: 'Templates',
-            formats: 'AI, EPS, INDD, FIGMA',
-            primary_image: 'mockup-branding-kit.svg',
-            secondary_image: 'mockup-branding-kit-hover.svg',
-            url: routes.all_products_collection_url
-          %}
+            {% render 'product-card',
+              title: 'Brand Identity Starter Kit',
+              price: '$15.00',
+              compare_at_price: '$30.00',
+              badge: 'Save 50%',
+              category: 'Templates',
+              formats: 'AI, EPS, INDD, FIGMA',
+              primary_image: 'mockup-branding-kit.svg',
+              secondary_image: 'mockup-branding-kit-hover.svg',
+              url: routes.all_products_collection_url
+            %}
 
-          {% render 'product-card',
-            title: 'Social Media Creator Bundle',
-            price: '$15.00',
-            category: 'Templates',
-            formats: 'CANVA, FIGMA, PSD',
-            primary_image: 'mockup-social-templates.svg',
-            secondary_image: 'mockup-social-templates-hover.svg',
-            url: routes.all_products_collection_url
-          %}
+            {% render 'product-card',
+              title: 'Social Media Creator Bundle',
+              price: '$15.00',
+              category: 'Templates',
+              badge: 'Popular',
+              formats: 'CANVA, FIGMA, PSD',
+              primary_image: 'mockup-social-templates.svg',
+              secondary_image: 'mockup-social-templates-hover.svg',
+              url: routes.all_products_collection_url
+            %}
 
-          {% render 'product-card',
-            title: 'Minimalist Typography Kit',
-            price: '$15.00',
-            category: 'Graphics',
-            formats: 'OTF, TTF, WOFF2',
-            primary_image: 'mockup-typography-kit.svg',
-            secondary_image: 'mockup-typography-kit-hover.svg',
-            url: routes.all_products_collection_url
-          %}
+            {% render 'product-card',
+              title: 'Minimalist Typography Kit',
+              price: '$15.00',
+              category: 'Graphics',
+              formats: 'OTF, TTF, WOFF2',
+              primary_image: 'mockup-typography-kit.svg',
+              secondary_image: 'mockup-typography-kit-hover.svg',
+              url: routes.all_products_collection_url
+            %}
 
-          {% render 'product-card',
-            title: 'Mobile UI Design System',
-            price: '$15.00',
-            category: 'Templates',
-            formats: 'FIGMA, SKETCH, XD',
-            primary_image: 'mockup-mobile-ui.svg',
-            secondary_image: 'mockup-mobile-ui-hover.svg',
-            url: routes.all_products_collection_url
-          %}
+            {% render 'product-card',
+              title: 'Mobile UI Design System',
+              price: '$15.00',
+              category: 'Templates',
+              badge: 'New',
+              formats: 'FIGMA, SKETCH, XD',
+              primary_image: 'mockup-mobile-ui.svg',
+              secondary_image: 'mockup-mobile-ui-hover.svg',
+              url: routes.all_products_collection_url
+            %}
+          {%- endif -%}
         </div>
       </main>
     </div>

@@ -1,91 +1,110 @@
-<section class="featured-products-section" aria-label="Products">
-  <div class="products-grid">
-    <div class="product-card">
-      <div class="product-card__image">
-        <img src="{{ 'mockup-geometric-pack.svg' | asset_url }}" alt="Geometric Repeat Pack" width="300" height="200" loading="lazy">
-      </div>
-      <div class="product-card__content">
-        <h3 class="product-card__title">Geometric Repeat Pack</h3>
-        <div class="product-card__price">$15.00</div>
-        <button type="button" class="product-card__button">Add to Cart</button>
-      </div>
+<section class="featured-products-section" aria-label="Featured Products">
+  <div class="featured-products-container">
+    <div class="section-header text-center">
+      <span class="hero-tag">Featured Digital Drops</span>
+      <h2 class="section-title">Trending Creative Packs</h2>
+      <p class="section-subtitle">Handcrafted pattern swatches, presentation kits, and artisan papers ready for your next project.</p>
     </div>
 
-    <div class="product-card">
-      <div class="product-card__image">
-        <img src="{{ 'mockup-pitch-deck.svg' | asset_url }}" alt="Pitch Deck Pro Template" width="300" height="200" loading="lazy">
-      </div>
-      <div class="product-card__content">
-        <h3 class="product-card__title">Pitch Deck Pro Template</h3>
-        <div class="product-card__price">$15.00</div>
-        <button type="button" class="product-card__button">Add to Cart</button>
-      </div>
-    </div>
+    <div class="products-grid">
+      {%- assign featured_collection = section.settings.collection -%}
+      {%- if featured_collection != blank and featured_collection.products.size > 0 -%}
+        {%- for product in featured_collection.products limit: section.settings.products_to_show -%}
+          {% render 'product-card', product: product %}
+        {%- endfor -%}
+      {%- elsif collections['all'] != blank and collections['all'].products.size > 0 -%}
+        {%- for product in collections['all'].products limit: section.settings.products_to_show -%}
+          {% render 'product-card', product: product %}
+        {%- endfor -%}
+      {%- else -%}
+        {% render 'product-card',
+          title: 'Geometric Repeat Pack',
+          price: '$15.00',
+          compare_at_price: '$25.00',
+          badge: 'Save 40%',
+          category: 'Patterns',
+          formats: 'AI, EPS, SVG, PNG',
+          primary_image: 'mockup-geometric-pack.svg',
+          secondary_image: 'mockup-geometric-pack-hover.svg',
+          url: routes.all_products_collection_url
+        %}
 
-    <div class="product-card">
-      <div class="product-card__image">
-        <img src="{{ 'mockup-watercolor-papers.svg' | asset_url }}" alt="Watercolor Textured Papers" width="300" height="200" loading="lazy">
-      </div>
-      <div class="product-card__content">
-        <h3 class="product-card__title">Watercolor Textured Papers</h3>
-        <div class="product-card__price">$15.00</div>
-        <button type="button" class="product-card__button">Add to Cart</button>
-      </div>
-    </div>
+        {% render 'product-card',
+          title: 'Pitch Deck Pro Template',
+          price: '$15.00',
+          category: 'Templates',
+          badge: 'Bestseller',
+          formats: 'PPTX, KEY, FIGMA',
+          primary_image: 'mockup-pitch-deck.svg',
+          secondary_image: 'mockup-pitch-deck-hover.svg',
+          url: routes.all_products_collection_url
+        %}
 
-    <div class="product-card">
-      <div class="product-card__image">
-        <img src="{{ 'mockup-vector-graphics.svg' | asset_url }}" alt="3D Vector Graphics Pack" width="300" height="200" loading="lazy">
-      </div>
-      <div class="product-card__content">
-        <h3 class="product-card__title">3D Vector Graphics Pack</h3>
-        <div class="product-card__price">$15.00</div>
-        <button type="button" class="product-card__button">Add to Cart</button>
-      </div>
-    </div>
+        {% render 'product-card',
+          title: 'Watercolor Textured Papers',
+          price: '$15.00',
+          category: 'Papers',
+          badge: 'New',
+          formats: 'JPG 600DPI, PNG',
+          primary_image: 'mockup-watercolor-papers.svg',
+          secondary_image: 'mockup-watercolor-papers-hover.svg',
+          url: routes.all_products_collection_url
+        %}
 
-    <div class="product-card">
-      <div class="product-card__image">
-        <img src="{{ 'mockup-branding-kit.svg' | asset_url }}" alt="Brand Identity Starter Kit" width="300" height="200" loading="lazy">
-      </div>
-      <div class="product-card__content">
-        <h3 class="product-card__title">Brand Identity Starter Kit</h3>
-        <div class="product-card__price">$15.00</div>
-        <button type="button" class="product-card__button">Add to Cart</button>
-      </div>
-    </div>
+        {% render 'product-card',
+          title: '3D Vector Graphics Pack',
+          price: '$15.00',
+          category: 'Graphics',
+          formats: 'PNG, BLENDER, AI',
+          primary_image: 'mockup-vector-graphics.svg',
+          secondary_image: 'mockup-vector-graphics-hover.svg',
+          url: routes.all_products_collection_url
+        %}
 
-    <div class="product-card">
-      <div class="product-card__image">
-        <img src="{{ 'mockup-social-templates.svg' | asset_url }}" alt="Social Media Creator Bundle" width="300" height="200" loading="lazy">
-      </div>
-      <div class="product-card__content">
-        <h3 class="product-card__title">Social Media Creator Bundle</h3>
-        <div class="product-card__price">$15.00</div>
-        <button type="button" class="product-card__button">Add to Cart</button>
-      </div>
-    </div>
+        {% render 'product-card',
+          title: 'Brand Identity Starter Kit',
+          price: '$15.00',
+          compare_at_price: '$30.00',
+          badge: 'Save 50%',
+          category: 'Templates',
+          formats: 'AI, EPS, INDD, FIGMA',
+          primary_image: 'mockup-branding-kit.svg',
+          secondary_image: 'mockup-branding-kit-hover.svg',
+          url: routes.all_products_collection_url
+        %}
 
-    <div class="product-card">
-      <div class="product-card__image">
-        <img src="{{ 'mockup-typography-kit.svg' | asset_url }}" alt="Minimalist Typography Kit" width="300" height="200" loading="lazy">
-      </div>
-      <div class="product-card__content">
-        <h3 class="product-card__title">Minimalist Typography Kit</h3>
-        <div class="product-card__price">$15.00</div>
-        <button type="button" class="product-card__button">Add to Cart</button>
-      </div>
-    </div>
+        {% render 'product-card',
+          title: 'Social Media Creator Bundle',
+          price: '$15.00',
+          category: 'Templates',
+          badge: 'Popular',
+          formats: 'CANVA, FIGMA, PSD',
+          primary_image: 'mockup-social-templates.svg',
+          secondary_image: 'mockup-social-templates-hover.svg',
+          url: routes.all_products_collection_url
+        %}
 
-    <div class="product-card">
-      <div class="product-card__image">
-        <img src="{{ 'mockup-mobile-ui.svg' | asset_url }}" alt="Mobile UI Design System" width="300" height="200" loading="lazy">
-      </div>
-      <div class="product-card__content">
-        <h3 class="product-card__title">Mobile UI Design System</h3>
-        <div class="product-card__price">$15.00</div>
-        <button type="button" class="product-card__button">Add to Cart</button>
-      </div>
+        {% render 'product-card',
+          title: 'Minimalist Typography Kit',
+          price: '$15.00',
+          category: 'Graphics',
+          formats: 'OTF, TTF, WOFF2',
+          primary_image: 'mockup-typography-kit.svg',
+          secondary_image: 'mockup-typography-kit-hover.svg',
+          url: routes.all_products_collection_url
+        %}
+
+        {% render 'product-card',
+          title: 'Mobile UI Design System',
+          price: '$15.00',
+          category: 'Templates',
+          badge: 'New',
+          formats: 'FIGMA, SKETCH, XD',
+          primary_image: 'mockup-mobile-ui.svg',
+          secondary_image: 'mockup-mobile-ui-hover.svg',
+          url: routes.all_products_collection_url
+        %}
+      {%- endif -%}
     </div>
   </div>
 </section>
@@ -93,7 +112,22 @@
 {% schema %}
 {
   "name": "Featured Products",
-  "settings": [],
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 4,
+      "max": 16,
+      "step": 2,
+      "default": 8,
+      "label": "Products to show"
+    }
+  ],
   "presets": [
     {
       "name": "Featured Products"
