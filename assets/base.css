@@ -3702,3 +3702,61 @@ details-disclosure > details {
     transform: translateX(100%) scaleX(0);
   }
 }
+
+/* Digvolly Header & Navigation Overrides */
+.header-wrapper {
+  background-color: #FFFFFF !important;
+  border-bottom: 1px solid var(--color-border) !important;
+}
+.header {
+  background-color: #FFFFFF !important;
+}
+.header--top-center a.header__heading-link {
+  color: var(--color-foreground) !important;
+}
+.header__active-menu-item, .header__menu-item:hover {
+  color: var(--color-accent) !important;
+}
+.header__icon {
+  color: var(--color-foreground) !important;
+}
+.header__icon:hover {
+  color: var(--color-accent) !important;
+  background-color: var(--color-secondary) !important;
+}
+
+/* Desktop Menu Links */
+.list-menu__item {
+  color: var(--color-foreground) !important;
+  font-family: var(--font-body-family) !important;
+  font-weight: 500 !important;
+  transition: color 0.2s ease !important;
+}
+.list-menu__item:hover, .list-menu__item--active {
+  color: var(--color-accent) !important;
+}
+
+/* Mobile Menu Drawer */
+.menu-drawer {
+  background-color: #FFFFFF !important;
+}
+.menu-drawer__inner-container {
+  background-color: #FFFFFF !important;
+}
+.menu-drawer__menu-item {
+  color: var(--color-foreground) !important;
+  font-family: var(--font-body-family) !important;
+  border-bottom: 1px solid var(--color-border) !important;
+}
+.menu-drawer__menu-item:hover, .menu-drawer__menu-item--active {
+  color: var(--color-accent) !important;
+  background-color: var(--color-secondary) !important;
+}
+.menu-drawer__close-button {
+  color: var(--color-foreground) !important;
+}
+.menu-drawer__close-button:hover {
+  color: var(--color-accent) !important;
+  background-color: var(--color-secondary) !important;
+}
+
