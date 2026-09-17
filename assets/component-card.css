@@ -593,3 +593,22 @@
     clip-path: polygon(var(--shape--blob-5));
   }
 }
+
+/* Narrow Mobile Screen Grid Optimization (<375px) */
+@media screen and (max-width: 374px) {
+  .grid--2-col-tablet-down .grid__item,
+  .contains-card--product .grid__item,
+  .product-grid .grid__item {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .card__content {
+    padding: 1.2rem 0.8rem !important;
+  }
+
+  .card__heading {
+    font-size: 1.4rem;
+  }
+}
+

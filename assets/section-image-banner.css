@@ -490,3 +490,17 @@
     color: currentColor;
   }
 }
+
+/* Mobile Text Contrast Overlay Improvement */
+@media screen and (max-width: 749px) {
+  .banner--desktop-transparent .banner__box,
+  .banner:not(.banner--mobile-bottom) .banner__box {
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border-radius: var(--text-boxes-radius);
+    padding: 2.5rem 1.5rem;
+    margin: 1rem;
+  }
+}
+

@@ -107,7 +107,19 @@
 
   .section-header {
     position: sticky; /* This is for fixing a Safari z-index issue. PR #2147 */
+    top: 0;
+    z-index: 10;
     margin-bottom: {{ section.settings.margin_bottom | times: 0.75 | round: 0 }}px;
+    background-color: rgb(var(--color-background));
+  }
+
+  @media screen and (max-width: 749px) {
+    .shopify-section-header-sticky .header-wrapper,
+    .section-header.shopify-section-header-sticky {
+      background-color: rgba(var(--color-background), 0.95);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
   }
 
   @media screen and (min-width: 750px) {
