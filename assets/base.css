@@ -163,11 +163,32 @@ body, .gradient, .color-background-1 {
   background: linear-gradient(135deg, rgba(99, 102, 241, 0.12) 0%, rgba(139, 92, 246, 0.15) 35%, rgba(236, 72, 153, 0.10) 70%, rgba(244, 114, 182, 0.08) 100%);
   background-size: 200% 200%;
   animation: heroGradientShift 14s ease-in-out infinite alternate;
-  padding: 110px 40px;
+  padding: 100px 40px 70px;
   overflow: hidden;
   min-height: 480px;
   display: flex;
   align-items: center;
+}
+
+/* Soft transition fade at the bottom of the hero to eliminate hard cutoff */
+.digvolly-hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(243, 244, 254, 0.45) 50%, rgba(238, 242, 255, 0.95) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.digvolly-hero__container {
+  max-width: 1280px;
+  margin: 0 auto;
+  width: 100%;
+  position: relative;
+  z-index: 2;
 }
 
 .digvolly-hero__animated-bg {
@@ -182,7 +203,7 @@ body, .gradient, .color-background-1 {
 
 .digvolly-hero__content {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   max-width: 820px;
 }
 
@@ -288,17 +309,34 @@ body, .gradient, .color-background-1 {
    FEATURED PRODUCTS & SECTION SPACING
    ========================================================================== */
 .featured-products-section {
-  padding: 100px 40px;
-  background: #FFFFFF;
+  position: relative;
+  padding: 60px 40px 100px;
+  background: linear-gradient(180deg, rgba(238, 242, 255, 0.95) 0%, rgba(245, 243, 255, 0.55) 140px, rgba(249, 250, 252, 0.25) 280px, #FFFFFF 420px);
+  overflow: hidden;
+}
+
+/* Subtle ambient gradient continuation from hero into featured section */
+.featured-products-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 260px;
+  background: radial-gradient(ellipse at 50% 0%, rgba(139, 92, 246, 0.08) 0%, rgba(99, 102, 241, 0.04) 50%, transparent 80%);
+  pointer-events: none;
+  z-index: 0;
 }
 
 .featured-products-container {
   max-width: 1280px;
   margin: 0 auto;
+  position: relative;
+  z-index: 2;
 }
 
 .section-header {
-  margin-bottom: 50px;
+  margin-bottom: 44px;
 }
 
 .section-title {
@@ -349,17 +387,36 @@ body, .gradient, .color-background-1 {
 .text-center { text-align: center; }
 
 .hero-tag {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   background: #EEF2FF;
-  color: #4F46E5;
-  font-size: 13px;
+  color: #4338CA;
+  font-size: 12px;
   font-weight: 700;
-  padding: 6px 14px;
+  padding: 6px 16px;
   border-radius: 9999px;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   margin-bottom: 16px;
   border: 1px solid #C7D2FE;
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.12);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hero-tag::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #6366F1;
+  box-shadow: 0 0 6px rgba(99, 102, 241, 0.7);
+}
+
+.hero-tag:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
 }
 
 /* --- Header Enhancements --- */

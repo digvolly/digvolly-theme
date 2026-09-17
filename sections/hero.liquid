@@ -1,48 +1,50 @@
 <section class="digvolly-hero" aria-label="Hero">
   <div class="digvolly-hero__animated-bg"></div>
-  <div class="digvolly-hero__content">
-    <div class="hero-tag-wrap">
-      <span class="hero-tag">Digvolly Creative Vault</span>
-    </div>
-    <h1 class="digvolly-hero__title">
-      {%- if section.settings.heading != blank -%}
-        {{ section.settings.heading }}
-      {%- else -%}
-        Premium Digital Assets for Creators
-      {%- endif -%}
-    </h1>
-    <p class="digvolly-hero__subtitle">
-      {%- if section.settings.subtitle != blank -%}
-        {{ section.settings.subtitle }}
-      {%- else -%}
-        Download instantly. Create without limits.
-      {%- endif -%}
-    </p>
-    <div class="digvolly-hero__actions">
-      <a href="{{ section.settings.button_link | default: routes.all_products_collection_url }}" class="digvolly-hero__button">
-        {{ section.settings.button_label | default: 'Browse Collection' }}
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-left: 8px; vertical-align: middle;">
-          <line x1="5" y1="12" x2="19" y2="12"></line>
-          <polyline points="12 5 19 12 12 19"></polyline>
-        </svg>
-      </a>
-    </div>
+  <div class="digvolly-hero__container">
+    <div class="digvolly-hero__content">
+      <div class="hero-tag-wrap">
+        <span class="hero-tag">Digvolly Creative Vault</span>
+      </div>
+      <h1 class="digvolly-hero__title">
+        {%- if section.settings.heading != blank -%}
+          {{ section.settings.heading }}
+        {%- else -%}
+          Premium Digital Assets for Creators
+        {%- endif -%}
+      </h1>
+      <p class="digvolly-hero__subtitle">
+        {%- if section.settings.subtitle != blank -%}
+          {{ section.settings.subtitle }}
+        {%- else -%}
+          Download instantly. Create without limits.
+        {%- endif -%}
+      </p>
+      <div class="digvolly-hero__actions">
+        <a href="{{ section.settings.button_link | default: routes.all_products_collection_url }}" class="digvolly-hero__button">
+          {{ section.settings.button_label | default: 'Browse Collection' }}
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-left: 8px; vertical-align: middle;">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+      </div>
 
-    <!-- Glassmorphic Stat/Trust Bar directly under CTA -->
-    <div class="hero-trust-bar" role="region" aria-label="Store highlights">
-      <div class="hero-trust-bar__pill">
-        <span class="hero-trust-bar__dot"></span>
-        <span class="hero-trust-bar__text">12,000+ Creators</span>
-      </div>
-      <div class="hero-trust-bar__divider"></div>
-      <div class="hero-trust-bar__pill">
-        <span class="hero-trust-bar__dot"></span>
-        <span class="hero-trust-bar__text">500+ Assets</span>
-      </div>
-      <div class="hero-trust-bar__divider"></div>
-      <div class="hero-trust-bar__pill">
-        <span class="hero-trust-bar__dot"></span>
-        <span class="hero-trust-bar__text">Instant Download</span>
+      <!-- Glassmorphic Stat/Trust Bar directly under CTA -->
+      <div class="hero-trust-bar" role="region" aria-label="Store highlights">
+        <div class="hero-trust-bar__pill">
+          <span class="hero-trust-bar__dot"></span>
+          <span class="hero-trust-bar__text">12,000+ Creators</span>
+        </div>
+        <div class="hero-trust-bar__divider"></div>
+        <div class="hero-trust-bar__pill">
+          <span class="hero-trust-bar__dot"></span>
+          <span class="hero-trust-bar__text">500+ Assets</span>
+        </div>
+        <div class="hero-trust-bar__divider"></div>
+        <div class="hero-trust-bar__pill">
+          <span class="hero-trust-bar__dot"></span>
+          <span class="hero-trust-bar__text">Instant Download</span>
+        </div>
       </div>
     </div>
   </div>
