@@ -3788,6 +3788,54 @@ h1, h2, h3, h4, h5, h6 {
 /* === DIGVOLLY DESIGN SYSTEM - END === */
 /* ============================================ */
 
+/* === DIGVOLLY HERO OVERRIDES === */
+.shopify-section:first-child .image-banner, 
+.shopify-section:first-child .slideshow,
+.shopify-section:first-child .banner {
+  background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%) !important;
+}
+
+.shopify-section:first-child .banner__heading,
+.shopify-section:first-child .slideshow__text .h2,
+.shopify-section:first-child h2 {
+  color: #FFFFFF !important;
+  font-size: 48px !important;
+  font-weight: 800 !important;
+}
+
+.shopify-section:first-child .banner__text,
+.shopify-section:first-child .slideshow__text .rte {
+  color: #FFFFFF !important;
+  font-size: 20px !important;
+  opacity: 0.9 !important;
+}
+
+.shopify-section:first-child .button {
+  background-color: #FFFFFF !important;
+  color: #6366F1 !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+}
+
+.shopify-section:first-child .button:hover {
+  background-color: #F8F9FA !important;
+  transform: translateY(-2px);
+}
+
+@media screen and (max-width: 749px) {
+  .shopify-section:first-child .banner__heading,
+  .shopify-section:first-child .slideshow__text .h2,
+  .shopify-section:first-child h2 {
+    font-size: 28px !important;
+  }
+  .shopify-section:first-child .banner__text,
+  .shopify-section:first-child .slideshow__text .rte {
+    font-size: 16px !important;
+  }
+}
+/* === END DIGVOLLY HERO OVERRIDES === */
+
+
 
 
 

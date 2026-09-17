@@ -24,9 +24,22 @@
 {%- endif -%}
 
 {%- style -%}
+  #Banner-{{ section.id }} {
+    background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+  }
+  #Banner-{{ section.id }} .banner__heading,
+  #Banner-{{ section.id }} .banner__text,
+  #Banner-{{ section.id }} .banner__text p {
+    color: #FFFFFF !important;
+  }
   #Banner-{{ section.id }}::after {
     opacity: {{ section.settings.image_overlay_opacity | divided_by: 100.0 }};
   }
+  {%- if section.settings.image == blank and section.settings.image_2 == blank -%}
+    #Banner-{{ section.id }} .banner__media {
+      display: none !important;
+    }
+  {%- endif -%}
 {%- endstyle -%}
 
 {%- liquid
@@ -369,7 +382,7 @@
         {
           "type": "inline_richtext",
           "id": "heading",
-          "default": "t:sections.image-banner.blocks.heading.settings.heading.default",
+          "default": "Premium Digital Assets for Creators",
           "label": "t:sections.image-banner.blocks.heading.settings.heading.label"
         },
         {
@@ -410,7 +423,7 @@
         {
           "type": "inline_richtext",
           "id": "text",
-          "default": "t:sections.image-banner.blocks.text.settings.text.default",
+          "default": "Download instantly. Create without limits.",
           "label": "t:sections.image-banner.blocks.text.settings.text.label"
         },
         {
@@ -447,14 +460,15 @@
         {
           "type": "text",
           "id": "button_label_1",
-          "default": "t:sections.image-banner.blocks.buttons.settings.button_label_1.default",
+          "default": "Browse Collection",
           "label": "t:sections.image-banner.blocks.buttons.settings.button_label_1.label",
           "info": "t:sections.image-banner.blocks.buttons.settings.button_label_1.info"
         },
         {
           "type": "url",
           "id": "button_link_1",
-          "label": "t:sections.image-banner.blocks.buttons.settings.button_link_1.label"
+          "label": "t:sections.image-banner.blocks.buttons.settings.button_link_1.label",
+          "default": "/collections/all"
         },
         {
           "type": "checkbox",
