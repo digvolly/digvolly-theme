@@ -3760,3 +3760,28 @@ details-disclosure > details {
   background-color: var(--color-secondary) !important;
 }
 
+/* === DIGVOLLY FORCED OVERRIDES === */
+body, .gradient, .color-background-1 {
+  background-color: #FFFFFF !important;
+  color: #1A1A1A !important;
+}
+.header-wrapper, .header {
+  background-color: #FFFFFF !important;
+  border-bottom: 1px solid #E5E7EB !important;
+}
+.header__heading-link, .header__menu-item, .list-menu__item, .menu-drawer__menu-item {
+  color: #1A1A1A !important;
+  font-family: 'Inter', sans-serif !important;
+}
+.header__menu-item:hover, .list-menu__item:hover, .menu-drawer__menu-item:hover, .header__active-menu-item {
+  color: #6366F1 !important;
+}
+.button, .shopify-payment-button__button--unbranded {
+  background-color: #6366F1 !important;
+  color: #FFFFFF !important;
+  border-radius: 12px !important;
+  font-family: 'Inter', sans-serif !important;
+}
+/* ================================= */
+
+
