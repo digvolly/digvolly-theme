@@ -160,25 +160,33 @@ body, .gradient, .color-background-1 {
 
 .digvolly-hero {
   position: relative;
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.12) 0%, rgba(139, 92, 246, 0.15) 35%, rgba(236, 72, 153, 0.10) 70%, rgba(244, 114, 182, 0.08) 100%);
-  background-size: 200% 200%;
+  background: 
+    linear-gradient(to bottom, transparent 0%, transparent 45%, rgba(255, 255, 255, 0.6) 75%, #FFFFFF 100%),
+    linear-gradient(135deg, rgba(99, 102, 241, 0.12) 0%, rgba(139, 92, 246, 0.15) 35%, rgba(236, 72, 153, 0.10) 70%, rgba(244, 114, 182, 0.08) 100%);
+  background-size: 100% 100%, 200% 200%;
   animation: heroGradientShift 14s ease-in-out infinite alternate;
   padding: 100px 40px 70px;
+  margin-bottom: -1px;
+  border: none !important;
+  border-top: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+  outline: none !important;
   overflow: hidden;
   min-height: 480px;
   display: flex;
   align-items: center;
 }
 
-/* Soft transition fade at the bottom of the hero to eliminate hard cutoff */
+/* Seamless, 100% pure white bottom fade with zero contrast at the seam */
 .digvolly-hero::after {
   content: '';
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 80px;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(243, 244, 254, 0.45) 50%, rgba(238, 242, 255, 0.95) 100%);
+  height: 140px;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.6) 45%, #FFFFFF 100%);
   pointer-events: none;
   z-index: 1;
 }
@@ -310,22 +318,26 @@ body, .gradient, .color-background-1 {
    ========================================================================== */
 .featured-products-section {
   position: relative;
-  padding: 60px 40px 100px;
-  background: linear-gradient(180deg, rgba(238, 242, 255, 0.95) 0%, rgba(245, 243, 255, 0.55) 140px, rgba(249, 250, 252, 0.25) 280px, #FFFFFF 420px);
-  overflow: hidden;
+  padding: 50px 40px 100px;
+  background-color: #FFFFFF !important;
+  background: #FFFFFF !important;
+  border: none !important;
+  border-top: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  margin-top: 0 !important;
 }
 
-/* Subtle ambient gradient continuation from hero into featured section */
-.featured-products-section::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 260px;
-  background: radial-gradient(ellipse at 50% 0%, rgba(139, 92, 246, 0.08) 0%, rgba(99, 102, 241, 0.04) 50%, transparent 80%);
-  pointer-events: none;
-  z-index: 0;
+.shopify-section,
+#shopify-section-sections--hero,
+#shopify-section-sections--featured_products {
+  border: none !important;
+  border-top: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  margin: 0 !important;
 }
 
 .featured-products-container {
