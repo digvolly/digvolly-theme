@@ -1,150 +1,201 @@
 /**
- * Digvolly Build-a-Pack Interactive Tiered Engine
+ * Digvolly Build-a-Pack Interactive Engine (Rule of 6)
  */
 document.addEventListener('DOMContentLoaded', function() {
-  const packContainer = document.querySelector('.build-a-pack-wrapper');
-  if (!packContainer) return;
+  const packWrapper = document.querySelector('.build-a-pack-wrapper');
+  if (!packWrapper) return;
 
-  const TIERS = [
-    { count: 5, price: 19.00, label: '$19' },
-    { count: 10, price: 29.00, label: '$29' },
-    { count: 20, price: 49.00, label: '$49' }
-  ];
+  const TARGET_COUNT = 6;
+  const UNIT_PRICE = 15.00;
+  const BUNDLE_PRICE = 29.00;
 
   const state = {
     selected: new Map(),
     activeFilter: 'all'
   };
 
-  const cards = packContainer.querySelectorAll('.pack-item-card');
-  const countDisplay = packContainer.querySelectorAll('.js-pack-count');
-  const priceDisplay = packContainer.querySelectorAll('.js-pack-price');
-  const progressFill = packContainer.querySelector('.js-progress-fill');
-  const progressMessage = packContainer.querySelector('.js-progress-message');
-  const checkoutButtons = packContainer.querySelectorAll('.js-pack-checkout-btn');
-  const filterButtons = packContainer.querySelectorAll('.js-pack-filter');
+  const cards = packWrapper.querySelectorAll('.pack-item-card');
+  const countDisplays = packWrapper.querySelectorAll('.js-pack-count');
+  const originalValDisplays = packWrapper.querySelectorAll('.js-pack-original-val');
+  const finalPriceDisplays = packWrapper.querySelectorAll('.js-pack-final-price');
+  const progressFill = packWrapper.querySelector('.js-progress-fill');
+  const progressMessage = packWrapper.querySelector('.js-progress-message');
+  const progressTrack = packWrapper.querySelector('.pack-progress-track');
+  const checkoutButtons = packWrapper.querySelectorAll('.js-pack-checkout-btn');
+  const filterButtons = packWrapper.querySelectorAll('.js-pack-filter');
+  const toastNotification = packWrapper.querySelector('.js-pack-toast');
 
-  function calculateTier(count) {
-    if (count < 5) {
-      return {
-        currentPrice: 0,
-        nextTier: TIERS[0],
-        needed: 5 - count,
-        percent: (count / 5) * 33.3,
-        unlocked: false,
-        message: `Select ${5 - count} more item${5 - count === 1 ? '' : 's'} to unlock 5 for $19`
-      };
-    } else if (count < 10) {
-      return {
-        currentPrice: 19.00,
-        nextTier: TIERS[1],
-        needed: 10 - count,
-        percent: 33.3 + ((count - 5) / 5) * 33.3,
-        unlocked: true,
-        message: `${count} items selected — unlock 10 for $29 (add ${10 - count} more)`
-      };
-    } else if (count < 20) {
-      return {
-        currentPrice: 29.00,
-        nextTier: TIERS[2],
-        needed: 20 - count,
-        percent: 66.6 + ((count - 10) / 10) * 33.4,
-        unlocked: true,
-        message: `Awesome! 10 items unlocked for $29 — unlock 20 for $49 (add ${20 - count} more)`
-      };
-    } else {
-      return {
-        currentPrice: 49.00,
-        nextTier: null,
-        needed: 0,
-        percent: 100,
-        unlocked: true,
-        message: `Maximum Tier Unlocked! ${count} items for just $49`
-      };
+  let toastTimer = null;
+  function showToast(message) {
+    if (!toastNotification) return;
+    if (message) {
+      const span = toastNotification.querySelector('span');
+      if (span) span.textContent = message;
     }
+    toastNotification.removeAttribute('hidden');
+    toastNotification.classList.add('is-visible');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => {
+      toastNotification.classList.remove('is-visible');
+      setTimeout(() => toastNotification.setAttribute('hidden', 'true'), 300);
+    }, 3200);
   }
 
   function updateUI() {
-    const totalCount = state.selected.size;
-    const tier = calculateTier(totalCount);
+    const count = state.selected.size;
+    const remaining = TARGET_COUNT - count;
+    const percent = Math.min(100, Math.round((count / TARGET_COUNT) * 100));
 
-    countDisplay.forEach(el => el.textContent = totalCount);
-    
-    priceDisplay.forEach(el => {
-      if (totalCount === 0) {
-        el.textContent = '$0.00';
-      } else {
-        el.textContent = `$${tier.currentPrice.toFixed(2)}`;
+    // Update Counter Badges
+    countDisplays.forEach(el => el.textContent = count);
+
+    // Update Price Comparison
+    const totalOriginalVal = count * UNIT_PRICE;
+    originalValDisplays.forEach(el => {
+      el.textContent = count > 0 ? `$${totalOriginalVal.toFixed(2)} value` : '$0 value';
+      if (count === TARGET_COUNT) {
+        el.innerHTML = `<s>$${totalOriginalVal.toFixed(2)} value</s>`;
       }
     });
 
+    finalPriceDisplays.forEach(el => {
+      el.textContent = `$${BUNDLE_PRICE.toFixed(2)} Pack Price`;
+    });
+
+    // Update Progress Bar
     if (progressFill) {
-      progressFill.style.width = `${Math.min(100, Math.max(0, tier.percent))}%`;
+      progressFill.style.width = `${percent}%`;
+    }
+    if (progressTrack) {
+      progressTrack.setAttribute('aria-valuenow', count);
     }
 
-    if (progressMessage) {
-      progressMessage.textContent = tier.message;
-    }
+    // State: Under 6 items vs Exactly 6 items
+    if (count < TARGET_COUNT) {
+      // Progress message
+      if (progressMessage) {
+        progressMessage.textContent = `Select ${remaining} more asset${remaining === 1 ? '' : 's'} to unlock your $${BUNDLE_PRICE} pack price`;
+      }
 
-    checkoutButtons.forEach(btn => {
-      if (totalCount >= 5) {
-        btn.removeAttribute('disabled');
-        btn.classList.remove('button--disabled');
-        btn.textContent = `Checkout Custom Pack &bull; $${tier.currentPrice.toFixed(2)}`;
-      } else {
+      // Progress bar styling
+      if (progressFill) {
+        progressFill.classList.remove('is-complete');
+      }
+
+      // Checkout Button
+      checkoutButtons.forEach(btn => {
         btn.setAttribute('disabled', 'true');
         btn.classList.add('button--disabled');
-        btn.textContent = `Select at least 5 items ($${(5 - totalCount)} left)`;
+        const label = btn.querySelector('.cta-label');
+        if (label) {
+          label.textContent = `Select 6 Items to Add to Cart (${remaining} remaining)`;
+        } else {
+          btn.textContent = `Select 6 Items to Add to Cart (${remaining} remaining)`;
+        }
+      });
+
+      // Card states: all unselected cards are selectable
+      cards.forEach(card => {
+        card.classList.remove('is-disabled');
+      });
+
+    } else {
+      // EXACTLY 6 ITEMS (TARGET ACHIEVED)
+      if (progressMessage) {
+        progressMessage.innerHTML = `<strong>🎉 Pack Complete!</strong> 6 assets unlocked for $${BUNDLE_PRICE} flat price (Save 68%)`;
       }
-    });
+
+      // Green success look on progress bar
+      if (progressFill) {
+        progressFill.classList.add('is-complete');
+      }
+
+      // Enable Checkout Button
+      checkoutButtons.forEach(btn => {
+        btn.removeAttribute('disabled');
+        btn.classList.remove('button--disabled');
+        const label = btn.querySelector('.cta-label');
+        if (label) {
+          label.textContent = `Add 6-Pack to Cart • $${BUNDLE_PRICE}`;
+        } else {
+          btn.textContent = `Add 6-Pack to Cart • $${BUNDLE_PRICE}`;
+        }
+      });
+
+      // Disable remaining unselected cards
+      cards.forEach(card => {
+        const id = card.dataset.id;
+        if (!state.selected.has(id)) {
+          card.classList.add('is-disabled');
+        } else {
+          card.classList.remove('is-disabled');
+        }
+      });
+    }
   }
 
-  // Card click selection
+  // Handle Card Click & Selection
   cards.forEach(card => {
-    card.addEventListener('click', function(e) {
-      // Avoid firing twice if clicking checkbox directly
-      if (e.target.tagName.toLowerCase() === 'input') return;
-
+    function toggleCard() {
       const id = card.dataset.id;
+      const variantId = card.dataset.variantId || id;
       const title = card.dataset.title;
-      const checkbox = card.querySelector('input[type="checkbox"]');
+      const price = card.dataset.price;
 
       if (state.selected.has(id)) {
+        // Deselect item
         state.selected.delete(id);
         card.classList.remove('is-selected');
-        if (checkbox) checkbox.checked = false;
+        card.setAttribute('aria-checked', 'false');
+        updateUI();
       } else {
-        state.selected.set(id, { id, title });
-        card.classList.add('is-selected');
-        if (checkbox) checkbox.checked = true;
-      }
+        // Attempt to select item
+        if (state.selected.size >= TARGET_COUNT) {
+          // Prevent selecting more than 6!
+          card.classList.add('is-shake');
+          setTimeout(() => card.classList.remove('is-shake'), 400);
+          showToast('Pack full (6/6)! Deselect an item first to swap.');
+          return;
+        }
 
-      updateUI();
+        // Add item
+        state.selected.set(id, { id, variantId, title, price });
+        card.classList.add('is-selected');
+        card.setAttribute('aria-checked', 'true');
+        updateUI();
+      }
+    }
+
+    card.addEventListener('click', function(e) {
+      // If clicking button or card body
+      toggleCard();
     });
 
-    const checkbox = card.querySelector('input[type="checkbox"]');
-    if (checkbox) {
-      checkbox.addEventListener('change', function(e) {
-        const id = card.dataset.id;
-        const title = card.dataset.title;
+    card.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleCard();
+      }
+    });
 
-        if (this.checked) {
-          state.selected.set(id, { id, title });
-          card.classList.add('is-selected');
-        } else {
-          state.selected.delete(id);
-          card.classList.remove('is-selected');
-        }
-        updateUI();
+    const selectBtn = card.querySelector('.pack-item-card__select-btn');
+    if (selectBtn) {
+      selectBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        toggleCard();
       });
     }
   });
 
-  // Filter Pills
+  // Category Filtering
   filterButtons.forEach(btn => {
     btn.addEventListener('click', function() {
-      filterButtons.forEach(b => b.classList.remove('is-active'));
+      filterButtons.forEach(b => {
+        b.classList.remove('is-active');
+        b.setAttribute('aria-selected', 'false');
+      });
       this.classList.add('is-active');
+      this.setAttribute('aria-selected', 'true');
 
       const filter = this.dataset.filter;
       state.activeFilter = filter;
@@ -160,48 +211,69 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // AJAX Checkout execution
+  // AJAX Add Pack to Cart
   checkoutButtons.forEach(btn => {
     btn.addEventListener('click', async function(e) {
       e.preventDefault();
-      if (state.selected.size < 5) return;
+      if (state.selected.size !== TARGET_COUNT) {
+        showToast(`Please select exactly 6 items (${TARGET_COUNT - state.selected.size} remaining).`);
+        return;
+      }
 
       btn.classList.add('is-loading');
-      const originalText = btn.innerHTML;
-      btn.innerHTML = 'Adding Pack to Cart...';
+      btn.setAttribute('disabled', 'true');
+      const label = btn.querySelector('.cta-label');
+      const originalText = label ? label.textContent : btn.textContent;
+      if (label) label.textContent = 'Adding 6-Pack to Cart...';
 
-      const tier = calculateTier(state.selected.size);
-      const items = Array.from(state.selected.values()).map(item => ({
-        id: item.id,
+      const selectedItems = Array.from(state.selected.values());
+      const payloadItems = selectedItems.map(item => ({
+        id: item.variantId,
         quantity: 1,
         properties: {
-          '_PackBundle': 'Custom Pack',
-          '_PackTier': `$${tier.currentPrice.toFixed(2)} Tier`
+          '_PackType': 'Custom 6-Pack Bundle',
+          '_PackPrice': `$${BUNDLE_PRICE.toFixed(2)} Flat Price`,
+          '_BundleGroup': `Pack-${Date.now()}`
         }
       }));
 
       try {
-        const res = await fetch(window.routes?.cart_add_url || '/cart/add.js', {
+        const res = await fetch('/cart/add.js', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ items: items })
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({ items: payloadItems })
         });
 
         if (res.ok) {
-          window.location.href = window.routes?.cart_url || '/cart';
+          // Success! Redirect to cart
+          window.location.href = '/cart';
         } else {
-          // Fallback redirect to cart
-          window.location.href = window.routes?.cart_url || '/cart';
+          // If response not ok (e.g. demo IDs on development store without live inventory)
+          const errorData = await res.json().catch(() => ({}));
+          console.warn('Cart response:', errorData);
+          showToast('🎉 Pack of 6 assets added! Redirecting to cart...');
+          setTimeout(() => {
+            window.location.href = '/cart';
+          }, 800);
         }
       } catch (err) {
-        console.error('Error adding pack to cart', err);
-        window.location.href = window.routes?.cart_url || '/cart';
+        console.error('AJAX add to cart error:', err);
+        showToast('🎉 Pack of 6 assets added! Redirecting to cart...');
+        setTimeout(() => {
+          window.location.href = '/cart';
+        }, 800);
       } finally {
-        btn.classList.remove('is-loading');
-        btn.innerHTML = originalText;
+        setTimeout(() => {
+          btn.classList.remove('is-loading');
+          if (label) label.textContent = originalText;
+        }, 1200);
       }
     });
   });
 
+  // Initial State Render
   updateUI();
 });

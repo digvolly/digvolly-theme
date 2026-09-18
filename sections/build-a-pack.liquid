@@ -1,161 +1,236 @@
 <script src="{{ 'build-a-pack.js' | asset_url }}" defer="defer"></script>
 
-<section class="build-a-pack-wrapper" aria-label="Build a Pack">
-  <!-- Sticky Progress Header -->
-  <div class="pack-sticky-header glass-panel">
+<div class="build-a-pack-wrapper" aria-label="Build a Custom Pack">
+  <!-- Sticky Progress Bar Header (Top of Viewport) -->
+  <aside class="pack-sticky-header glass-panel" aria-label="Pack Progress">
     <div class="pack-sticky-header__container">
-      <div class="pack-tier-status">
-        <div class="pack-tier-status__info">
-          <span class="pack-tier-status__count-badge"><span class="js-pack-count">0</span> Assets Selected</span>
-          <span class="pack-tier-status__msg js-progress-message">Select 5 items to unlock 5 for $19</span>
+      <div class="pack-progress-row">
+        <div class="pack-counter-box">
+          <span class="pack-counter-badge">
+            <span class="js-pack-count">0</span> / 6 Selected
+          </span>
+          <span class="pack-hint-text js-progress-message">Select 6 more assets to unlock your $29 pack price</span>
         </div>
-        <div class="pack-tier-status__price-box">
-          <span class="pack-tier-status__price-label">Bundle Price:</span>
-          <span class="pack-tier-status__price-val js-pack-price">$0.00</span>
+
+        <div class="pack-price-comparison">
+          <span class="pack-original-price js-pack-original-val">$0 value</span>
+          <span class="pack-arrow-sep" aria-hidden="true">→</span>
+          <span class="pack-bundle-price js-pack-final-price">$29 Pack Price</span>
+          <span class="pack-savings-badge js-pack-savings-pill">Save 68%</span>
         </div>
       </div>
 
-      <div class="pack-progress-track">
+      <!-- Visual Progress Bar -->
+      <div class="pack-progress-track" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="6">
         <div class="pack-progress-fill js-progress-fill" style="width: 0%;"></div>
-        <div class="pack-progress-milestones">
-          <span class="milestone milestone--1">5 Items ($19)</span>
-          <span class="milestone milestone--2">10 Items ($29)</span>
-          <span class="milestone milestone--3">20 Items ($49)</span>
-        </div>
       </div>
     </div>
-  </div>
+  </aside>
 
-  <div class="build-a-pack-hero">
-    <span class="hero-tag">Custom Tiered Bundle Builder</span>
-    <h1 class="build-a-pack-hero__title">Build Your Custom Design Asset Pack</h1>
+  <!-- Hero Headline & Offer Description -->
+  <header class="build-a-pack-hero">
+    <div class="hero-tag-wrap">
+      <span class="hero-tag">Custom Bundle Builder</span>
+    </div>
+    <h1 class="build-a-pack-hero__title">Build Your Custom Pack</h1>
     <p class="build-a-pack-hero__subtitle">
-      Mix and match patterns, slide decks, and vector sets. Unlock massive tiered savings the more creative assets you select.
+      Pick any 6 assets. Pay one flat price. Save up to 83%.
     </p>
 
-    <!-- Tier Explanation Badges -->
-    <div class="pack-tier-cards-grid">
-      <div class="pack-tier-badge">
-        <span class="pack-tier-badge__name">Starter Pack</span>
-        <span class="pack-tier-badge__qty">5 Assets</span>
-        <span class="pack-tier-badge__price">$19 <s>$75</s></span>
-        <span class="pack-tier-badge__save">Save 74%</span>
-      </div>
-      <div class="pack-tier-badge pack-tier-badge--popular">
-        <span class="pack-tier-badge__popular-tag">Most Popular</span>
-        <span class="pack-tier-badge__name">Creator Pro</span>
-        <span class="pack-tier-badge__qty">10 Assets</span>
-        <span class="pack-tier-badge__price">$29 <s>$150</s></span>
-        <span class="pack-tier-badge__save">Save 80%</span>
-      </div>
-      <div class="pack-tier-badge">
-        <span class="pack-tier-badge__name">Studio Vault</span>
-        <span class="pack-tier-badge__qty">20 Assets</span>
-        <span class="pack-tier-badge__price">$49 <s>$300</s></span>
-        <span class="pack-tier-badge__save">Save 83%</span>
-      </div>
+    <!-- Category Filter Tabs -->
+    <nav class="pack-filter-pills" role="tablist" aria-label="Filter assets by category">
+      <button type="button" class="pack-filter-pill js-pack-filter is-active" data-filter="all" role="tab" aria-selected="true">
+        All Assets (12)
+      </button>
+      <button type="button" class="pack-filter-pill js-pack-filter" data-filter="Patterns" role="tab" aria-selected="false">
+        Patterns
+      </button>
+      <button type="button" class="pack-filter-pill js-pack-filter" data-filter="Templates" role="tab" aria-selected="false">
+        Templates
+      </button>
+      <button type="button" class="pack-filter-pill js-pack-filter" data-filter="Papers" role="tab" aria-selected="false">
+        Papers
+      </button>
+      <button type="button" class="pack-filter-pill js-pack-filter" data-filter="Graphics" role="tab" aria-selected="false">
+        Graphics
+      </button>
+    </nav>
+  </header>
+
+  <!-- Product Selection Grid -->
+  <main class="pack-grid-container">
+    <div class="pack-items-grid" id="PackItemsGrid">
+      {%- assign all_products = collections['all'].products -%}
+      {%- if all_products != blank and all_products.size > 0 -%}
+        {%- for product in all_products limit: 16 -%}
+          {%- assign p_cat = product.type | default: 'Templates' -%}
+          {% render 'build-a-pack-card',
+            id: product.id,
+            variant_id: product.selected_or_first_available_variant.id,
+            title: product.title,
+            category: p_cat,
+            price: '$15.00',
+            primary_image: product.featured_image,
+            secondary_image: product.images[1]
+          %}
+        {%- endfor -%}
+      {%- else -%}
+        {% render 'build-a-pack-card',
+          id: 'geom-01',
+          title: 'Geometric Repeat Pack',
+          category: 'Patterns',
+          formats: 'AI, EPS, SVG, PNG',
+          price: '$15.00',
+          primary_image: 'mockup-geometric-pack.svg',
+          secondary_image: 'mockup-geometric-pack-hover.svg'
+        %}
+
+        {% render 'build-a-pack-card',
+          id: 'pitch-02',
+          title: 'Pitch Deck Pro Template',
+          category: 'Templates',
+          formats: 'PPTX, KEY, FIGMA',
+          price: '$15.00',
+          primary_image: 'mockup-pitch-deck.svg',
+          secondary_image: 'mockup-pitch-deck-hover.svg'
+        %}
+
+        {% render 'build-a-pack-card',
+          id: 'paper-03',
+          title: 'Watercolor Textured Papers',
+          category: 'Papers',
+          formats: 'JPG 600DPI, PNG',
+          price: '$15.00',
+          primary_image: 'mockup-watercolor-papers.svg',
+          secondary_image: 'mockup-watercolor-papers-hover.svg'
+        %}
+
+        {% render 'build-a-pack-card',
+          id: 'vector-04',
+          title: '3D Vector Graphics Pack',
+          category: 'Graphics',
+          formats: 'PNG, BLENDER, AI',
+          price: '$15.00',
+          primary_image: 'mockup-vector-graphics.svg',
+          secondary_image: 'mockup-vector-graphics-hover.svg'
+        %}
+
+        {% render 'build-a-pack-card',
+          id: 'brand-05',
+          title: 'Brand Identity Starter Kit',
+          category: 'Templates',
+          formats: 'AI, EPS, INDD, FIGMA',
+          price: '$15.00',
+          primary_image: 'mockup-branding-kit.svg',
+          secondary_image: 'mockup-branding-kit-hover.svg'
+        %}
+
+        {% render 'build-a-pack-card',
+          id: 'social-06',
+          title: 'Social Media Creator Bundle',
+          category: 'Templates',
+          formats: 'CANVA, FIGMA, PSD',
+          price: '$15.00',
+          primary_image: 'mockup-social-templates.svg',
+          secondary_image: 'mockup-social-templates-hover.svg'
+        %}
+
+        {% render 'build-a-pack-card',
+          id: 'typo-07',
+          title: 'Minimalist Typography Kit',
+          category: 'Graphics',
+          formats: 'OTF, TTF, WOFF2',
+          price: '$15.00',
+          primary_image: 'mockup-typography-kit.svg',
+          secondary_image: 'mockup-typography-kit-hover.svg'
+        %}
+
+        {% render 'build-a-pack-card',
+          id: 'ui-08',
+          title: 'Mobile UI Design System',
+          category: 'Templates',
+          formats: 'FIGMA, SKETCH, XD',
+          price: '$15.00',
+          primary_image: 'mockup-mobile-ui.svg',
+          secondary_image: 'mockup-mobile-ui-hover.svg'
+        %}
+
+        {% render 'build-a-pack-card',
+          id: 'marble-09',
+          title: 'Handmade Marble Textures',
+          category: 'Papers',
+          formats: 'JPG 6000x4000, TIFF',
+          price: '$15.00',
+          primary_image: 'mockup-watercolor-papers-hover.svg',
+          secondary_image: 'mockup-watercolor-papers.svg'
+        %}
+
+        {% render 'build-a-pack-card',
+          id: 'icon-10',
+          title: 'Isometric Icon Collection',
+          category: 'Graphics',
+          formats: 'AI, SVG, PNG, C4D',
+          price: '$15.00',
+          primary_image: 'mockup-vector-graphics-hover.svg',
+          secondary_image: 'mockup-vector-graphics.svg'
+        %}
+
+        {% render 'build-a-pack-card',
+          id: 'mag-11',
+          title: 'Editorial Magazine Layouts',
+          category: 'Templates',
+          formats: 'INDD, IDML, FIGMA',
+          price: '$15.00',
+          primary_image: 'mockup-pitch-deck-hover.svg',
+          secondary_image: 'mockup-pitch-deck.svg'
+        %}
+
+        {% render 'build-a-pack-card',
+          id: 'floral-12',
+          title: 'Monoline Floral Patterns',
+          category: 'Patterns',
+          formats: 'AI, EPS, SVG, PAT',
+          price: '$15.00',
+          primary_image: 'mockup-geometric-pack-hover.svg',
+          secondary_image: 'mockup-geometric-pack.svg'
+        %}
+      {%- endif -%}
     </div>
+  </main>
 
-    <!-- Category Filter Pills -->
-    <div class="pack-filter-pills" role="tablist">
-      <button type="button" class="pack-filter-pill js-pack-filter is-active" data-filter="all">All Creative Assets</button>
-      <button type="button" class="pack-filter-pill js-pack-filter" data-filter="Patterns">Seamless Patterns</button>
-      <button type="button" class="pack-filter-pill js-pack-filter" data-filter="Templates">Pitch Decks &amp; Templates</button>
-      <button type="button" class="pack-filter-pill js-pack-filter" data-filter="Papers">Textured Papers</button>
-      <button type="button" class="pack-filter-pill js-pack-filter" data-filter="Graphics">3D &amp; Vector Graphics</button>
-    </div>
-  </div>
-
-  <!-- Asset Selection Grid -->
-  <div class="pack-grid-container">
-    <div class="pack-items-grid">
-      {% render 'build-a-pack-card',
-        id: 'geom-01',
-        title: 'Geometric Repeat Pack',
-        category: 'Patterns',
-        formats: 'AI, EPS, SVG, PNG',
-        primary_image: 'mockup-geometric-pack.svg',
-        secondary_image: 'mockup-geometric-pack-hover.svg'
-      %}
-
-      {% render 'build-a-pack-card',
-        id: 'pitch-02',
-        title: 'Pitch Deck Pro Template',
-        category: 'Templates',
-        formats: 'PPTX, KEY, FIGMA',
-        primary_image: 'mockup-pitch-deck.svg',
-        secondary_image: 'mockup-pitch-deck-hover.svg'
-      %}
-
-      {% render 'build-a-pack-card',
-        id: 'paper-03',
-        title: 'Watercolor Textured Papers',
-        category: 'Papers',
-        formats: 'JPG 600DPI, PNG',
-        primary_image: 'mockup-watercolor-papers.svg',
-        secondary_image: 'mockup-watercolor-papers-hover.svg'
-      %}
-
-      {% render 'build-a-pack-card',
-        id: 'vector-04',
-        title: '3D Vector Graphics Pack',
-        category: 'Graphics',
-        formats: 'PNG, BLENDER, AI',
-        primary_image: 'mockup-vector-graphics.svg',
-        secondary_image: 'mockup-vector-graphics-hover.svg'
-      %}
-
-      {% render 'build-a-pack-card',
-        id: 'brand-05',
-        title: 'Brand Identity Starter Kit',
-        category: 'Templates',
-        formats: 'AI, EPS, INDD, FIGMA',
-        primary_image: 'mockup-branding-kit.svg',
-        secondary_image: 'mockup-branding-kit-hover.svg'
-      %}
-
-      {% render 'build-a-pack-card',
-        id: 'social-06',
-        title: 'Social Media Creator Bundle',
-        category: 'Templates',
-        formats: 'CANVA, FIGMA, PSD',
-        primary_image: 'mockup-social-templates.svg',
-        secondary_image: 'mockup-social-templates-hover.svg'
-      %}
-
-      {% render 'build-a-pack-card',
-        id: 'typo-07',
-        title: 'Minimalist Typography Kit',
-        category: 'Graphics',
-        formats: 'OTF, TTF, WOFF2',
-        primary_image: 'mockup-typography-kit.svg',
-        secondary_image: 'mockup-typography-kit-hover.svg'
-      %}
-
-      {% render 'build-a-pack-card',
-        id: 'ui-08',
-        title: 'Mobile UI Design System',
-        category: 'Templates',
-        formats: 'FIGMA, SKETCH, XD',
-        primary_image: 'mockup-mobile-ui.svg',
-        secondary_image: 'mockup-mobile-ui-hover.svg'
-      %}
-    </div>
+  <!-- Toast Notification when pack is full -->
+  <div class="pack-toast-notification js-pack-toast" role="status" aria-live="polite" hidden>
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;">
+      <circle cx="12" cy="12" r="10"></circle>
+      <line x1="12" y1="8" x2="12" y2="12"></line>
+      <line x1="12" y1="16" x2="12.01" y2="16"></line>
+    </svg>
+    <span>Pack full (6/6 selected)! Deselect an item to swap.</span>
   </div>
 
   <!-- Sticky Bottom Checkout Bar (Mobile & Desktop) -->
-  <div class="pack-bottom-bar glass-panel">
+  <nav class="pack-bottom-bar glass-panel" aria-label="Pack Checkout Bar">
     <div class="pack-bottom-bar__container">
       <div class="pack-bottom-bar__summary">
-        <span class="pack-bottom-bar__items"><span class="js-pack-count">0</span> items in pack</span>
-        <span class="pack-bottom-bar__total">Total: <strong class="js-pack-price">$0.00</strong></span>
+        <div class="pack-bottom-bar__count-wrap">
+          <strong class="pack-bottom-bar__count"><span class="js-pack-count">0</span> of 6</strong> assets selected
+        </div>
+        <div class="pack-bottom-bar__price-wrap">
+          <span class="pack-bottom-bar__val-struck js-pack-original-val">$0 value</span>
+          <strong class="pack-bottom-bar__final-price js-pack-final-price">$29 Pack Price</strong>
+        </div>
       </div>
-      <button type="button" class="button button--primary pack-bottom-bar__cta js-pack-checkout-btn button--disabled" disabled>
-        Select at least 5 items (5 left)
+
+      <button 
+        type="button" 
+        class="button pack-bottom-bar__cta js-pack-checkout-btn button--disabled" 
+        disabled
+      >
+        <span class="cta-label">Select 6 Items to Add to Cart (6 remaining)</span>
       </button>
     </div>
-  </div>
-</section>
+  </nav>
+</div>
 
 {% schema %}
 {
