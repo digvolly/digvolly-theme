@@ -31,11 +31,7 @@
   {% section 'header' %}
 
   <main id="MainContent" class="content-for-layout focus-outline" role="main">
-    {%- if request.path == '/pages/build-a-pack' -%}
-      {% section 'build-a-pack' %}
-    {%- else -%}
-      {{ content_for_layout }}
-    {%- endif -%}
+    {{ content_for_layout }}
   </main>
 
   {% section 'footer' %}
