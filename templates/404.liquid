@@ -1,0 +1,11 @@
+{%- if request.path == '/pages/build-a-pack' -%}
+  {% section 'build-a-pack' %}
+{%- else -%}
+  <div class="template-404 text-center" style="padding: 100px 40px;">
+    <h1 style="font-size: 36px; font-weight: 800; color: #111827; margin-bottom: 12px;">404 — Page Not Found</h1>
+    <p style="font-size: 16px; color: #4B5563; margin-bottom: 24px;">The page you were looking for does not exist.</p>
+    <a href="{{ routes.all_products_collection_url }}" class="button">
+      Continue Shopping
+    </a>
+  </div>
+{%- endif -%}
