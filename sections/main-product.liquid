@@ -4,12 +4,13 @@
   assign current_product = product
   assign p_title = current_product.title | default: 'Geometric Repeat Pack'
   assign p_handle = current_product.handle | default: 'geometric-repeat-pack'
-  assign p_price = current_product.price | default: 1500 | money | default: '$15.00'
-  assign p_compare = ''
-  if current_product.compare_at_price > current_product.price
+  assign p_price = '$15.00'
+  if current_product != blank and current_product.price > 0
+    assign p_price = current_product.price | money
+  endif
+  assign p_compare = '$25.00'
+  if current_product != blank and current_product.compare_at_price > current_product.price
     assign p_compare = current_product.compare_at_price | money
-  else
-    assign p_compare = '$25.00'
   endif
   assign p_desc = current_product.description | default: 'A comprehensive collection of 24 handcrafted, seamless vector geometric pattern repeats. Perfect for textile design, editorial packaging, branding identity, web backgrounds, and modern print media. Fully editable vector layers in AI and EPS formats.'
   assign p_cat = 'Patterns'
@@ -130,8 +131,8 @@
           {%- endif -%}
         </div>
 
-        <!-- Format & File Info Block -->
-        {% render 'format-file-info' %}
+        <!-- 4 Trust Badge Boxes (Instant Download, Commercial License, Secure Checkout, Lifetime Access) -->
+        {% render 'trust-badges' %}
       </div>
 
       <!-- Right Column: Product Details & Purchase Box -->
@@ -211,9 +212,6 @@
               </button>
             </div>
           </form>
-
-          <!-- Trust Badges Strip -->
-          {% render 'trust-badges' %}
         </div>
       </div>
 

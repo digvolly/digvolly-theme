@@ -61,14 +61,19 @@
     endif
   endif
 
-  if product != blank
+  if price != blank
+    assign card_price = price
+    assign card_compare_price = compare_at_price | default: '$25.00'
+  elsif product != blank and product.price > 0
     assign card_price = product.price | money
     if product.compare_at_price > product.price
       assign card_compare_price = product.compare_at_price | money
+    else
+      assign card_compare_price = '$25.00'
     endif
   else
-    assign card_price = price | default: '$15.00'
-    assign card_compare_price = compare_at_price
+    assign card_price = '$15.00'
+    assign card_compare_price = compare_at_price | default: '$25.00'
   endif
 
   assign card_badge = ''

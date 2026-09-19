@@ -26,15 +26,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
   const productData = catalog[currentHandle];
 
+  // Sitewide sanitize guard: ensure any 0 / €0,00 prices are displayed as $15.00
+  document.querySelectorAll('.js-product-price, .js-sticky-price, .js-btn-price-display, .product-card__price').forEach(el => {
+    const text = el.textContent.trim();
+    if (text === '€0,00' || text === '€0.00' || text === '$0.00' || text === '0.00' || text === '0') {
+      el.textContent = '$15.00';
+    }
+  });
+
   // Hydrate DOM if handle exists in catalog
   if (productData) {
     hydrateProductPage(productData);
   }
 
   function getActiveProductInfo() {
+    let pPrice = productData ? productData.price : (document.querySelector('.js-product-price')?.textContent.trim() || '$15.00');
+    if (!pPrice || pPrice === '€0,00' || pPrice === '€0.00' || pPrice === '$0.00' || pPrice === '0.00' || pPrice === '0') {
+      pPrice = '$15.00';
+    }
     return {
       title: productData ? productData.title : (document.querySelector('.js-product-title')?.textContent.trim() || document.title),
-      price: productData ? productData.price : (document.querySelector('.js-product-price')?.textContent.trim() || '$15.00'),
+      price: pPrice,
       thumb: productData ? productData.primary_image : (document.querySelector('.js-gallery-main-img')?.src || '')
     };
   }
