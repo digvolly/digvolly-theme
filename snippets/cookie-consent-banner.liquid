@@ -1,0 +1,104 @@
+{%- comment -%}
+  Cookie Consent Banner (EU/UK GDPR & ePrivacy Compliance)
+  - Displays on first visit if consent is not saved in localStorage.
+  - Grants or revokes tracking consent via Shopify's Customer Privacy API.
+  - Completely lightweight: 0 external scripts, 0 monthly app fees.
+{%- endcomment -%}
+
+<div id="CookieConsentBanner" class="cookie-consent-banner" role="dialog" aria-live="polite" aria-label="Cookie Consent Preferences" style="display: none;">
+  <div class="cookie-consent-inner">
+    <div class="cookie-consent-text-wrap">
+      <div class="cookie-consent-icon" aria-hidden="true">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#818CF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"></path>
+          <path d="M8.5 8.5v.01"></path>
+          <path d="M7.5 15.5v.01"></path>
+          <path d="M15.5 15.5v.01"></path>
+          <path d="M11.5 12.5v.01"></path>
+        </svg>
+      </div>
+      <div class="cookie-consent-content">
+        <strong class="cookie-consent-title">Cookie &amp; Privacy Preferences</strong>
+        <p class="cookie-consent-desc">
+          We use strictly necessary cookies to ensure our digital asset store functions securely. With your permission, we also use privacy-friendly analytics to optimize download performance. We never sell your personal data. Read our <a href="/pages/privacy" class="cookie-consent-link">Privacy Policy</a>.
+        </p>
+      </div>
+    </div>
+    <div class="cookie-consent-actions">
+      <button type="button" id="CookieConsentDecline" class="cookie-btn cookie-btn--decline">
+        Decline Non-Essential
+      </button>
+      <button type="button" id="CookieConsentAccept" class="cookie-btn cookie-btn--accept">
+        Accept All Cookies
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    const banner = document.getElementById('CookieConsentBanner');
+    if (!banner) return;
+
+    const acceptBtn = document.getElementById('CookieConsentAccept');
+    const declineBtn = document.getElementById('CookieConsentDecline');
+    const STORAGE_KEY = 'digvolly_cookie_consent';
+
+    function setShopifyPrivacy(consentGiven) {
+      if (window.Shopify && window.Shopify.customerPrivacy && typeof window.Shopify.customerPrivacy.setTrackingConsent === 'function') {
+        window.Shopify.customerPrivacy.setTrackingConsent(consentGiven, function() {});
+      }
+    }
+
+    function hideBanner() {
+      banner.classList.remove('is-visible');
+      setTimeout(function() {
+        banner.style.display = 'none';
+      }, 300);
+    }
+
+    function showBanner() {
+      banner.style.display = 'block';
+      // Slight tick to allow display:block before adding opacity transition
+      setTimeout(function() {
+        banner.classList.add('is-visible');
+      }, 50);
+    }
+
+    // Check stored consent
+    const existingConsent = localStorage.getItem(STORAGE_KEY);
+
+    if (!existingConsent) {
+      // Show after short delay on initial visit
+      setTimeout(showBanner, 600);
+    } else {
+      // Sync with Shopify Customer Privacy API on subsequent page loads
+      const consentGiven = (existingConsent === 'accepted');
+      if (document.readyState === 'complete' || document.readyState === 'interactive') {
+        setShopifyPrivacy(consentGiven);
+      } else {
+        window.addEventListener('load', function() {
+          setShopifyPrivacy(consentGiven);
+        });
+      }
+    }
+
+    if (acceptBtn) {
+      acceptBtn.addEventListener('click', function() {
+        localStorage.setItem(STORAGE_KEY, 'accepted');
+        localStorage.setItem(STORAGE_KEY + '_date', new Date().toISOString());
+        setShopifyPrivacy(true);
+        hideBanner();
+      });
+    }
+
+    if (declineBtn) {
+      declineBtn.addEventListener('click', function() {
+        localStorage.setItem(STORAGE_KEY, 'declined');
+        localStorage.setItem(STORAGE_KEY + '_date', new Date().toISOString());
+        setShopifyPrivacy(false);
+        hideBanner();
+      });
+    }
+  })();
+</script>
