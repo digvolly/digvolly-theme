@@ -70,6 +70,8 @@ document.addEventListener('DOMContentLoaded', function() {
       progressTrack.setAttribute('aria-valuenow', count);
     }
 
+    const CTA_TEXT = `Add Pack to Cart — $${BUNDLE_PRICE.toFixed(2)}`;
+
     // State: Under 6 items vs Exactly 6 items
     if (count < TARGET_COUNT) {
       // Progress message
@@ -82,27 +84,33 @@ document.addEventListener('DOMContentLoaded', function() {
         progressFill.classList.remove('is-complete');
       }
 
-      // Checkout Button
+      // Checkout Buttons: disabled & grayed out
       checkoutButtons.forEach(btn => {
         btn.setAttribute('disabled', 'true');
         btn.classList.add('button--disabled');
         const label = btn.querySelector('.cta-label');
         if (label) {
-          label.textContent = `Select 6 Items to Add to Cart (${remaining} remaining)`;
+          label.textContent = CTA_TEXT;
         } else {
-          btn.textContent = `Select 6 Items to Add to Cart (${remaining} remaining)`;
+          btn.textContent = CTA_TEXT;
         }
       });
 
-      // Card states: all unselected cards are selectable
+      // Card states: all unselected cards are selectable (not dimmed)
       cards.forEach(card => {
         card.classList.remove('is-disabled');
+        card.removeAttribute('aria-disabled');
+        const selectBtn = card.querySelector('.pack-item-card__select-btn');
+        if (selectBtn) {
+          selectBtn.classList.remove('is-disabled');
+          selectBtn.removeAttribute('aria-disabled');
+        }
       });
 
     } else {
       // EXACTLY 6 ITEMS (TARGET ACHIEVED)
       if (progressMessage) {
-        progressMessage.innerHTML = `<strong>🎉 Pack Complete!</strong> 6 assets unlocked for $${BUNDLE_PRICE} flat price (Save 68%)`;
+        progressMessage.innerHTML = `<strong>🎉 Pack Complete!</strong> 6 assets unlocked for $${BUNDLE_PRICE.toFixed(2)} flat price (Save 68%)`;
       }
 
       // Green success look on progress bar
@@ -110,25 +118,36 @@ document.addEventListener('DOMContentLoaded', function() {
         progressFill.classList.add('is-complete');
       }
 
-      // Enable Checkout Button
+      // Enable Checkout Buttons: fully active brand indigo
       checkoutButtons.forEach(btn => {
         btn.removeAttribute('disabled');
         btn.classList.remove('button--disabled');
         const label = btn.querySelector('.cta-label');
         if (label) {
-          label.textContent = `Add 6-Pack to Cart • $${BUNDLE_PRICE}`;
+          label.textContent = CTA_TEXT;
         } else {
-          btn.textContent = `Add 6-Pack to Cart • $${BUNDLE_PRICE}`;
+          btn.textContent = CTA_TEXT;
         }
       });
 
-      // Disable remaining unselected cards
+      // Disable remaining unselected cards: visually dim (opacity: 0.52, not-allowed)
       cards.forEach(card => {
         const id = card.dataset.id;
+        const selectBtn = card.querySelector('.pack-item-card__select-btn');
         if (!state.selected.has(id)) {
           card.classList.add('is-disabled');
+          card.setAttribute('aria-disabled', 'true');
+          if (selectBtn) {
+            selectBtn.classList.add('is-disabled');
+            selectBtn.setAttribute('aria-disabled', 'true');
+          }
         } else {
           card.classList.remove('is-disabled');
+          card.removeAttribute('aria-disabled');
+          if (selectBtn) {
+            selectBtn.classList.remove('is-disabled');
+            selectBtn.removeAttribute('aria-disabled');
+          }
         }
       });
     }
@@ -152,9 +171,11 @@ document.addEventListener('DOMContentLoaded', function() {
         // Attempt to select item
         if (state.selected.size >= TARGET_COUNT) {
           // Prevent selecting more than 6!
+          card.classList.remove('is-shake');
+          void card.offsetWidth; // force reflow for smooth re-trigger
           card.classList.add('is-shake');
-          setTimeout(() => card.classList.remove('is-shake'), 400);
-          showToast('Pack full (6/6)! Deselect an item first to swap.');
+          setTimeout(() => card.classList.remove('is-shake'), 450);
+          showToast('Pack full (6/6 selected)! Deselect an item first to swap.');
           return;
         }
 

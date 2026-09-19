@@ -12,11 +12,23 @@
           <span class="pack-hint-text js-progress-message">Select 6 more assets to unlock your $29 pack price</span>
         </div>
 
-        <div class="pack-price-comparison">
-          <span class="pack-original-price js-pack-original-val">$0 value</span>
-          <span class="pack-arrow-sep" aria-hidden="true">→</span>
-          <span class="pack-bundle-price js-pack-final-price">$29 Pack Price</span>
-          <span class="pack-savings-badge js-pack-savings-pill">Save 68%</span>
+        <div class="pack-actions-wrap">
+          <div class="pack-price-comparison">
+            <span class="pack-original-price js-pack-original-val">$0 value</span>
+            <span class="pack-arrow-sep" aria-hidden="true">→</span>
+            <span class="pack-bundle-price js-pack-final-price">$29 Pack Price</span>
+            <span class="pack-savings-badge js-pack-savings-pill">Save 68%</span>
+          </div>
+
+          <!-- Sticky Header Docked Checkout CTA (Desktop) -->
+          <button 
+            type="button" 
+            class="button pack-header-cta js-pack-checkout-btn button--disabled" 
+            disabled
+            aria-label="Add Pack to Cart"
+          >
+            <span class="cta-label">Add Pack to Cart — $29.00</span>
+          </button>
         </div>
       </div>
 
@@ -225,8 +237,9 @@
         type="button" 
         class="button pack-bottom-bar__cta js-pack-checkout-btn button--disabled" 
         disabled
+        aria-label="Add Pack to Cart"
       >
-        <span class="cta-label">Select 6 Items to Add to Cart (6 remaining)</span>
+        <span class="cta-label">Add Pack to Cart — $29.00</span>
       </button>
     </div>
   </nav>
