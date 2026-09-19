@@ -676,16 +676,16 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
-  const addToCartForm = document.querySelector('.js-add-to-cart-form');
-  if (addToCartForm) {
-    addToCartForm.addEventListener('submit', function(e) {
+  const addToCartForms = document.querySelectorAll('.js-add-to-cart-form');
+  addToCartForms.forEach(form => {
+    form.addEventListener('submit', function(e) {
       e.preventDefault();
       const variantInput = this.querySelector('.js-product-variant-id');
       const variantId = variantInput ? variantInput.value : '1';
       const submitBtn = this.querySelector('.js-add-to-cart-btn');
       handleAddToCart(variantId, submitBtn);
     });
-  }
+  });
 
   const stickyAddBtn = document.querySelector('.js-sticky-add-btn');
   if (stickyAddBtn) {
