@@ -88,7 +88,12 @@
         <span class="product-card__price">{{ price | default: '$15.00' }}</span>
         <span class="pack-card__value-note">Individual value</span>
       </div>
-      <div class="product-card__license-tag">Commercial License</div>
+      <div class="product-card__license-tag">
+        <svg class="license-check-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+        <span>Commercial License Included</span>
+      </div>
     </div>
 
     <button type="button" class="pack-item-card__select-btn" aria-label="Select {{ title | escape }}">
