@@ -1,10 +1,12 @@
 <header class="header-wrapper glass-panel">
   <div class="header__heading-container">
-    <a href="{{ routes.root_url }}" class="header__heading">
+    <a href="{{ routes.root_url }}" class="header__heading" aria-label="Digvolly Home">
       Digvolly
     </a>
   </div>
-  <nav class="nav-links" aria-label="Main Navigation">
+
+  <!-- Desktop Navigation (visible on screens > 768px) -->
+  <nav class="nav-links desktop-nav" aria-label="Main Navigation">
     <a href="{{ routes.root_url }}">Home</a>
     <a href="/pages/build-a-pack" class="nav-link-badge">
       Build a Pack
@@ -15,7 +17,7 @@
     <a href="{{ routes.collections_url }}/templates">Templates</a>
     <a href="/pages/contact">Contact</a>
     <a href="{{ routes.cart_url }}" class="cart-link" aria-label="Cart">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <circle cx="9" cy="21" r="1"></circle>
         <circle cx="20" cy="21" r="1"></circle>
         <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
@@ -23,7 +25,172 @@
       <span class="cart-counter" aria-hidden="true">{{ cart.item_count }}</span>
     </a>
   </nav>
+
+  <!-- Mobile Header Actions (visible on screens <= 768px: Cart + Hamburger Toggle) -->
+  <div class="mobile-header-actions">
+    <a href="{{ routes.cart_url }}" class="cart-link mobile-cart-link" aria-label="Cart ({{ cart.item_count }} items)">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="9" cy="21" r="1"></circle>
+        <circle cx="20" cy="21" r="1"></circle>
+        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+      </svg>
+      <span class="cart-counter" aria-hidden="true">{{ cart.item_count }}</span>
+    </a>
+
+    <button 
+      type="button" 
+      class="mobile-menu-toggle js-mobile-menu-toggle" 
+      aria-label="Open navigation menu" 
+      aria-expanded="false" 
+      aria-controls="MobileNavDrawer"
+    >
+      <span class="hamburger-icon" aria-hidden="true">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </span>
+    </button>
+  </div>
 </header>
+
+<!-- Mobile Navigation Drawer -->
+<div id="MobileNavDrawer" class="mobile-nav-drawer js-mobile-nav-drawer" aria-hidden="true">
+  <div class="mobile-nav-backdrop js-mobile-nav-close" tabindex="-1" aria-hidden="true"></div>
+  <div class="mobile-nav-panel" role="dialog" aria-modal="true" aria-label="Mobile Navigation">
+    <div class="mobile-nav-panel__header">
+      <a href="{{ routes.root_url }}" class="mobile-nav-panel__logo" aria-label="Digvolly Home">
+        Digvolly
+      </a>
+      <button 
+        type="button" 
+        class="mobile-nav-close-btn js-mobile-nav-close" 
+        aria-label="Close navigation menu"
+      >
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <nav class="mobile-nav-list" aria-label="Mobile Navigation Links">
+      <a href="{{ routes.root_url }}" class="mobile-nav-item">
+        <span class="mobile-nav-item__text">Home</span>
+        <svg class="mobile-nav-item__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </a>
+
+      <a href="/pages/build-a-pack" class="mobile-nav-item mobile-nav-item--featured">
+        <div class="mobile-nav-item__left">
+          <span class="mobile-nav-item__text">Build a Pack</span>
+          <span class="nav-badge-pill">Save 83%</span>
+        </div>
+        <svg class="mobile-nav-item__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </a>
+
+      <a href="/pages/bundle" class="mobile-nav-item">
+        <span class="mobile-nav-item__text">Curated Bundles</span>
+        <svg class="mobile-nav-item__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </a>
+
+      <a href="{{ routes.collections_url }}/patterns" class="mobile-nav-item">
+        <span class="mobile-nav-item__text">Patterns</span>
+        <svg class="mobile-nav-item__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </a>
+
+      <a href="{{ routes.collections_url }}/templates" class="mobile-nav-item">
+        <span class="mobile-nav-item__text">Templates</span>
+        <svg class="mobile-nav-item__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </a>
+
+      <a href="/pages/contact" class="mobile-nav-item">
+        <span class="mobile-nav-item__text">Contact</span>
+        <svg class="mobile-nav-item__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </a>
+    </nav>
+
+    <div class="mobile-nav-panel__footer">
+      <a href="/pages/build-a-pack" class="button mobile-nav-cta">
+        Build Your Custom Pack — $29
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    function initMobileNav() {
+      const toggleBtn = document.querySelector('.js-mobile-menu-toggle');
+      const drawer = document.querySelector('.js-mobile-nav-drawer');
+      const closeButtons = document.querySelectorAll('.js-mobile-nav-close');
+      if (!toggleBtn || !drawer) return;
+
+      function openDrawer() {
+        drawer.style.display = 'block';
+        requestAnimationFrame(() => {
+          drawer.setAttribute('aria-hidden', 'false');
+          toggleBtn.setAttribute('aria-expanded', 'true');
+          drawer.classList.add('is-open');
+          document.body.classList.add('mobile-nav-open');
+          const firstLink = drawer.querySelector('.mobile-nav-item');
+          if (firstLink) setTimeout(() => firstLink.focus(), 150);
+        });
+      }
+
+      function closeDrawer() {
+        drawer.setAttribute('aria-hidden', 'true');
+        toggleBtn.setAttribute('aria-expanded', 'false');
+        drawer.classList.remove('is-open');
+        document.body.classList.remove('mobile-nav-open');
+        toggleBtn.focus();
+        setTimeout(() => {
+          if (!drawer.classList.contains('is-open')) {
+            drawer.style.display = 'none';
+          }
+        }, 320);
+      }
+
+      toggleBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (drawer.classList.contains('is-open')) {
+          closeDrawer();
+        } else {
+          openDrawer();
+        }
+      });
+
+      closeButtons.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          closeDrawer();
+        });
+      });
+
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && drawer.classList.contains('is-open')) {
+          closeDrawer();
+        }
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initMobileNav);
+    } else {
+      initMobileNav();
+    }
+  })();
+</script>
 
 {% schema %}
 {
