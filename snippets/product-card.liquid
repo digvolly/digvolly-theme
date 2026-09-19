@@ -156,10 +156,6 @@
 
 <div class="product-card js-collection-item" data-category="{{ card_category | escape }}" data-formats="{{ card_formats | escape }}" data-style="{{ card_title | escape }}">
   <div class="product-card__image-container">
-    {%- if card_badge != blank -%}
-      <span class="product-card__badge {{ badge_class }}">{{ card_badge }}</span>
-    {%- endif -%}
-
     <a href="{{ card_url }}" class="product-card__media-link" aria-label="{{ card_title | escape }}">
       <div class="product-card__image-box">
         {%- if primary_img_src != blank -%}
@@ -198,15 +194,6 @@
   </div>
 
   <div class="product-card__content">
-    {% if card_formats != blank %}
-      <div class="product-card__formats">
-        {% assign format_list = card_formats | split: ', ' %}
-        {% for fmt in format_list %}
-          <span class="format-chip format-chip--sm">{{ fmt }}</span>
-        {% endfor %}
-      </div>
-    {% endif %}
-
     <h3 class="product-card__title">
       <a href="{{ card_url }}">{{ card_title }}</a>
     </h3>

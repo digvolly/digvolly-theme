@@ -22,6 +22,10 @@
       assign p_cat = 'Presentation Templates'
     endif
   endif
+  assign image_count = current_product.images.size
+  if current_product == blank or current_product.images.size == 0
+    assign image_count = 4
+  endif
 -%}
 
 <section class="main-product-section js-main-product" data-current-handle="{{ p_handle }}" aria-label="{{ p_title }}">
@@ -90,46 +94,75 @@
             {%- endif -%}
           </div>
 
+          <!-- Magnifying Glass Zoom Trigger Hint -->
+          <button type="button" class="product-gallery-zoom-trigger js-gallery-zoom-trigger" aria-label="Zoom product image" title="Click to enlarge">
+            <svg class="zoom-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              <line x1="11" y1="8" x2="11" y2="14"></line>
+              <line x1="8" y1="11" x2="14" y2="11"></line>
+            </svg>
+            <span class="zoom-label">Click to zoom</span>
+          </button>
+
+          <!-- Gallery Navigation Arrows (Only rendered when 2+ images) -->
+          {%- if image_count > 1 -%}
+            <button type="button" class="gallery-arrow gallery-arrow--prev js-gallery-arrow-prev" aria-label="Previous image">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+            </button>
+            <button type="button" class="gallery-arrow gallery-arrow--next js-gallery-arrow-next" aria-label="Next image">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
+          {%- endif -%}
+
           <div class="product-gallery-badge">High-Res Master Preview</div>
         </div>
 
-        <!-- Mobile Carousel Dots Indicator -->
-        <div class="gallery-dots js-gallery-dots" role="tablist" aria-label="Carousel pagination">
-          {%- if current_product.images.size > 0 -%}
-            {%- for image in current_product.images -%}
-              <button type="button" class="gallery-dot {% if forloop.first %}is-active{% endif %}" data-index="{{ forloop.index0 }}" aria-label="Slide {{ forloop.index }}"></button>
-            {%- endfor -%}
-          {%- else -%}
-            <button type="button" class="gallery-dot is-active" data-index="0" aria-label="Slide 1"></button>
-            <button type="button" class="gallery-dot" data-index="1" aria-label="Slide 2"></button>
-            <button type="button" class="gallery-dot" data-index="2" aria-label="Slide 3"></button>
-            <button type="button" class="gallery-dot" data-index="3" aria-label="Slide 4"></button>
-          {%- endif -%}
-        </div>
+        <!-- Mobile Carousel Dots Indicator (Only rendered when 2+ images) -->
+        {%- if image_count > 1 -%}
+          <div class="gallery-dots js-gallery-dots" role="tablist" aria-label="Carousel pagination">
+            {%- if current_product.images.size > 0 -%}
+              {%- for image in current_product.images -%}
+                <button type="button" class="gallery-dot {% if forloop.first %}is-active{% endif %}" data-index="{{ forloop.index0 }}" aria-label="Slide {{ forloop.index }}"></button>
+              {%- endfor -%}
+            {%- else -%}
+              <button type="button" class="gallery-dot is-active" data-index="0" aria-label="Slide 1"></button>
+              <button type="button" class="gallery-dot" data-index="1" aria-label="Slide 2"></button>
+              <button type="button" class="gallery-dot" data-index="2" aria-label="Slide 3"></button>
+              <button type="button" class="gallery-dot" data-index="3" aria-label="Slide 4"></button>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
 
-        <!-- Thumbnail Carousel Strip (Desktop & Tablet) -->
-        <div class="product-gallery-thumbs js-gallery-thumbs" role="tablist" aria-label="Product thumbnail variations">
-          {%- if current_product.images.size > 0 -%}
-            {%- for image in current_product.images -%}
-              <button type="button" class="gallery-thumb js-gallery-thumb {% if forloop.first %}is-active{% endif %}" data-index="{{ forloop.index0 }}" data-full-src="{{ image | image_url: width: 800 }}" data-alt="View {{ forloop.index }}">
-                <img src="{{ image | image_url: width: 140, height: 100, crop: 'center' }}" alt="Thumbnail {{ forloop.index }}" width="100" height="70" loading="lazy">
+        <!-- Thumbnail Carousel Strip (Desktop & Tablet - Only rendered when 2+ images) -->
+        {%- if image_count > 1 -%}
+          <div class="product-gallery-thumbs js-gallery-thumbs" role="tablist" aria-label="Product thumbnail variations">
+            {%- if current_product.images.size > 0 -%}
+              {%- for image in current_product.images -%}
+                <button type="button" class="gallery-thumb js-gallery-thumb {% if forloop.first %}is-active{% endif %}" data-index="{{ forloop.index0 }}" data-full-src="{{ image | image_url: width: 1200 }}" data-alt="View {{ forloop.index }}">
+                  <img src="{{ image | image_url: width: 140, height: 100, crop: 'center' }}" alt="Thumbnail {{ forloop.index }}" width="100" height="70" loading="lazy">
+                </button>
+              {%- endfor -%}
+            {%- else -%}
+              <button type="button" class="gallery-thumb js-gallery-thumb is-active" data-index="0" data-full-src="{{ 'mockup-geometric-pack.svg' | asset_url }}" data-alt="Cover View">
+                <img src="{{ 'mockup-geometric-pack.svg' | asset_url }}" alt="Thumbnail 1" width="100" height="70" loading="lazy">
               </button>
-            {%- endfor -%}
-          {%- else -%}
-            <button type="button" class="gallery-thumb js-gallery-thumb is-active" data-index="0" data-full-src="{{ 'mockup-geometric-pack.svg' | asset_url }}" data-alt="Cover View">
-              <img src="{{ 'mockup-geometric-pack.svg' | asset_url }}" alt="Thumbnail 1" width="100" height="70" loading="lazy">
-            </button>
-            <button type="button" class="gallery-thumb js-gallery-thumb" data-index="1" data-full-src="{{ 'mockup-geometric-pack-hover.svg' | asset_url }}" data-alt="Slide 2: Pattern Inverted Detail">
-              <img src="{{ 'mockup-geometric-pack-hover.svg' | asset_url }}" alt="Thumbnail 2" width="100" height="70" loading="lazy">
-            </button>
-            <button type="button" class="gallery-thumb js-gallery-thumb" data-index="2" data-full-src="{{ 'mockup-pitch-deck.svg' | asset_url }}" data-alt="Slide 3: Layout Specs">
-              <img src="{{ 'mockup-pitch-deck.svg' | asset_url }}" alt="Thumbnail 3" width="100" height="70" loading="lazy">
-            </button>
-            <button type="button" class="gallery-thumb js-gallery-thumb" data-index="3" data-full-src="{{ 'mockup-watercolor-papers.svg' | asset_url }}" data-alt="Slide 4: Swatch Zoom">
-              <img src="{{ 'mockup-watercolor-papers.svg' | asset_url }}" alt="Thumbnail 4" width="100" height="70" loading="lazy">
-            </button>
-          {%- endif -%}
-        </div>
+              <button type="button" class="gallery-thumb js-gallery-thumb" data-index="1" data-full-src="{{ 'mockup-geometric-pack-hover.svg' | asset_url }}" data-alt="Slide 2: Pattern Inverted Detail">
+                <img src="{{ 'mockup-geometric-pack-hover.svg' | asset_url }}" alt="Thumbnail 2" width="100" height="70" loading="lazy">
+              </button>
+              <button type="button" class="gallery-thumb js-gallery-thumb" data-index="2" data-full-src="{{ 'mockup-pitch-deck.svg' | asset_url }}" data-alt="Slide 3: Layout Specs">
+                <img src="{{ 'mockup-pitch-deck.svg' | asset_url }}" alt="Thumbnail 3" width="100" height="70" loading="lazy">
+              </button>
+              <button type="button" class="gallery-thumb js-gallery-thumb" data-index="3" data-full-src="{{ 'mockup-watercolor-papers.svg' | asset_url }}" data-alt="Slide 4: Swatch Zoom">
+                <img src="{{ 'mockup-watercolor-papers.svg' | asset_url }}" alt="Thumbnail 4" width="100" height="70" loading="lazy">
+              </button>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
 
         <!-- Trust Block: 4-Badge Grid + Full Commercial License Banner directly under thumbnails -->
         <div class="product-trust-section">
@@ -518,6 +551,50 @@
     }
   }
   </script>
+
+  <!-- Product Image Zoom Lightbox Modal -->
+  <div id="ProductGalleryLightbox" class="gallery-lightbox js-gallery-lightbox" role="dialog" aria-modal="true" aria-label="Product Image Lightbox Zoom" style="display: none;">
+    <div class="gallery-lightbox__backdrop js-lightbox-close"></div>
+    
+    <!-- Top Bar Controls -->
+    <div class="gallery-lightbox__header">
+      <div class="gallery-lightbox__counter js-lightbox-counter" aria-live="polite">
+        <span class="js-lightbox-current">1</span> / <span class="js-lightbox-total">{{ image_count }}</span>
+      </div>
+      <button type="button" class="gallery-lightbox__close js-lightbox-close" aria-label="Close image zoom (Esc)">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Main Lightbox Stage -->
+    <div class="gallery-lightbox__stage js-lightbox-stage">
+      <button type="button" class="gallery-lightbox__nav gallery-lightbox__nav--prev js-lightbox-prev" aria-label="Previous image (Left arrow)" {% if image_count <= 1 %}style="display: none;"{% endif %}>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+
+      <div class="gallery-lightbox__viewport js-lightbox-viewport">
+        <img src="" alt="" class="gallery-lightbox__img js-lightbox-img" width="1200" height="800">
+      </div>
+
+      <button type="button" class="gallery-lightbox__nav gallery-lightbox__nav--next js-lightbox-next" aria-label="Next image (Right arrow)" {% if image_count <= 1 %}style="display: none;"{% endif %}>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Lightbox Thumbnails Bottom Strip -->
+    <div class="gallery-lightbox__thumbs-wrap js-lightbox-thumbs-wrap" {% if image_count <= 1 %}style="display: none;"{% endif %}>
+      <div class="gallery-lightbox__thumbs js-lightbox-thumbs" role="tablist" aria-label="Lightbox image thumbnails">
+        <!-- Injected via JS -->
+      </div>
+    </div>
+  </div>
 </section>
 
 {% schema %}

@@ -70,15 +70,6 @@
   </div>
 
   <div class="product-card__content">
-    {% if formats != blank %}
-      <div class="product-card__formats">
-        {% assign format_list = formats | split: ', ' %}
-        {% for fmt in format_list %}
-          <span class="format-chip format-chip--sm">{{ fmt }}</span>
-        {% endfor %}
-      </div>
-    {% endif %}
-
     <h3 class="product-card__title">
       {{ title }}
     </h3>

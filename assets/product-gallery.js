@@ -122,8 +122,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const slidesContainer = document.querySelector('.js-gallery-slides');
     const thumbsContainer = document.querySelector('.js-gallery-thumbs');
     const dotsContainer = document.querySelector('.js-gallery-dots');
+    const galleryArrows = document.querySelectorAll('.js-gallery-arrow-prev, .js-gallery-arrow-next');
 
-    if (slidesContainer && prod.thumbnails && prod.thumbnails.length > 0) {
+    const totalThumbs = (prod.thumbnails && prod.thumbnails.length) || 0;
+
+    if (slidesContainer && totalThumbs > 0) {
       slidesContainer.innerHTML = prod.thumbnails.map((src, idx) => `
         <div class="gallery-slide ${idx === 0 ? 'is-active' : ''}" data-index="${idx}">
           <img 
@@ -138,19 +141,36 @@ document.addEventListener('DOMContentLoaded', function() {
       `).join('');
     }
 
-    if (thumbsContainer && prod.thumbnails && prod.thumbnails.length > 0) {
-      thumbsContainer.innerHTML = prod.thumbnails.map((src, idx) => `
-        <button type="button" class="gallery-thumb js-gallery-thumb ${idx === 0 ? 'is-active' : ''}" data-index="${idx}" data-full-src="${src}" data-alt="Slide ${idx + 1}">
-          <img src="${src}" alt="Thumbnail ${idx + 1}" width="100" height="70" loading="lazy">
-        </button>
-      `).join('');
+    if (thumbsContainer) {
+      if (totalThumbs > 1) {
+        thumbsContainer.style.display = '';
+        thumbsContainer.innerHTML = prod.thumbnails.map((src, idx) => `
+          <button type="button" class="gallery-thumb js-gallery-thumb ${idx === 0 ? 'is-active' : ''}" data-index="${idx}" data-full-src="${src}" data-alt="Slide ${idx + 1}">
+            <img src="${src}" alt="Thumbnail ${idx + 1}" width="100" height="70" loading="lazy">
+          </button>
+        `).join('');
+      } else {
+        thumbsContainer.style.display = 'none';
+        thumbsContainer.innerHTML = '';
+      }
     }
 
-    if (dotsContainer && prod.thumbnails && prod.thumbnails.length > 0) {
-      dotsContainer.innerHTML = prod.thumbnails.map((_, idx) => `
-        <button type="button" class="gallery-dot ${idx === 0 ? 'is-active' : ''}" data-index="${idx}" aria-label="Slide ${idx + 1}"></button>
-      `).join('');
+    if (dotsContainer) {
+      if (totalThumbs > 1) {
+        dotsContainer.style.display = '';
+        dotsContainer.innerHTML = prod.thumbnails.map((_, idx) => `
+          <button type="button" class="gallery-dot ${idx === 0 ? 'is-active' : ''}" data-index="${idx}" aria-label="Slide ${idx + 1}"></button>
+        `).join('');
+      } else {
+        dotsContainer.style.display = 'none';
+        dotsContainer.innerHTML = '';
+      }
     }
+
+    // Toggle gallery arrows based on image count
+    galleryArrows.forEach(arrow => {
+      arrow.style.display = totalThumbs > 1 ? '' : 'none';
+    });
 
     // Hydrate Category-Matched Related Products
     hydrateRelatedProducts(prod);
@@ -166,7 +186,6 @@ document.addEventListener('DOMContentLoaded', function() {
       return `
         <div class="product-card js-collection-item" data-category="${p.category}">
           <div class="product-card__image-container">
-            ${p.save_badge ? `<span class="product-card__badge product-card__badge--save">${p.save_badge}</span>` : ''}
             <a href="/products/${p.handle}" class="product-card__media-link" aria-label="${p.title}">
               <div class="product-card__image-box">
                 <img 
@@ -178,7 +197,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   loading="lazy"
                   style="object-fit: cover;"
                 >
-                ${p.thumbnails[1] ? `
+                ${p.thumbnails && p.thumbnails[1] ? `
                   <img 
                     src="${p.thumbnails[1]}" 
                     alt="${p.title} - Preview" 
@@ -194,9 +213,6 @@ document.addEventListener('DOMContentLoaded', function() {
             <span class="product-card__category-badge">${p.category}</span>
           </div>
           <div class="product-card__content">
-            <div class="product-card__formats">
-              ${(p.formats || []).map(f => `<span class="format-chip format-chip--sm">${f.replace('.', '')}</span>`).join(' ')}
-            </div>
             <h3 class="product-card__title">
               <a href="/products/${p.handle}">${p.title}</a>
             </h3>
@@ -223,7 +239,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
-  // 2. Gallery Interaction: Thumbnails & Mobile Carousel Swiping
+  // 2. Gallery Interaction: Thumbnails, Arrows & Mobile Carousel Swiping
   function initGallery() {
     const gallery = document.querySelector('.js-product-gallery');
     if (!gallery) return;
@@ -256,6 +272,47 @@ document.addEventListener('DOMContentLoaded', function() {
           behavior: 'smooth'
         });
       }
+    }
+
+    function getSlides() {
+      return Array.from(gallery.querySelectorAll('.gallery-slide'));
+    }
+
+    function goToPrevSlide() {
+      const slides = getSlides();
+      if (slides.length <= 1) return;
+      let activeIdx = slides.findIndex(s => s.classList.contains('is-active'));
+      if (activeIdx === -1) activeIdx = 0;
+      const prevIdx = (activeIdx - 1 + slides.length) % slides.length;
+      setActiveSlide(prevIdx);
+    }
+
+    function goToNextSlide() {
+      const slides = getSlides();
+      if (slides.length <= 1) return;
+      let activeIdx = slides.findIndex(s => s.classList.contains('is-active'));
+      if (activeIdx === -1) activeIdx = 0;
+      const nextIdx = (activeIdx + 1) % slides.length;
+      setActiveSlide(nextIdx);
+    }
+
+    const prevArrow = gallery.querySelector('.js-gallery-arrow-prev');
+    const nextArrow = gallery.querySelector('.js-gallery-arrow-next');
+
+    if (prevArrow) {
+      prevArrow.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        goToPrevSlide();
+      });
+    }
+
+    if (nextArrow) {
+      nextArrow.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        goToNextSlide();
+      });
     }
 
     // Thumbnail Click Delegation
@@ -296,7 +353,197 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
+  // 3. Lightbox Modal Interaction (Desktop & Mobile Fullscreen Zoom)
+  function initLightbox() {
+    const lightbox = document.getElementById('ProductGalleryLightbox');
+    if (!lightbox) return;
+
+    const mainGalleryBox = document.querySelector('.product-gallery-main');
+    const zoomTrigger = document.querySelector('.js-gallery-zoom-trigger');
+    const lightboxImg = lightbox.querySelector('.js-lightbox-img');
+    const currentCounter = lightbox.querySelector('.js-lightbox-current');
+    const totalCounter = lightbox.querySelector('.js-lightbox-total');
+    const prevBtn = lightbox.querySelector('.js-lightbox-prev');
+    const nextBtn = lightbox.querySelector('.js-lightbox-next');
+    const thumbsWrap = lightbox.querySelector('.js-lightbox-thumbs-wrap');
+    const thumbsContainer = lightbox.querySelector('.js-lightbox-thumbs');
+    const stage = lightbox.querySelector('.js-lightbox-stage');
+
+    let currentLightboxIdx = 0;
+
+    function getLightboxImages() {
+      const slides = Array.from(document.querySelectorAll('.js-gallery-slides .gallery-slide img'));
+      return slides.map(img => img.getAttribute('src') || img.src).filter(Boolean);
+    }
+
+    function renderLightboxThumbs(images, activeIdx) {
+      if (!thumbsContainer) return;
+      if (images.length <= 1) {
+        if (thumbsWrap) thumbsWrap.style.display = 'none';
+        return;
+      }
+      if (thumbsWrap) thumbsWrap.style.display = '';
+      thumbsContainer.innerHTML = images.map((src, idx) => `
+        <button type="button" class="gallery-lightbox__thumb ${idx === activeIdx ? 'is-active' : ''}" data-index="${idx}" aria-label="View slide ${idx + 1}">
+          <img src="${src}" alt="Thumb ${idx + 1}" width="70" height="50">
+        </button>
+      `).join('');
+    }
+
+    function setLightboxSlide(index) {
+      const images = getLightboxImages();
+      const total = images.length;
+      if (total === 0) return;
+
+      currentLightboxIdx = (index + total) % total;
+      const targetSrc = images[currentLightboxIdx];
+
+      if (lightboxImg) {
+        lightboxImg.classList.remove('is-loaded');
+        lightboxImg.src = targetSrc;
+        lightboxImg.onload = () => lightboxImg.classList.add('is-loaded');
+      }
+
+      if (currentCounter) currentCounter.textContent = currentLightboxIdx + 1;
+      if (totalCounter) totalCounter.textContent = total;
+
+      if (prevBtn) prevBtn.style.display = total > 1 ? '' : 'none';
+      if (nextBtn) nextBtn.style.display = total > 1 ? '' : 'none';
+
+      // Update lightbox thumbs
+      if (thumbsContainer) {
+        thumbsContainer.querySelectorAll('.gallery-lightbox__thumb').forEach((t, idx) => {
+          t.classList.toggle('is-active', idx === currentLightboxIdx);
+        });
+      }
+
+      // Also sync active slide in main page gallery
+      const mainThumbs = document.querySelectorAll('.js-gallery-thumb');
+      if (mainThumbs.length > currentLightboxIdx) {
+        const thumb = mainThumbs[currentLightboxIdx];
+        if (thumb) thumb.click();
+      }
+    }
+
+    function openLightbox(initialIndex) {
+      const images = getLightboxImages();
+      const total = images.length;
+      if (total === 0) return;
+
+      lightbox.style.display = 'flex';
+      requestAnimationFrame(() => {
+        lightbox.classList.add('is-open');
+        document.body.style.overflow = 'hidden';
+      });
+
+      renderLightboxThumbs(images, initialIndex || 0);
+      setLightboxSlide(initialIndex || 0);
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('is-open');
+      document.body.style.overflow = '';
+      setTimeout(() => {
+        if (!lightbox.classList.contains('is-open')) {
+          lightbox.style.display = 'none';
+        }
+      }, 250);
+    }
+
+    // Trigger on clicking main gallery image or zoom button
+    if (mainGalleryBox) {
+      mainGalleryBox.addEventListener('click', function(e) {
+        // Do not open if clicking arrow navigation or badge
+        if (e.target.closest('.gallery-arrow') || e.target.closest('.product-gallery-badge')) {
+          return;
+        }
+        const activeSlide = mainGalleryBox.querySelector('.gallery-slide.is-active') || mainGalleryBox.querySelector('.gallery-slide');
+        const activeIdx = activeSlide ? parseInt(activeSlide.dataset.index || '0', 10) : 0;
+        openLightbox(activeIdx);
+      });
+    }
+
+    if (zoomTrigger) {
+      zoomTrigger.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        const activeSlide = document.querySelector('.gallery-slide.is-active') || document.querySelector('.gallery-slide');
+        const activeIdx = activeSlide ? parseInt(activeSlide.dataset.index || '0', 10) : 0;
+        openLightbox(activeIdx);
+      });
+    }
+
+    // Close on backdrop or close button
+    lightbox.addEventListener('click', function(e) {
+      if (e.target.closest('.js-lightbox-close')) {
+        e.preventDefault();
+        closeLightbox();
+        return;
+      }
+
+      const thumb = e.target.closest('.gallery-lightbox__thumb');
+      if (thumb) {
+        e.preventDefault();
+        const idx = parseInt(thumb.dataset.index || '0', 10);
+        setLightboxSlide(idx);
+        return;
+      }
+
+      if (e.target.closest('.js-lightbox-prev')) {
+        e.preventDefault();
+        setLightboxSlide(currentLightboxIdx - 1);
+        return;
+      }
+
+      if (e.target.closest('.js-lightbox-next')) {
+        e.preventDefault();
+        setLightboxSlide(currentLightboxIdx + 1);
+        return;
+      }
+    });
+
+    // Keyboard navigation (Esc, Left, Right)
+    document.addEventListener('keydown', function(e) {
+      if (!lightbox.classList.contains('is-open')) return;
+      if (e.key === 'Escape') {
+        closeLightbox();
+      } else if (e.key === 'ArrowLeft') {
+        setLightboxSlide(currentLightboxIdx - 1);
+      } else if (e.key === 'ArrowRight') {
+        setLightboxSlide(currentLightboxIdx + 1);
+      }
+    });
+
+    // Touch Swipe Gesture on mobile
+    if (stage) {
+      let touchStartX = 0;
+      let touchStartY = 0;
+      stage.addEventListener('touchstart', function(e) {
+        if (e.touches.length === 1) {
+          touchStartX = e.touches[0].clientX;
+          touchStartY = e.touches[0].clientY;
+        }
+      }, { passive: true });
+
+      stage.addEventListener('touchend', function(e) {
+        if (e.changedTouches.length === 1) {
+          const deltaX = e.changedTouches[0].clientX - touchStartX;
+          const deltaY = e.changedTouches[0].clientY - touchStartY;
+          // Only trigger horizontal swipe if mostly horizontal
+          if (Math.abs(deltaX) > 45 && Math.abs(deltaX) > Math.abs(deltaY) * 1.5) {
+            if (deltaX < 0) {
+              setLightboxSlide(currentLightboxIdx + 1); // Swiped left -> next
+            } else {
+              setLightboxSlide(currentLightboxIdx - 1); // Swiped right -> prev
+            }
+          }
+        }
+      }, { passive: true });
+    }
+  }
+
   initGallery();
+  initLightbox();
 
   // 3. License Modal
   const licenseModal = document.querySelector('.js-license-modal');
