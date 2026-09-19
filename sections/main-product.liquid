@@ -131,8 +131,6 @@
           {%- endif -%}
         </div>
 
-        <!-- 4 Trust Badge Boxes (Instant Download, Commercial License, Secure Checkout, Lifetime Access) -->
-        {% render 'trust-badges' %}
       </div>
 
       <!-- Right Column: Product Details & Purchase Box -->
@@ -212,14 +210,17 @@
               </button>
             </div>
           </form>
+
+          <!-- Trust & Commercial License Block (Badges + Full Banner) -->
+          <div class="product-trust-section">
+            {% render 'trust-badges' %}
+            {% render 'commercial-license-badge' %}
+          </div>
         </div>
       </div>
 
     </div>
   </div>
-
-  <!-- License Details Modal -->
-  {% render 'commercial-license-badge' %}
 
   <!-- Mobile Sticky Bottom Checkout Bar -->
   <aside class="product-sticky-bar js-product-sticky-bar" aria-label="Quick checkout bar">
