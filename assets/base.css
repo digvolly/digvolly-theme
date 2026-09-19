@@ -758,12 +758,10 @@ body.mobile-nav-open {
 .product-card__image-box {
   position: relative;
   width: 100%;
-  height: 220px;
+  aspect-ratio: 4 / 3;
   overflow: hidden;
   border-radius: 8px;
-  background: #F3F4F6 linear-gradient(90deg, #F3F4F6 0%, #E5E7EB 50%, #F3F4F6 100%);
-  background-size: 200% 100%;
-  animation: skeletonShimmer 1.8s ease-in-out infinite;
+  background: #F9FAFB;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -784,38 +782,49 @@ body.mobile-nav-open {
 
 .product-card__img--primary {
   display: block;
+  opacity: 1;
 }
 
 .product-card__img--secondary {
   position: absolute;
   top: 0;
   left: 0;
+  width: 100%;
+  height: 100%;
   opacity: 0;
   pointer-events: none;
+  transition: opacity 0.35s ease, transform 0.35s ease;
 }
 
-.product-card:hover .product-card__img--secondary {
+/* Hover swap: ONLY when card has 2+ images */
+.product-card--has-hover-image:hover .product-card__img--secondary,
+.product-card:has(.product-card__img--secondary):hover .product-card__img--secondary {
   opacity: 1;
   transform: scale(1.03);
 }
 
-.product-card:hover .product-card__img--primary {
+.product-card--has-hover-image:hover .product-card__img--primary,
+.product-card:has(.product-card__img--secondary):hover .product-card__img--primary {
   opacity: 0;
 }
 
-.product-card__placeholder {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  background: #F3F4F6;
+/* Single-image cards: single image stays completely visible and static at all times */
+.product-card--single-image .product-card__img--primary,
+.product-card--single-image:hover .product-card__img--primary,
+.product-card:not(:has(.product-card__img--secondary)) .product-card__img--primary,
+.product-card:not(:has(.product-card__img--secondary)):hover .product-card__img--primary {
+  opacity: 1 !important;
+  transform: none !important;
 }
 
-.product-card__placeholder-icon {
-  opacity: 0.35;
-  width: 44px;
-  height: 44px;
+.product-card--single-image .product-card__img--secondary,
+.product-card--single-image:hover .product-card__img--secondary {
+  display: none !important;
+  opacity: 0 !important;
+}
+
+.product-card__placeholder {
+  display: none !important;
 }
 
 .product-card__content {
@@ -2547,23 +2556,22 @@ body.mobile-nav-open {
   opacity: 0;
 }
 
-.pack-item-card:hover .product-card__img--secondary {
+.pack-item-card.pack-item-card--has-hover-image:hover .product-card__img--secondary,
+.pack-item-card:has(.product-card__img--secondary):hover .product-card__img--secondary {
   opacity: 1;
 }
 
-.pack-item-card:hover .product-card__img--primary {
+.pack-item-card.pack-item-card--has-hover-image:hover .product-card__img--primary,
+.pack-item-card:has(.product-card__img--secondary):hover .product-card__img--primary {
   transform: scale(1.04);
 }
 
-/* Card image placeholder (no image) */
-.product-card__placeholder {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, #F3F4F6 0%, #E5E7EB 100%);
-  min-height: 160px;
+.pack-item-card.pack-item-card--single-image .product-card__img--primary,
+.pack-item-card.pack-item-card--single-image:hover .product-card__img--primary,
+.pack-item-card:not(:has(.product-card__img--secondary)) .product-card__img--primary,
+.pack-item-card:not(:has(.product-card__img--secondary)):hover .product-card__img--primary {
+  opacity: 1 !important;
+  transform: none !important;
 }
 
 /* ---- Card Check Badge (top-right corner) ---- */

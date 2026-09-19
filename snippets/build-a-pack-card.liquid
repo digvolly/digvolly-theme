@@ -11,8 +11,16 @@
   - variant_id: Shopify variant ID (optional)
 {% endcomment %}
 
+{%- liquid
+  assign has_secondary = false
+  if secondary_image != blank
+    assign has_secondary = true
+  endif
+  assign card_primary_img = primary_image | default: 'mockup-geometric-pack.svg'
+-%}
+
 <div 
-  class="pack-item-card product-card" 
+  class="pack-item-card product-card {% if has_secondary %}pack-item-card--has-hover-image product-card--has-hover-image{% else %}pack-item-card--single-image product-card--single-image{% endif %}" 
   data-id="{{ id | escape }}" 
   data-variant-id="{{ variant_id | default: id | escape }}"
   data-title="{{ title | escape }}" 
@@ -36,35 +44,25 @@
 
     <!-- Image Container with Hover Preview -->
     <div class="product-card__image-box">
-      {%- if primary_image != blank -%}
+      <img 
+        src="{{ card_primary_img | asset_url }}" 
+        alt="{{ title | escape }}" 
+        class="product-card__img product-card__img--primary"
+        width="600" 
+        height="400" 
+        loading="lazy"
+        style="object-fit: cover;"
+      >
+      {%- if has_secondary -%}
         <img 
-          src="{{ primary_image | asset_url }}" 
-          alt="{{ title | escape }}" 
-          class="product-card__img product-card__img--primary"
+          src="{{ secondary_image | asset_url }}" 
+          alt="{{ title | escape }} - Preview" 
+          class="product-card__img product-card__img--secondary"
           width="600" 
           height="400" 
           loading="lazy"
           style="object-fit: cover;"
         >
-        {%- if secondary_image != blank -%}
-          <img 
-            src="{{ secondary_image | asset_url }}" 
-            alt="{{ title | escape }} - Preview" 
-            class="product-card__img product-card__img--secondary"
-            width="600" 
-            height="400" 
-            loading="lazy"
-            style="object-fit: cover;"
-          >
-        {%- endif -%}
-      {%- else -%}
-        <div class="product-card__placeholder">
-          <svg class="product-card__placeholder-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-            <circle cx="8.5" cy="8.5" r="1.5"></circle>
-            <polyline points="21 15 16 10 5 21"></polyline>
-          </svg>
-        </div>
       {%- endif -%}
     </div>
   </div>

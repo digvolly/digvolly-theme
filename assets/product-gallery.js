@@ -182,14 +182,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const relatedCards = prod.related.map(relHandle => {
       const p = catalog[relHandle];
-      if (!p) return '';
+      const hasSecondary = Boolean(p.thumbnails && p.thumbnails.length > 1 && p.thumbnails[1]);
       return `
-        <div class="product-card js-collection-item" data-category="${p.category}">
+        <div class="product-card js-collection-item ${hasSecondary ? 'product-card--has-hover-image' : 'product-card--single-image'}" data-category="${p.category}">
           <div class="product-card__image-container">
             <a href="/products/${p.handle}" class="product-card__media-link" aria-label="${p.title}">
               <div class="product-card__image-box">
                 <img 
-                  src="${p.primary_image}" 
+                  src="${p.primary_image || ''}" 
                   alt="${p.title}" 
                   class="product-card__img product-card__img--primary"
                   width="600" 
@@ -197,7 +197,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   loading="lazy"
                   style="object-fit: cover;"
                 >
-                ${p.thumbnails && p.thumbnails[1] ? `
+                ${hasSecondary ? `
                   <img 
                     src="${p.thumbnails[1]}" 
                     alt="${p.title} - Preview" 
