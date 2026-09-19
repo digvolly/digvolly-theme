@@ -131,6 +131,11 @@
           {%- endif -%}
         </div>
 
+        <!-- Trust Block: 4-Badge Grid + Full Commercial License Banner directly under thumbnails -->
+        <div class="product-trust-section">
+          {% render 'trust-badges' %}
+          {% render 'commercial-license-badge' %}
+        </div>
       </div>
 
       <!-- Right Column: Product Details & Purchase Box -->
@@ -210,12 +215,6 @@
               </button>
             </div>
           </form>
-
-          <!-- Trust & Commercial License Block (Badges + Full Banner) -->
-          <div class="product-trust-section">
-            {% render 'trust-badges' %}
-            {% render 'commercial-license-badge' %}
-          </div>
         </div>
       </div>
 
