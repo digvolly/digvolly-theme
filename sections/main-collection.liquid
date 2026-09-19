@@ -18,6 +18,15 @@
       </div>
 
       <div class="collection-toolbar__right">
+        <!-- Compact Mobile Filter Trigger Button (mobile only) -->
+        <button type="button" class="mobile-filter-trigger-btn js-open-filter-drawer" aria-label="Open filter options" aria-expanded="false" aria-controls="CollectionSidebarDrawer">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+          </svg>
+          <span class="mobile-filter-trigger-label">Filters</span>
+          <span class="mobile-filter-badge js-mobile-filter-count" style="display: none;">0</span>
+        </button>
+
         <!-- Grid vs Masonry View Switcher -->
         <div class="view-switcher" role="group" aria-label="Layout view options">
           <button type="button" class="view-btn js-view-grid is-active" title="Grid View" aria-label="Grid View">
@@ -43,70 +52,119 @@
     </div>
 
     <div class="collection-layout">
-      <!-- Filter Sidebar -->
-      <aside class="collection-sidebar card glass-panel" aria-label="Filter assets">
-        <div class="filter-group">
-          <h4 class="filter-group__heading">Asset Category</h4>
-          <label class="filter-checkbox-label">
-            <input type="checkbox" class="js-filter-checkbox" data-group="category" value="eBooks">
-            <span>eBooks</span>
-          </label>
-          <label class="filter-checkbox-label">
-            <input type="checkbox" class="js-filter-checkbox" data-group="category" value="Presentation Templates">
-            <span>Presentation Templates</span>
-          </label>
-          <label class="filter-checkbox-label">
-            <input type="checkbox" class="js-filter-checkbox" data-group="category" value="Patterns">
-            <span>Patterns</span>
-          </label>
-        </div>
+      <!-- Filter Sidebar / Mobile Bottom Sheet -->
+      <aside id="CollectionSidebarDrawer" class="collection-sidebar card glass-panel js-collection-sidebar" aria-label="Filter assets">
+        <div class="collection-filter-backdrop js-close-filter-drawer" tabindex="-1" aria-hidden="true"></div>
+        <div class="collection-sidebar__inner">
+          <!-- Mobile Bottom Sheet Header (hidden on desktop) -->
+          <div class="collection-filter-sheet__header">
+            <div class="collection-filter-sheet__title-box">
+              <h3 class="collection-filter-sheet__title">Filters</h3>
+              <span class="collection-filter-sheet__active-pill js-sheet-active-pill" style="display: none;">0 active</span>
+            </div>
+            <button type="button" class="collection-filter-sheet__close-btn js-close-filter-drawer" aria-label="Close filters">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
 
-        <div class="filter-group">
-          <h4 class="filter-group__heading">Style &amp; Theme</h4>
-          <label class="filter-checkbox-label">
-            <input type="checkbox" class="js-filter-checkbox" data-group="style" value="Geometric">
-            <span>Abstract &amp; Geometric</span>
-          </label>
-          <label class="filter-checkbox-label">
-            <input type="checkbox" class="js-filter-checkbox" data-group="style" value="Pitch">
-            <span>Corporate &amp; Pitch Decks</span>
-          </label>
-          <label class="filter-checkbox-label">
-            <input type="checkbox" class="js-filter-checkbox" data-group="style" value="Watercolor">
-            <span>Handmade &amp; Watercolor</span>
-          </label>
-          <label class="filter-checkbox-label">
-            <input type="checkbox" class="js-filter-checkbox" data-group="style" value="Minimalist">
-            <span>Minimalist Typography</span>
-          </label>
-          <label class="filter-checkbox-label">
-            <input type="checkbox" class="js-filter-checkbox" data-group="style" value="Identity">
-            <span>Brand Identity</span>
-          </label>
-        </div>
+          <!-- Filter Accordion Groups (scrollable on mobile) -->
+          <div class="collection-filter-sheet__scroll">
+            <div class="filter-group js-filter-accordion">
+              <button type="button" class="filter-group__header js-filter-accordion-toggle" aria-expanded="false">
+                <h4 class="filter-group__heading">Asset Category</h4>
+                <svg class="filter-group__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </button>
+              <div class="filter-group__content">
+                <label class="filter-checkbox-label">
+                  <input type="checkbox" class="js-filter-checkbox" data-group="category" value="eBooks">
+                  <span>eBooks</span>
+                </label>
+                <label class="filter-checkbox-label">
+                  <input type="checkbox" class="js-filter-checkbox" data-group="category" value="Presentation Templates">
+                  <span>Presentation Templates</span>
+                </label>
+                <label class="filter-checkbox-label">
+                  <input type="checkbox" class="js-filter-checkbox" data-group="category" value="Patterns">
+                  <span>Patterns</span>
+                </label>
+              </div>
+            </div>
 
-        <div class="filter-group">
-          <h4 class="filter-group__heading">File Format &amp; App</h4>
-          <label class="filter-checkbox-label">
-            <input type="checkbox" class="js-filter-checkbox" data-group="format" value="AI">
-            <span>Adobe Illustrator (.AI)</span>
-          </label>
-          <label class="filter-checkbox-label">
-            <input type="checkbox" class="js-filter-checkbox" data-group="format" value="PPTX">
-            <span>PowerPoint &amp; Keynote</span>
-          </label>
-          <label class="filter-checkbox-label">
-            <input type="checkbox" class="js-filter-checkbox" data-group="format" value="FIGMA">
-            <span>Figma Component Kits</span>
-          </label>
-          <label class="filter-checkbox-label">
-            <input type="checkbox" class="js-filter-checkbox" data-group="format" value="SVG">
-            <span>Vector SVG &bull; EPS</span>
-          </label>
-          <label class="filter-checkbox-label">
-            <input type="checkbox" class="js-filter-checkbox" data-group="format" value="PNG">
-            <span>300 DPI Transparent PNG</span>
-          </label>
+            <div class="filter-group js-filter-accordion">
+              <button type="button" class="filter-group__header js-filter-accordion-toggle" aria-expanded="false">
+                <h4 class="filter-group__heading">Style &amp; Theme</h4>
+                <svg class="filter-group__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </button>
+              <div class="filter-group__content">
+                <label class="filter-checkbox-label">
+                  <input type="checkbox" class="js-filter-checkbox" data-group="style" value="Geometric">
+                  <span>Abstract &amp; Geometric</span>
+                </label>
+                <label class="filter-checkbox-label">
+                  <input type="checkbox" class="js-filter-checkbox" data-group="style" value="Pitch">
+                  <span>Corporate &amp; Pitch Decks</span>
+                </label>
+                <label class="filter-checkbox-label">
+                  <input type="checkbox" class="js-filter-checkbox" data-group="style" value="Watercolor">
+                  <span>Handmade &amp; Watercolor</span>
+                </label>
+                <label class="filter-checkbox-label">
+                  <input type="checkbox" class="js-filter-checkbox" data-group="style" value="Minimalist">
+                  <span>Minimalist Typography</span>
+                </label>
+                <label class="filter-checkbox-label">
+                  <input type="checkbox" class="js-filter-checkbox" data-group="style" value="Identity">
+                  <span>Brand Identity</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="filter-group js-filter-accordion">
+              <button type="button" class="filter-group__header js-filter-accordion-toggle" aria-expanded="false">
+                <h4 class="filter-group__heading">File Format &amp; App</h4>
+                <svg class="filter-group__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </button>
+              <div class="filter-group__content">
+                <label class="filter-checkbox-label">
+                  <input type="checkbox" class="js-filter-checkbox" data-group="format" value="AI">
+                  <span>Adobe Illustrator (.AI)</span>
+                </label>
+                <label class="filter-checkbox-label">
+                  <input type="checkbox" class="js-filter-checkbox" data-group="format" value="PPTX">
+                  <span>PowerPoint &amp; Keynote</span>
+                </label>
+                <label class="filter-checkbox-label">
+                  <input type="checkbox" class="js-filter-checkbox" data-group="format" value="FIGMA">
+                  <span>Figma Component Kits</span>
+                </label>
+                <label class="filter-checkbox-label">
+                  <input type="checkbox" class="js-filter-checkbox" data-group="format" value="SVG">
+                  <span>Vector SVG &bull; EPS</span>
+                </label>
+                <label class="filter-checkbox-label">
+                  <input type="checkbox" class="js-filter-checkbox" data-group="format" value="PNG">
+                  <span>300 DPI Transparent PNG</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mobile Bottom Sheet Sticky Footer (hidden on desktop) -->
+          <div class="collection-filter-sheet__footer">
+            <button type="button" class="sheet-clear-btn js-clear-filters">Clear All</button>
+            <button type="button" class="button button--primary sheet-apply-btn js-close-filter-drawer">
+              Apply Filters
+            </button>
+          </div>
         </div>
       </aside>
 
