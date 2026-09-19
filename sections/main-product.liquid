@@ -175,17 +175,17 @@
       <div class="product-info-column">
         <div class="product-buy-box card glass-panel js-product-buy-box">
           
-          <!-- Breadcrumb Navigation -->
+          <!-- Category Badge on its own line -->
+          <div class="product-info__badge-wrap">
+            <span class="product-info__category-badge js-product-category">{{ p_cat }}</span>
+          </div>
+
+          <!-- Breadcrumb Navigation on its own line -->
           <nav class="product-breadcrumbs" aria-label="Breadcrumb">
             <a href="{{ routes.root_url }}">Home</a> &rsaquo; 
             <a href="{{ routes.all_products_collection_url }}" class="js-breadcrumb-cat">{{ p_cat }}</a> &rsaquo;
             <span class="js-breadcrumb-title">{{ p_title }}</span>
           </nav>
-
-          <!-- Category Badge -->
-          <div class="product-info__badge-wrap">
-            <span class="product-card__category-badge js-product-category">{{ p_cat }}</span>
-          </div>
 
           <!-- Product Title -->
           <h1 class="product-info__title js-product-title">{{ p_title }}</h1>
