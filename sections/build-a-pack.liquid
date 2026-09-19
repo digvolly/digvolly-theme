@@ -54,17 +54,14 @@
       <button type="button" class="pack-filter-pill js-pack-filter is-active" data-filter="all" role="tab" aria-selected="true">
         All Assets (12)
       </button>
+      <button type="button" class="pack-filter-pill js-pack-filter" data-filter="eBooks" role="tab" aria-selected="false">
+        eBooks
+      </button>
+      <button type="button" class="pack-filter-pill js-pack-filter" data-filter="Presentation Templates" role="tab" aria-selected="false">
+        Presentation Templates
+      </button>
       <button type="button" class="pack-filter-pill js-pack-filter" data-filter="Patterns" role="tab" aria-selected="false">
         Patterns
-      </button>
-      <button type="button" class="pack-filter-pill js-pack-filter" data-filter="Templates" role="tab" aria-selected="false">
-        Templates
-      </button>
-      <button type="button" class="pack-filter-pill js-pack-filter" data-filter="Papers" role="tab" aria-selected="false">
-        Papers
-      </button>
-      <button type="button" class="pack-filter-pill js-pack-filter" data-filter="Graphics" role="tab" aria-selected="false">
-        Graphics
       </button>
     </nav>
   </header>
@@ -75,7 +72,27 @@
       {%- assign all_products = collections['all'].products -%}
       {%- if all_products != blank and all_products.size > 0 -%}
         {%- for product in all_products limit: 16 -%}
-          {%- assign p_cat = product.type | default: 'Templates' -%}
+          {%- assign p_cat = 'Presentation Templates' -%}
+          {%- assign p_type = product.type | downcase -%}
+          {%- if p_type contains 'ebook' or p_type contains 'book' or p_type contains 'guide' -%}
+            {%- assign p_cat = 'eBooks' -%}
+          {%- elsif p_type contains 'pattern' or p_type contains 'paper' or p_type contains 'texture' -%}
+            {%- assign p_cat = 'Patterns' -%}
+          {%- else -%}
+            {%- for tag in product.tags -%}
+              {%- assign t_low = tag | downcase -%}
+              {%- if t_low contains 'ebook' or t_low contains 'book' -%}
+                {%- assign p_cat = 'eBooks' -%}
+                {%- break -%}
+              {%- elsif t_low contains 'pattern' or t_low contains 'paper' -%}
+                {%- assign p_cat = 'Patterns' -%}
+                {%- break -%}
+              {%- elsif t_low contains 'presentation' or t_low contains 'template' -%}
+                {%- assign p_cat = 'Presentation Templates' -%}
+                {%- break -%}
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endif -%}
           {% render 'build-a-pack-card',
             id: product.id,
             variant_id: product.selected_or_first_available_variant.id,
@@ -100,7 +117,7 @@
         {% render 'build-a-pack-card',
           id: 'pitch-02',
           title: 'Pitch Deck Pro Template',
-          category: 'Templates',
+          category: 'Presentation Templates',
           formats: 'PPTX, KEY, FIGMA',
           price: '$15.00',
           primary_image: 'mockup-pitch-deck.svg',
@@ -109,8 +126,8 @@
 
         {% render 'build-a-pack-card',
           id: 'paper-03',
-          title: 'Watercolor Textured Papers',
-          category: 'Papers',
+          title: 'Watercolor Texture Patterns',
+          category: 'Patterns',
           formats: 'JPG 600DPI, PNG',
           price: '$15.00',
           primary_image: 'mockup-watercolor-papers.svg',
@@ -119,9 +136,9 @@
 
         {% render 'build-a-pack-card',
           id: 'vector-04',
-          title: '3D Vector Graphics Pack',
-          category: 'Graphics',
-          formats: 'PNG, BLENDER, AI',
+          title: '3D Design Masterclass eBook',
+          category: 'eBooks',
+          formats: 'PDF, EPUB, NOTION',
           price: '$15.00',
           primary_image: 'mockup-vector-graphics.svg',
           secondary_image: 'mockup-vector-graphics-hover.svg'
@@ -130,7 +147,7 @@
         {% render 'build-a-pack-card',
           id: 'brand-05',
           title: 'Brand Identity Starter Kit',
-          category: 'Templates',
+          category: 'Presentation Templates',
           formats: 'AI, EPS, INDD, FIGMA',
           price: '$15.00',
           primary_image: 'mockup-branding-kit.svg',
@@ -140,7 +157,7 @@
         {% render 'build-a-pack-card',
           id: 'social-06',
           title: 'Social Media Creator Bundle',
-          category: 'Templates',
+          category: 'Presentation Templates',
           formats: 'CANVA, FIGMA, PSD',
           price: '$15.00',
           primary_image: 'mockup-social-templates.svg',
@@ -149,9 +166,9 @@
 
         {% render 'build-a-pack-card',
           id: 'typo-07',
-          title: 'Minimalist Typography Kit',
-          category: 'Graphics',
-          formats: 'OTF, TTF, WOFF2',
+          title: 'Typography & Layout Handbook eBook',
+          category: 'eBooks',
+          formats: 'PDF, EPUB, FIGMA',
           price: '$15.00',
           primary_image: 'mockup-typography-kit.svg',
           secondary_image: 'mockup-typography-kit-hover.svg'
@@ -160,7 +177,7 @@
         {% render 'build-a-pack-card',
           id: 'ui-08',
           title: 'Mobile UI Design System',
-          category: 'Templates',
+          category: 'Presentation Templates',
           formats: 'FIGMA, SKETCH, XD',
           price: '$15.00',
           primary_image: 'mockup-mobile-ui.svg',
@@ -170,7 +187,7 @@
         {% render 'build-a-pack-card',
           id: 'marble-09',
           title: 'Handmade Marble Textures',
-          category: 'Papers',
+          category: 'Patterns',
           formats: 'JPG 6000x4000, TIFF',
           price: '$15.00',
           primary_image: 'mockup-watercolor-papers-hover.svg',
@@ -179,9 +196,9 @@
 
         {% render 'build-a-pack-card',
           id: 'icon-10',
-          title: 'Isometric Icon Collection',
-          category: 'Graphics',
-          formats: 'AI, SVG, PNG, C4D',
+          title: 'Iconography & Design Systems Guide eBook',
+          category: 'eBooks',
+          formats: 'PDF, EPUB, NOTION',
           price: '$15.00',
           primary_image: 'mockup-vector-graphics-hover.svg',
           secondary_image: 'mockup-vector-graphics.svg'
@@ -190,7 +207,7 @@
         {% render 'build-a-pack-card',
           id: 'mag-11',
           title: 'Editorial Magazine Layouts',
-          category: 'Templates',
+          category: 'Presentation Templates',
           formats: 'INDD, IDML, FIGMA',
           price: '$15.00',
           primary_image: 'mockup-pitch-deck-hover.svg',

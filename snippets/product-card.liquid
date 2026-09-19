@@ -16,9 +16,39 @@
 {%- liquid
   assign card_title = title | default: product.title | default: 'Digital Creative Asset'
   assign card_url = url | default: product.url | default: routes.all_products_collection_url
-  assign card_category = category | default: product.type | default: 'Digital Pack'
-  if card_category == blank
-    assign card_category = 'Digital Pack'
+  assign raw_category = category | default: product.type | default: ''
+  assign raw_lower = raw_category | downcase
+
+  if raw_lower == 'ebooks' or raw_lower == 'ebook' or raw_lower contains 'ebook' or raw_lower contains 'book' or raw_lower contains 'guide' or raw_lower contains 'playbook'
+    assign card_category = 'eBooks'
+  elsif raw_lower == 'patterns' or raw_lower == 'pattern' or raw_lower contains 'pattern' or raw_lower contains 'paper' or raw_lower contains 'texture'
+    assign card_category = 'Patterns'
+  elsif raw_lower == 'presentation templates' or raw_lower contains 'presentation' or raw_lower contains 'template' or raw_lower contains 'deck' or raw_lower contains 'kit'
+    assign card_category = 'Presentation Templates'
+  else
+    assign matched_from_tag = ''
+    if product != blank
+      for tag in product.tags
+        assign tag_lower = tag | downcase
+        if tag_lower contains 'ebook' or tag_lower contains 'book'
+          assign matched_from_tag = 'eBooks'
+          break
+        elsif tag_lower contains 'pattern' or tag_lower contains 'paper'
+          assign matched_from_tag = 'Patterns'
+          break
+        elsif tag_lower contains 'presentation' or tag_lower contains 'template'
+          assign matched_from_tag = 'Presentation Templates'
+          break
+        endif
+      endfor
+    endif
+    if matched_from_tag != blank
+      assign card_category = matched_from_tag
+    elsif raw_lower contains 'graphic' or raw_lower contains '3d'
+      assign card_category = 'eBooks'
+    else
+      assign card_category = 'Presentation Templates'
+    endif
   endif
 
   if product != blank

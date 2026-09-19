@@ -12,9 +12,9 @@
       Build a Pack
       <span class="nav-badge-pill">Save 83%</span>
     </a>
-    <a href="/pages/bundle">Curated Bundles</a>
+    <a href="{{ routes.collections_url }}/ebooks">eBooks</a>
+    <a href="{{ routes.collections_url }}/presentation-templates">Presentation Templates</a>
     <a href="{{ routes.collections_url }}/patterns">Patterns</a>
-    <a href="{{ routes.collections_url }}/templates">Templates</a>
     <a href="/pages/contact">Contact</a>
     <a href="{{ routes.cart_url }}" class="cart-link" aria-label="Cart">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -91,8 +91,15 @@
         </svg>
       </a>
 
-      <a href="/pages/bundle" class="mobile-nav-item">
-        <span class="mobile-nav-item__text">Curated Bundles</span>
+      <a href="{{ routes.collections_url }}/ebooks" class="mobile-nav-item">
+        <span class="mobile-nav-item__text">eBooks</span>
+        <svg class="mobile-nav-item__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </a>
+
+      <a href="{{ routes.collections_url }}/presentation-templates" class="mobile-nav-item">
+        <span class="mobile-nav-item__text">Presentation Templates</span>
         <svg class="mobile-nav-item__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <polyline points="9 18 15 12 9 6"></polyline>
         </svg>
@@ -100,13 +107,6 @@
 
       <a href="{{ routes.collections_url }}/patterns" class="mobile-nav-item">
         <span class="mobile-nav-item__text">Patterns</span>
-        <svg class="mobile-nav-item__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <polyline points="9 18 15 12 9 6"></polyline>
-        </svg>
-      </a>
-
-      <a href="{{ routes.collections_url }}/templates" class="mobile-nav-item">
-        <span class="mobile-nav-item__text">Templates</span>
         <svg class="mobile-nav-item__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <polyline points="9 18 15 12 9 6"></polyline>
         </svg>
