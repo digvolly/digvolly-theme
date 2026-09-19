@@ -11,7 +11,7 @@ html {
   -webkit-text-size-adjust: 100%;
   width: 100%;
   max-width: 100%;
-  overflow-x: clip;
+  overflow-x: hidden;
 }
 
 :root {
@@ -31,7 +31,13 @@ body, .gradient, .color-background-1 {
   padding: 0;
   width: 100%;
   max-width: 100%;
-  overflow-x: clip;
+  overflow-x: hidden;
+}
+
+@supports (overflow-x: clip) {
+  html, body, .gradient, .color-background-1 {
+    overflow-x: clip;
+  }
 }
 
 /* Prevent body scroll when mobile menu is open */
@@ -2295,8 +2301,20 @@ body.mobile-nav-open {
     padding-left: 16px !important;
     padding-right: 16px !important;
     max-width: 100% !important;
-    overflow-x: clip !important;
+    overflow-x: hidden !important;
     box-sizing: border-box !important;
+  }
+
+  @supports (overflow-x: clip) {
+    .digvolly-hero,
+    .featured-products-section,
+    .footer-wrapper,
+    .bundle-hero-section,
+    .main-product-section,
+    .collection-wrapper,
+    .pack-grid-container {
+      overflow-x: clip !important;
+    }
   }
 
   .digvolly-hero {
