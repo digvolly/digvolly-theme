@@ -32,46 +32,61 @@
         <!-- Desktop Main Large Preview & Mobile Swipeable Slides -->
         <div class="product-gallery-main card">
           <div class="product-gallery-slides js-gallery-slides" role="region" aria-label="Product Image Carousel">
-            <div class="gallery-slide is-active" data-index="0">
-              <img 
-                src="{{ 'mockup-geometric-pack.svg' | asset_url }}" 
-                alt="{{ p_title }} - View 1" 
-                class="product-gallery-main__img js-gallery-main-img"
-                width="600" 
-                height="400"
-                loading="eager"
-              >
-            </div>
-            <div class="gallery-slide" data-index="1">
-              <img 
-                src="{{ 'mockup-geometric-pack-hover.svg' | asset_url }}" 
-                alt="{{ p_title }} - View 2" 
-                class="gallery-slide__img"
-                width="600" 
-                height="400"
-                loading="lazy"
-              >
-            </div>
-            <div class="gallery-slide" data-index="2">
-              <img 
-                src="{{ 'mockup-pitch-deck.svg' | asset_url }}" 
-                alt="{{ p_title }} - View 3" 
-                class="gallery-slide__img"
-                width="600" 
-                height="400"
-                loading="lazy"
-              >
-            </div>
-            <div class="gallery-slide" data-index="3">
-              <img 
-                src="{{ 'mockup-watercolor-papers.svg' | asset_url }}" 
-                alt="{{ p_title }} - View 4" 
-                class="gallery-slide__img"
-                width="600" 
-                height="400"
-                loading="lazy"
-              >
-            </div>
+            {%- if current_product.images.size > 0 -%}
+              {%- for image in current_product.images -%}
+                <div class="gallery-slide {% if forloop.first %}is-active{% endif %}" data-index="{{ forloop.index0 }}">
+                  <img 
+                    src="{{ image | image_url: width: 800 }}" 
+                    alt="{{ image.alt | default: p_title }} - View {{ forloop.index }}" 
+                    class="{% if forloop.first %}product-gallery-main__img js-gallery-main-img{% else %}gallery-slide__img{% endif %}"
+                    width="600" 
+                    height="400"
+                    loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+                  >
+                </div>
+              {%- endfor -%}
+            {%- else -%}
+              <div class="gallery-slide is-active" data-index="0">
+                <img 
+                  src="{{ 'mockup-geometric-pack.svg' | asset_url }}" 
+                  alt="{{ p_title }} - View 1" 
+                  class="product-gallery-main__img js-gallery-main-img"
+                  width="600" 
+                  height="400"
+                  loading="eager"
+                >
+              </div>
+              <div class="gallery-slide" data-index="1">
+                <img 
+                  src="{{ 'mockup-geometric-pack-hover.svg' | asset_url }}" 
+                  alt="{{ p_title }} - View 2" 
+                  class="gallery-slide__img"
+                  width="600" 
+                  height="400"
+                  loading="lazy"
+                >
+              </div>
+              <div class="gallery-slide" data-index="2">
+                <img 
+                  src="{{ 'mockup-pitch-deck.svg' | asset_url }}" 
+                  alt="{{ p_title }} - View 3" 
+                  class="gallery-slide__img"
+                  width="600" 
+                  height="400"
+                  loading="lazy"
+                >
+              </div>
+              <div class="gallery-slide" data-index="3">
+                <img 
+                  src="{{ 'mockup-watercolor-papers.svg' | asset_url }}" 
+                  alt="{{ p_title }} - View 4" 
+                  class="gallery-slide__img"
+                  width="600" 
+                  height="400"
+                  loading="lazy"
+                >
+              </div>
+            {%- endif -%}
           </div>
 
           <div class="product-gallery-badge">High-Res Master Preview</div>
@@ -79,26 +94,40 @@
 
         <!-- Mobile Carousel Dots Indicator -->
         <div class="gallery-dots js-gallery-dots" role="tablist" aria-label="Carousel pagination">
-          <button type="button" class="gallery-dot is-active" data-index="0" aria-label="Slide 1"></button>
-          <button type="button" class="gallery-dot" data-index="1" aria-label="Slide 2"></button>
-          <button type="button" class="gallery-dot" data-index="2" aria-label="Slide 3"></button>
-          <button type="button" class="gallery-dot" data-index="3" aria-label="Slide 4"></button>
+          {%- if current_product.images.size > 0 -%}
+            {%- for image in current_product.images -%}
+              <button type="button" class="gallery-dot {% if forloop.first %}is-active{% endif %}" data-index="{{ forloop.index0 }}" aria-label="Slide {{ forloop.index }}"></button>
+            {%- endfor -%}
+          {%- else -%}
+            <button type="button" class="gallery-dot is-active" data-index="0" aria-label="Slide 1"></button>
+            <button type="button" class="gallery-dot" data-index="1" aria-label="Slide 2"></button>
+            <button type="button" class="gallery-dot" data-index="2" aria-label="Slide 3"></button>
+            <button type="button" class="gallery-dot" data-index="3" aria-label="Slide 4"></button>
+          {%- endif -%}
         </div>
 
         <!-- Thumbnail Carousel Strip (Desktop & Tablet) -->
         <div class="product-gallery-thumbs js-gallery-thumbs" role="tablist" aria-label="Product thumbnail variations">
-          <button type="button" class="gallery-thumb js-gallery-thumb is-active" data-index="0" data-full-src="{{ 'mockup-geometric-pack.svg' | asset_url }}" data-alt="Cover View">
-            <img src="{{ 'mockup-geometric-pack.svg' | asset_url }}" alt="Thumbnail 1" width="100" height="70" loading="lazy">
-          </button>
-          <button type="button" class="gallery-thumb js-gallery-thumb" data-index="1" data-full-src="{{ 'mockup-geometric-pack-hover.svg' | asset_url }}" data-alt="Slide 2: Pattern Inverted Detail">
-            <img src="{{ 'mockup-geometric-pack-hover.svg' | asset_url }}" alt="Thumbnail 2" width="100" height="70" loading="lazy">
-          </button>
-          <button type="button" class="gallery-thumb js-gallery-thumb" data-index="2" data-full-src="{{ 'mockup-pitch-deck.svg' | asset_url }}" data-alt="Slide 3: Layout Specs">
-            <img src="{{ 'mockup-pitch-deck.svg' | asset_url }}" alt="Thumbnail 3" width="100" height="70" loading="lazy">
-          </button>
-          <button type="button" class="gallery-thumb js-gallery-thumb" data-index="3" data-full-src="{{ 'mockup-watercolor-papers.svg' | asset_url }}" data-alt="Slide 4: Swatch Zoom">
-            <img src="{{ 'mockup-watercolor-papers.svg' | asset_url }}" alt="Thumbnail 4" width="100" height="70" loading="lazy">
-          </button>
+          {%- if current_product.images.size > 0 -%}
+            {%- for image in current_product.images -%}
+              <button type="button" class="gallery-thumb js-gallery-thumb {% if forloop.first %}is-active{% endif %}" data-index="{{ forloop.index0 }}" data-full-src="{{ image | image_url: width: 800 }}" data-alt="View {{ forloop.index }}">
+                <img src="{{ image | image_url: width: 140, height: 100, crop: 'center' }}" alt="Thumbnail {{ forloop.index }}" width="100" height="70" loading="lazy">
+              </button>
+            {%- endfor -%}
+          {%- else -%}
+            <button type="button" class="gallery-thumb js-gallery-thumb is-active" data-index="0" data-full-src="{{ 'mockup-geometric-pack.svg' | asset_url }}" data-alt="Cover View">
+              <img src="{{ 'mockup-geometric-pack.svg' | asset_url }}" alt="Thumbnail 1" width="100" height="70" loading="lazy">
+            </button>
+            <button type="button" class="gallery-thumb js-gallery-thumb" data-index="1" data-full-src="{{ 'mockup-geometric-pack-hover.svg' | asset_url }}" data-alt="Slide 2: Pattern Inverted Detail">
+              <img src="{{ 'mockup-geometric-pack-hover.svg' | asset_url }}" alt="Thumbnail 2" width="100" height="70" loading="lazy">
+            </button>
+            <button type="button" class="gallery-thumb js-gallery-thumb" data-index="2" data-full-src="{{ 'mockup-pitch-deck.svg' | asset_url }}" data-alt="Slide 3: Layout Specs">
+              <img src="{{ 'mockup-pitch-deck.svg' | asset_url }}" alt="Thumbnail 3" width="100" height="70" loading="lazy">
+            </button>
+            <button type="button" class="gallery-thumb js-gallery-thumb" data-index="3" data-full-src="{{ 'mockup-watercolor-papers.svg' | asset_url }}" data-alt="Slide 4: Swatch Zoom">
+              <img src="{{ 'mockup-watercolor-papers.svg' | asset_url }}" alt="Thumbnail 4" width="100" height="70" loading="lazy">
+            </button>
+          {%- endif -%}
         </div>
 
         <!-- Format & File Info Block -->

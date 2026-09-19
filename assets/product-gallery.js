@@ -24,11 +24,19 @@ document.addEventListener('DOMContentLoaded', function() {
     currentHandle = path.split('/products/')[1].split('/')[0].split('?')[0].toLowerCase();
   }
 
-  const productData = catalog[currentHandle] || catalog['geometric-repeat-pack'];
+  const productData = catalog[currentHandle];
 
   // Hydrate DOM if handle exists in catalog
   if (productData) {
     hydrateProductPage(productData);
+  }
+
+  function getActiveProductInfo() {
+    return {
+      title: productData ? productData.title : (document.querySelector('.js-product-title')?.textContent.trim() || document.title),
+      price: productData ? productData.price : (document.querySelector('.js-product-price')?.textContent.trim() || '$15.00'),
+      thumb: productData ? productData.primary_image : (document.querySelector('.js-gallery-main-img')?.src || '')
+    };
   }
 
   function hydrateProductPage(prod) {
@@ -383,12 +391,14 @@ document.addEventListener('DOMContentLoaded', function() {
       }
 
       // Show confirmation toast
-      showCartToast(productData.title, productData.price, productData.primary_image);
+      const activeInfo = getActiveProductInfo();
+      showCartToast(activeInfo.title, activeInfo.price, activeInfo.thumb);
 
     } catch (e) {
       console.error('Add to cart failed', e);
       // Fallback: show toast anyway for demo
-      showCartToast(productData.title, productData.price, productData.primary_image);
+      const activeInfo = getActiveProductInfo();
+      showCartToast(activeInfo.title, activeInfo.price, activeInfo.thumb);
     } finally {
       if (btnText && btnLoading) {
         btnText.style.display = '';

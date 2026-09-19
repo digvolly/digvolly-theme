@@ -15,13 +15,14 @@
 
 {%- liquid
   assign card_title = title | default: product.title | default: 'Digital Creative Asset'
-  assign card_handle = handle | default: product.handle
-  if card_handle != blank
-    assign card_url = '/products/' | append: card_handle
+  if product != blank and product.url != blank
+    assign card_url = product.url
   elsif url != blank
     assign card_url = url
-  elsif product.url != blank
-    assign card_url = product.url
+  elsif product != blank and product.handle != blank
+    assign card_url = '/products/' | append: product.handle
+  elsif handle != blank and handle != 'all' and handle != 'collection' and handle != 'index' and handle != '404'
+    assign card_url = '/products/' | append: handle
   else
     assign card_url = routes.all_products_collection_url
   endif
