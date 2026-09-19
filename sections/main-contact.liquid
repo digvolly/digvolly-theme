@@ -1,0 +1,98 @@
+<article class="legal-page-wrapper">
+  <div class="legal-page-container">
+    <header class="legal-header">
+      <span class="legal-pill">Help &amp; Inquiries</span>
+      <h1 class="legal-title">Studio Support</h1>
+      <p class="legal-meta">We are here to assist with file questions, order retrieval, licensing, or custom inquiries.</p>
+    </header>
+
+    <div class="card glass-panel legal-card">
+      <div class="legal-prose">
+        <p>
+          Need help with an asset, having trouble downloading a ZIP file, or have a question about commercial licensing? Our support team is ready to help you keep your creative projects moving forward.
+        </p>
+
+        <div class="support-channels-grid">
+          <!-- Channel 1: Email Support -->
+          <div class="support-channel-card">
+            <div class="support-channel-icon">✉️</div>
+            <h3>Email Support</h3>
+            <p>Direct assistance for orders, downloads, and technical help.</p>
+            <a href="mailto:support@digvolly.com" class="support-channel-link">support@digvolly.com</a>
+            <span class="support-channel-note">Expected reply: Under 24 hours (Mon–Fri)</span>
+          </div>
+
+          <!-- Channel 2: Licensing Inquiries -->
+          <div class="support-channel-card">
+            <div class="support-channel-icon">📜</div>
+            <h3>Licensing Desk</h3>
+            <p>Questions regarding enterprise use, distribution, or commercial scope.</p>
+            <a href="mailto:licensing@digvolly.com" class="support-channel-link">licensing@digvolly.com</a>
+            <span class="support-channel-note"><a href="/pages/commercial-license">View License Terms &rarr;</a></span>
+          </div>
+        </div>
+
+        <h2>Common Help Resources</h2>
+        <p>
+          Before reaching out, you may find instant answers to your questions in our guides:
+        </p>
+        <ul>
+          <li><strong>Download &amp; Format FAQs:</strong> Solutions for ZIP extraction, compatible software, and file editing tips &mdash; <a href="/pages/faq">Visit Download FAQs</a>.</li>
+          <li><strong>Commercial License Rights:</strong> Plain-English breakdown of permitted personal, client, and commercial uses &mdash; <a href="/pages/commercial-license">Read License Terms</a>.</li>
+          <li><strong>Re-downloading Orders:</strong> Check your original checkout email confirmation for permanent lifetime download links.</li>
+        </ul>
+
+        <h2>Support Operating Hours</h2>
+        <p>
+          Our studio operates Monday through Friday, 9:00 AM &ndash; 6:00 PM (GMT). Inquiries submitted over the weekend will be handled promptly on Monday morning.
+        </p>
+
+        <!-- Optional Contact Form -->
+        <h2>Send Us a Message</h2>
+        {%- form 'contact', id: 'ContactForm', class: 'studio-contact-form' -%}
+          {%- if form.posted_successfully? -%}
+            <div class="form-status form-status--success" tabindex="-1" autofocus style="background: #ECFDF5; border: 1px solid #A7F3D0; color: #065F46; padding: 14px 18px; border-radius: 10px; margin-bottom: 20px;">
+              ✓ Thank you for contacting Digvolly! Our support team will respond to your email within 24 hours.
+            </div>
+          {%- elsif form.errors -%}
+            <div class="form-status form-status--error" tabindex="-1" autofocus style="background: #FEF2F2; border: 1px solid #FECACA; color: #991B1B; padding: 14px 18px; border-radius: 10px; margin-bottom: 20px;">
+              Please review the form fields and try again.
+            </div>
+          {%- endif -%}
+
+          <div class="form-row-2">
+            <div class="form-field">
+              <label for="ContactForm-name" class="form-label">Your Name</label>
+              <input type="text" id="ContactForm-name" name="contact[name]" value="{% if form.name %}{{ form.name }}{% endif %}" placeholder="Jane Doe" required class="form-input">
+            </div>
+            <div class="form-field">
+              <label for="ContactForm-email" class="form-label">Email Address</label>
+              <input type="email" id="ContactForm-email" name="contact[email]" value="{% if form.email %}{{ form.email }}{% endif %}" placeholder="jane@example.com" required class="form-input">
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label for="ContactForm-order" class="form-label">Order Number (Optional)</label>
+            <input type="text" id="ContactForm-order" name="contact[order_number]" placeholder="#1001" class="form-input">
+          </div>
+
+          <div class="form-field">
+            <label for="ContactForm-body" class="form-label">How can we help?</label>
+            <textarea id="ContactForm-body" name="contact[body]" rows="5" placeholder="Describe your question or issue in detail..." required class="form-textarea">{%- if form.body -%}{{ form.body }}{%- endif -%}</textarea>
+          </div>
+
+          <button type="submit" class="button button--primary" style="height: 48px; padding: 0 28px; font-weight: 700; border-radius: 10px;">
+            Send Message &rarr;
+          </button>
+        {%- endform -%}
+      </div>
+    </div>
+  </div>
+</article>
+
+{% schema %}
+{
+  "name": "Studio Support",
+  "settings": []
+}
+{% endschema %}

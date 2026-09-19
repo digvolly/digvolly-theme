@@ -7,7 +7,21 @@
   <meta name="theme-color" content="#6366F1">
   <link rel="canonical" href="{{ canonical_url }}">
   
-  <title>{{ page_title }} - Digvolly</title>
+  <title>
+    {%- if request.path == '/pages/privacy' -%}
+      Privacy Policy - Digvolly
+    {%- elsif request.path == '/pages/terms' -%}
+      Terms of Service - Digvolly
+    {%- elsif request.path == '/pages/commercial-license' -%}
+      Commercial License Rights - Digvolly
+    {%- elsif request.path == '/pages/faq' -%}
+      Download &amp; Format FAQs - Digvolly
+    {%- elsif request.path == '/pages/contact' -%}
+      Studio Support - Digvolly
+    {%- else -%}
+      {{ page_title }} - Digvolly
+    {%- endif -%}
+  </title>
   
   {% if page_description %}
     <meta name="description" content="{{ page_description | escape }}">
@@ -31,7 +45,19 @@
   {% section 'header' %}
 
   <main id="MainContent" class="content-for-layout focus-outline" role="main">
-    {{ content_for_layout }}
+    {%- if request.path == '/pages/privacy' -%}
+      {% section 'main-privacy' %}
+    {%- elsif request.path == '/pages/terms' -%}
+      {% section 'main-terms' %}
+    {%- elsif request.path == '/pages/commercial-license' -%}
+      {% section 'main-commercial-license' %}
+    {%- elsif request.path == '/pages/faq' -%}
+      {% section 'main-faq' %}
+    {%- elsif request.path == '/pages/contact' -%}
+      {% section 'main-contact' %}
+    {%- else -%}
+      {{ content_for_layout }}
+    {%- endif -%}
   </main>
 
   {% section 'footer' %}

@@ -1,13 +1,27 @@
-<section class="main-page-section" aria-label="{{ page.title }}">
-  <div class="page-container">
-    <div class="card glass-panel page-card">
-      <h1 class="page-title">{{ page.title }}</h1>
-      <div class="page-content rte">
-        {{ page.content }}
+{%- if page.handle == 'contact' and page.content == blank -%}
+  {% section 'main-contact' %}
+{%- elsif page.handle == 'privacy' and page.content == blank -%}
+  {% section 'main-privacy' %}
+{%- elsif page.handle == 'terms' and page.content == blank -%}
+  {% section 'main-terms' %}
+{%- elsif page.handle == 'commercial-license' and page.content == blank -%}
+  {% section 'main-commercial-license' %}
+{%- elsif page.handle == 'faq' and page.content == blank -%}
+  {% section 'main-faq' %}
+{%- else -%}
+  <article class="legal-page-wrapper" aria-label="{{ page.title }}">
+    <div class="legal-page-container">
+      <header class="legal-header">
+        <h1 class="legal-title">{{ page.title }}</h1>
+      </header>
+      <div class="card glass-panel legal-card">
+        <div class="legal-prose rte">
+          {{ page.content }}
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </article>
+{%- endif -%}
 
 {% schema %}
 {
