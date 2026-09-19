@@ -258,7 +258,26 @@
   <aside class="product-sticky-bar js-product-sticky-bar" aria-label="Quick checkout bar">
     <div class="product-sticky-bar__container">
       <div class="product-sticky-bar__info">
-        <img src="{{ 'mockup-geometric-pack.svg' | asset_url }}" alt="" class="product-sticky-bar__thumb js-sticky-thumb" width="44" height="44" loading="lazy">
+        {%- liquid
+          assign p_sticky_img = ''
+          if current_product.featured_image != blank
+            assign p_sticky_img = current_product.featured_image | image_url: width: 140, height: 140, crop: 'center'
+          elsif current_product.images.first != blank
+            assign p_sticky_img = current_product.images.first | image_url: width: 140, height: 140, crop: 'center'
+          elsif current_product.featured_media != blank
+            assign p_sticky_img = current_product.featured_media | image_url: width: 140, height: 140, crop: 'center'
+          else
+            assign p_sticky_img = 'mockup-geometric-pack.svg' | asset_url
+          endif
+        -%}
+        <img 
+          src="{{ p_sticky_img }}" 
+          alt="{{ p_title | escape }}" 
+          class="product-sticky-bar__thumb js-sticky-thumb" 
+          width="48" 
+          height="48" 
+          loading="lazy"
+        >
         <div class="product-sticky-bar__details">
           <h4 class="product-sticky-bar__title js-sticky-title">{{ p_title }}</h4>
           <span class="product-sticky-bar__price js-sticky-price">{{ p_price }}</span>

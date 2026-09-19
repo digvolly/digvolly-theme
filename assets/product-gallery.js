@@ -37,6 +37,15 @@ document.addEventListener('DOMContentLoaded', function() {
   // Hydrate DOM if handle exists in catalog
   if (productData) {
     hydrateProductPage(productData);
+  } else {
+    const mainImg = document.querySelector('.js-gallery-main-img');
+    if (mainImg && mainImg.src) {
+      document.querySelectorAll('.js-sticky-thumb, .js-toast-thumb').forEach(thumb => {
+        if (!thumb.src || thumb.src.includes('mockup-geometric-pack.svg')) {
+          thumb.src = mainImg.src;
+        }
+      });
+    }
   }
 
   function getActiveProductInfo() {
