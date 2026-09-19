@@ -2,6 +2,11 @@
   {% section 'build-a-pack' %}
 </div>
 
+<div id="product-page-fallback" style="display: none;">
+  {% section 'main-product' %}
+  {% section 'related-products' %}
+</div>
+
 <div id="default-404" class="template-404 text-center" style="padding: 100px 40px;">
   <h1 style="font-size: 36px; font-weight: 800; color: #111827; margin-bottom: 12px;">404 — Page Not Found</h1>
   <p style="font-size: 16px; color: #4B5563; margin-bottom: 24px;">The page you were looking for does not exist.</p>
@@ -12,11 +17,17 @@
 
 <script>
   (function() {
-    if (window.location.pathname.indexOf('/pages/build-a-pack') !== -1) {
+    var path = window.location.pathname;
+    var default404 = document.getElementById('default-404');
+
+    if (path.indexOf('/pages/build-a-pack') !== -1) {
       document.title = 'Build Your Custom Pack - Digvolly';
-      var fallback = document.getElementById('build-a-pack-fallback');
-      var default404 = document.getElementById('default-404');
-      if (fallback) fallback.style.display = 'block';
+      var buildFallback = document.getElementById('build-a-pack-fallback');
+      if (buildFallback) buildFallback.style.display = 'block';
+      if (default404) default404.style.display = 'none';
+    } else if (path.indexOf('/products/') !== -1) {
+      var prodFallback = document.getElementById('product-page-fallback');
+      if (prodFallback) prodFallback.style.display = 'block';
       if (default404) default404.style.display = 'none';
     }
   })();

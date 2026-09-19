@@ -15,7 +15,16 @@
 
 {%- liquid
   assign card_title = title | default: product.title | default: 'Digital Creative Asset'
-  assign card_url = url | default: product.url | default: routes.all_products_collection_url
+  assign card_handle = handle | default: product.handle
+  if card_handle != blank
+    assign card_url = '/products/' | append: card_handle
+  elsif url != blank
+    assign card_url = url
+  elsif product.url != blank
+    assign card_url = product.url
+  else
+    assign card_url = routes.all_products_collection_url
+  endif
   assign raw_category = category | default: product.type | default: ''
   assign raw_lower = raw_category | downcase
 
@@ -211,8 +220,8 @@
       </div>
     </div>
 
-    <button type="button" class="product-card__button" onclick="window.location.href='{{ card_url }}'">
+    <a href="{{ card_url }}" class="product-card__button">
       View Pack Details
-    </button>
+    </a>
   </div>
 </div>

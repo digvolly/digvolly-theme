@@ -1,35 +1,102 @@
 <script src="{{ 'product-gallery.js' | asset_url }}" defer="defer"></script>
 
-<section class="main-product-section" aria-label="{{ product.title | default: 'Geometric Repeat Pack' }}">
+{%- liquid
+  assign current_product = product
+  assign p_title = current_product.title | default: 'Geometric Repeat Pack'
+  assign p_handle = current_product.handle | default: 'geometric-repeat-pack'
+  assign p_price = current_product.price | default: 1500 | money | default: '$15.00'
+  assign p_compare = ''
+  if current_product.compare_at_price > current_product.price
+    assign p_compare = current_product.compare_at_price | money
+  else
+    assign p_compare = '$25.00'
+  endif
+  assign p_desc = current_product.description | default: 'A comprehensive collection of 24 handcrafted, seamless vector geometric pattern repeats. Perfect for textile design, editorial packaging, branding identity, web backgrounds, and modern print media. Fully editable vector layers in AI and EPS formats.'
+  assign p_cat = 'Patterns'
+  if current_product.type != blank
+    assign raw_cat = current_product.type | downcase
+    if raw_cat contains 'ebook' or raw_cat contains 'book'
+      assign p_cat = 'eBooks'
+    elsif raw_cat contains 'presentation' or raw_cat contains 'template'
+      assign p_cat = 'Presentation Templates'
+    endif
+  endif
+-%}
+
+<section class="main-product-section js-main-product" data-current-handle="{{ p_handle }}" aria-label="{{ p_title }}">
   <div class="product-page-container">
     <div class="product-layout-grid">
       
       <!-- Left Column: Multi-Image Slide / Pattern Gallery -->
       <div class="product-gallery-column js-product-gallery">
+        <!-- Desktop Main Large Preview & Mobile Swipeable Slides -->
         <div class="product-gallery-main card">
-          <img 
-            src="{{ 'mockup-geometric-pack.svg' | asset_url }}" 
-            alt="{{ product.title | default: 'Geometric Repeat Pack' }} - Main View" 
-            class="product-gallery-main__img js-gallery-main-img"
-            width="600" 
-            height="400"
-            loading="eager"
-          >
-          <div class="product-gallery-badge">High-Res Vector Preview</div>
+          <div class="product-gallery-slides js-gallery-slides" role="region" aria-label="Product Image Carousel">
+            <div class="gallery-slide is-active" data-index="0">
+              <img 
+                src="{{ 'mockup-geometric-pack.svg' | asset_url }}" 
+                alt="{{ p_title }} - View 1" 
+                class="product-gallery-main__img js-gallery-main-img"
+                width="600" 
+                height="400"
+                loading="eager"
+              >
+            </div>
+            <div class="gallery-slide" data-index="1">
+              <img 
+                src="{{ 'mockup-geometric-pack-hover.svg' | asset_url }}" 
+                alt="{{ p_title }} - View 2" 
+                class="gallery-slide__img"
+                width="600" 
+                height="400"
+                loading="lazy"
+              >
+            </div>
+            <div class="gallery-slide" data-index="2">
+              <img 
+                src="{{ 'mockup-pitch-deck.svg' | asset_url }}" 
+                alt="{{ p_title }} - View 3" 
+                class="gallery-slide__img"
+                width="600" 
+                height="400"
+                loading="lazy"
+              >
+            </div>
+            <div class="gallery-slide" data-index="3">
+              <img 
+                src="{{ 'mockup-watercolor-papers.svg' | asset_url }}" 
+                alt="{{ p_title }} - View 4" 
+                class="gallery-slide__img"
+                width="600" 
+                height="400"
+                loading="lazy"
+              >
+            </div>
+          </div>
+
+          <div class="product-gallery-badge">High-Res Master Preview</div>
         </div>
 
-        <!-- Thumbnail Carousel Strip -->
-        <div class="product-gallery-thumbs" role="tablist" aria-label="Product image slides">
-          <button type="button" class="gallery-thumb js-gallery-thumb is-active" data-full-src="{{ 'mockup-geometric-pack.svg' | asset_url }}" data-alt="Cover View">
+        <!-- Mobile Carousel Dots Indicator -->
+        <div class="gallery-dots js-gallery-dots" role="tablist" aria-label="Carousel pagination">
+          <button type="button" class="gallery-dot is-active" data-index="0" aria-label="Slide 1"></button>
+          <button type="button" class="gallery-dot" data-index="1" aria-label="Slide 2"></button>
+          <button type="button" class="gallery-dot" data-index="2" aria-label="Slide 3"></button>
+          <button type="button" class="gallery-dot" data-index="3" aria-label="Slide 4"></button>
+        </div>
+
+        <!-- Thumbnail Carousel Strip (Desktop & Tablet) -->
+        <div class="product-gallery-thumbs js-gallery-thumbs" role="tablist" aria-label="Product thumbnail variations">
+          <button type="button" class="gallery-thumb js-gallery-thumb is-active" data-index="0" data-full-src="{{ 'mockup-geometric-pack.svg' | asset_url }}" data-alt="Cover View">
             <img src="{{ 'mockup-geometric-pack.svg' | asset_url }}" alt="Thumbnail 1" width="100" height="70" loading="lazy">
           </button>
-          <button type="button" class="gallery-thumb js-gallery-thumb" data-full-src="{{ 'mockup-geometric-pack-hover.svg' | asset_url }}" data-alt="Slide 2: Pattern Inverted Detail">
+          <button type="button" class="gallery-thumb js-gallery-thumb" data-index="1" data-full-src="{{ 'mockup-geometric-pack-hover.svg' | asset_url }}" data-alt="Slide 2: Pattern Inverted Detail">
             <img src="{{ 'mockup-geometric-pack-hover.svg' | asset_url }}" alt="Thumbnail 2" width="100" height="70" loading="lazy">
           </button>
-          <button type="button" class="gallery-thumb js-gallery-thumb" data-full-src="{{ 'mockup-pitch-deck.svg' | asset_url }}" data-alt="Slide 3: Layout Specs">
+          <button type="button" class="gallery-thumb js-gallery-thumb" data-index="2" data-full-src="{{ 'mockup-pitch-deck.svg' | asset_url }}" data-alt="Slide 3: Layout Specs">
             <img src="{{ 'mockup-pitch-deck.svg' | asset_url }}" alt="Thumbnail 3" width="100" height="70" loading="lazy">
           </button>
-          <button type="button" class="gallery-thumb js-gallery-thumb" data-full-src="{{ 'mockup-watercolor-papers.svg' | asset_url }}" data-alt="Slide 4: Swatch Zoom">
+          <button type="button" class="gallery-thumb js-gallery-thumb" data-index="3" data-full-src="{{ 'mockup-watercolor-papers.svg' | asset_url }}" data-alt="Slide 4: Swatch Zoom">
             <img src="{{ 'mockup-watercolor-papers.svg' | asset_url }}" alt="Thumbnail 4" width="100" height="70" loading="lazy">
           </button>
         </div>
@@ -40,46 +107,81 @@
 
       <!-- Right Column: Product Details & Purchase Box -->
       <div class="product-info-column">
-        <div class="product-buy-box card glass-panel">
-          <div class="product-breadcrumbs">
-            <a href="{{ routes.root_url }}">Home</a> &rsaquo; 
-            <a href="{{ routes.collections_url }}/patterns">Seamless Patterns</a> &rsaquo;
-            <span>{{ product.title | default: 'Geometric Repeat Pack' }}</span>
-          </div>
-
-          <h1 class="product-info__title">{{ product.title | default: 'Geometric Repeat Pack' }}</h1>
+        <div class="product-buy-box card glass-panel js-product-buy-box">
           
-          <div class="product-info__meta-bar">
-            <div class="product-info__price">{{ product.price | default: 1500 | money | default: '$15.00' }}</div>
-            <span class="product-info__save-chip">Instant License</span>
+          <!-- Breadcrumb Navigation -->
+          <nav class="product-breadcrumbs" aria-label="Breadcrumb">
+            <a href="{{ routes.root_url }}">Home</a> &rsaquo; 
+            <a href="{{ routes.all_products_collection_url }}" class="js-breadcrumb-cat">{{ p_cat }}</a> &rsaquo;
+            <span class="js-breadcrumb-title">{{ p_title }}</span>
+          </nav>
+
+          <!-- Category Badge -->
+          <div class="product-info__badge-wrap">
+            <span class="product-card__category-badge js-product-category">{{ p_cat }}</span>
           </div>
 
-          <p class="product-info__description">
-            {{ product.description | default: 'A comprehensive collection of 24 handcrafted, seamless vector geometric pattern repeats. Perfect for textile design, editorial packaging, branding identity, web backgrounds, and modern print media. Fully editable vector layers in AI and EPS formats.' }}
+          <!-- Product Title -->
+          <h1 class="product-info__title js-product-title">{{ p_title }}</h1>
+          
+          <!-- Price & Savings Row -->
+          <div class="product-info__price-box">
+            <div class="product-info__price-row">
+              <span class="product-info__price js-product-price">{{ p_price }}</span>
+              <s class="product-info__compare-price js-product-compare-price">{{ p_compare }}</s>
+            </div>
+            <span class="product-info__save-chip js-product-save-chip">Save 40%</span>
+          </div>
+
+          <!-- Commercial License on its own clean line -->
+          <div class="product-info__license-line">
+            <svg class="license-check-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <span class="product-info__license-text">Commercial License Included</span>
+            <button type="button" class="product-info__license-link js-license-modal-trigger" aria-label="View license terms">
+              (View Terms)
+            </button>
+          </div>
+
+          <!-- Product Description -->
+          <p class="product-info__description js-product-description">
+            {{ p_desc }}
           </p>
 
-          <!-- Commercial License Badge & Tooltip -->
-          {% render 'commercial-license-badge' %}
-
-          <!-- Add to Cart Form -->
-          {% form 'product', product, id: 'product_form', class: 'product-form' %}
-            <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id | default: '1' }}">
-
-            <div class="product-form__actions">
-              <button type="submit" name="add" class="button button--primary product-add-btn">
-                Add to Cart &bull; $15.00
-              </button>
-            </div>
-          {% endform %}
-
-          <!-- Instant Download Indicator -->
+          <!-- Instant Digital Download Notification Banner -->
           <div class="instant-download-banner">
             <div class="instant-download-banner__icon">⚡</div>
             <div class="instant-download-banner__text">
               <strong>Instant Digital Download</strong>
-              <span>Immediate ZIP file access on the thank-you page + email download link sent immediately.</span>
+              <span>Immediate ZIP file download after checkout + permanent backup link sent to your email.</span>
             </div>
           </div>
+
+          <!-- Add to Cart AJAX Form -->
+          <form method="post" action="{{ routes.cart_add_url }}" class="product-form js-add-to-cart-form" enctype="multipart/form-data">
+            <input type="hidden" name="id" class="js-product-variant-id" value="{{ current_product.selected_or_first_available_variant.id | default: '45000000001' }}">
+            <input type="hidden" name="quantity" value="1">
+
+            <div class="product-form__actions">
+              <button type="submit" name="add" class="button button--primary product-add-btn js-add-to-cart-btn" aria-label="Add {{ p_title }} to cart">
+                <span class="btn-text js-btn-text">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -3px; margin-right: 6px;" aria-hidden="true">
+                    <circle cx="9" cy="21" r="1"></circle>
+                    <circle cx="20" cy="21" r="1"></circle>
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                  </svg>
+                  Add to Cart &bull; <span class="js-btn-price-display">{{ p_price }}</span>
+                </span>
+                <span class="btn-loading js-btn-loading" style="display: none;">
+                  <svg class="spinner-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M21 12a9 9 0 1 1-6.219-8.56"></path>
+                  </svg>
+                  Adding to Cart...
+                </span>
+              </button>
+            </div>
+          </form>
 
           <!-- Trust Badges Strip -->
           {% render 'trust-badges' %}
@@ -88,6 +190,307 @@
 
     </div>
   </div>
+
+  <!-- License Details Modal -->
+  {% render 'commercial-license-badge' %}
+
+  <!-- Mobile Sticky Bottom Checkout Bar -->
+  <aside class="product-sticky-bar js-product-sticky-bar" aria-label="Quick checkout bar">
+    <div class="product-sticky-bar__container">
+      <div class="product-sticky-bar__info">
+        <img src="{{ 'mockup-geometric-pack.svg' | asset_url }}" alt="" class="product-sticky-bar__thumb js-sticky-thumb" width="44" height="44" loading="lazy">
+        <div class="product-sticky-bar__details">
+          <h4 class="product-sticky-bar__title js-sticky-title">{{ p_title }}</h4>
+          <span class="product-sticky-bar__price js-sticky-price">{{ p_price }}</span>
+        </div>
+      </div>
+      <button type="button" class="button button--primary product-sticky-bar__cta js-sticky-add-btn">
+        Add to Cart
+      </button>
+    </div>
+  </aside>
+
+  <!-- Mini-Cart Confirmation Toast / Slide-out notification -->
+  <aside class="mini-cart-toast js-cart-toast" role="status" aria-live="polite" hidden>
+    <div class="mini-cart-toast__inner card glass-panel">
+      <div class="mini-cart-toast__header">
+        <div class="mini-cart-toast__title-wrap">
+          <span class="mini-cart-toast__check">✓</span>
+          <strong>Added to Cart!</strong>
+        </div>
+        <button type="button" class="mini-cart-toast__close js-close-toast" aria-label="Close notification">&times;</button>
+      </div>
+      <div class="mini-cart-toast__product">
+        <img src="{{ 'mockup-geometric-pack.svg' | asset_url }}" alt="" class="mini-cart-toast__thumb js-toast-thumb" width="50" height="50">
+        <div class="mini-cart-toast__desc">
+          <span class="mini-cart-toast__p-title js-toast-title">{{ p_title }}</span>
+          <span class="mini-cart-toast__p-price js-toast-price">{{ p_price }} &bull; Commercial License</span>
+        </div>
+      </div>
+      <div class="mini-cart-toast__actions">
+        <a href="{{ routes.cart_url }}" class="button button--secondary mini-cart-toast__btn-cart">View Cart</a>
+        <a href="/checkout" class="button button--primary mini-cart-toast__btn-checkout">Checkout</a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Product Catalog Registry for Instant Client Routing / Hydration -->
+  <script type="application/json" id="DigvollyProductCatalog">
+  {
+    "geometric-repeat-pack": {
+      "handle": "geometric-repeat-pack",
+      "title": "Geometric Repeat Pack",
+      "category": "Patterns",
+      "price": "$15.00",
+      "compare_at": "$25.00",
+      "save_badge": "Save 40%",
+      "primary_image": "{{ 'mockup-geometric-pack.svg' | asset_url }}",
+      "thumbnails": [
+        "{{ 'mockup-geometric-pack.svg' | asset_url }}",
+        "{{ 'mockup-geometric-pack-hover.svg' | asset_url }}",
+        "{{ 'mockup-pitch-deck.svg' | asset_url }}",
+        "{{ 'mockup-watercolor-papers.svg' | asset_url }}"
+      ],
+      "formats": [".AI", ".EPS", ".SVG", ".PNG"],
+      "included": "24 Handcrafted Seamless Vector Pattern Repeats + Swatch Palettes",
+      "specs": "Infinite Vector Scalability, 300 DPI High-Res Pattern Tiles (6000x4000px), CMYK & RGB",
+      "compatibility": "Adobe Illustrator, Photoshop, Figma, Canva, Affinity",
+      "description": "A comprehensive collection of 24 handcrafted, seamless vector geometric pattern repeats. Perfect for textile design, editorial packaging, branding identity, web backgrounds, and modern print media. Fully editable vector layers in AI, EPS, and SVG formats.",
+      "related": ["watercolor-texture-patterns", "handmade-marble-textures", "monoline-floral-patterns", "pitch-deck-pro-template"]
+    },
+    "pitch-deck-pro-template": {
+      "handle": "pitch-deck-pro-template",
+      "title": "Pitch Deck Pro Template",
+      "category": "Presentation Templates",
+      "price": "$15.00",
+      "compare_at": "$30.00",
+      "save_badge": "Save 50%",
+      "primary_image": "{{ 'mockup-pitch-deck.svg' | asset_url }}",
+      "thumbnails": [
+        "{{ 'mockup-pitch-deck.svg' | asset_url }}",
+        "{{ 'mockup-pitch-deck-hover.svg' | asset_url }}",
+        "{{ 'mockup-branding-kit.svg' | asset_url }}",
+        "{{ 'mockup-mobile-ui.svg' | asset_url }}"
+      ],
+      "formats": [".PPTX", ".KEY", ".FIGMA"],
+      "included": "120+ Unique Presentation Slides, Dark & Light Layout Variations, 400+ Vector Icons",
+      "specs": "16:9 Full HD Widescreen (1920x1080), Master Slide Systems, Free Google Fonts",
+      "compatibility": "PowerPoint, Apple Keynote, Figma, Google Slides",
+      "description": "Investor-ready presentation deck designed to convert. Includes financial charts, team profiles, market opportunity slides, roadmap timelines, and device mockups. Fully compatible with PowerPoint, Apple Keynote, and Figma.",
+      "related": ["brand-identity-starter-kit", "social-media-creator-bundle", "mobile-ui-design-system", "editorial-magazine-layouts"]
+    },
+    "watercolor-texture-patterns": {
+      "handle": "watercolor-texture-patterns",
+      "title": "Watercolor Texture Patterns",
+      "category": "Patterns",
+      "price": "$15.00",
+      "compare_at": "$22.00",
+      "save_badge": "Save 32%",
+      "primary_image": "{{ 'mockup-watercolor-papers.svg' | asset_url }}",
+      "thumbnails": [
+        "{{ 'mockup-watercolor-papers.svg' | asset_url }}",
+        "{{ 'mockup-watercolor-papers-hover.svg' | asset_url }}",
+        "{{ 'mockup-geometric-pack.svg' | asset_url }}",
+        "{{ 'mockup-branding-kit.svg' | asset_url }}"
+      ],
+      "formats": [".JPG 600DPI", ".PNG", ".PAT"],
+      "included": "18 Organic Watercolor Seamless Textures, Photoshop Pattern (.PAT) Preset, Transparent Overlays",
+      "specs": "Ultra-HD 600 DPI, 6000x4000px Resolution, Authentic Hand-Painted Pigment Scans",
+      "compatibility": "Photoshop, Illustrator, Procreate, Canva, InDesign",
+      "description": "Hand-painted watercolor washes and textured paper patterns digitized at 600 DPI for luxury packaging, wedding stationery, book covers, and soft brand identities. Includes seamless repeat tiles and Photoshop PAT presets.",
+      "related": ["geometric-repeat-pack", "handmade-marble-textures", "monoline-floral-patterns", "brand-identity-starter-kit"]
+    },
+    "3d-design-masterclass-ebook": {
+      "handle": "3d-design-masterclass-ebook",
+      "title": "3D Design Masterclass eBook",
+      "category": "eBooks",
+      "price": "$15.00",
+      "compare_at": "$28.00",
+      "save_badge": "Save 46%",
+      "primary_image": "{{ 'mockup-vector-graphics.svg' | asset_url }}",
+      "thumbnails": [
+        "{{ 'mockup-vector-graphics.svg' | asset_url }}",
+        "{{ 'mockup-vector-graphics-hover.svg' | asset_url }}",
+        "{{ 'mockup-typography-kit.svg' | asset_url }}",
+        "{{ 'mockup-mobile-ui.svg' | asset_url }}"
+      ],
+      "formats": [".PDF", ".EPUB", ".NOTION"],
+      "included": "180-Page Illustrated Digital Book, 12 Practical Case Studies, Notion Resource Hub & Cheatsheets",
+      "specs": "Searchable PDF, Interactive Table of Contents, Mobile & Tablet Optimized EPUB, Exercise Files",
+      "compatibility": "Any PDF reader, Apple Books, Kindle, Notion app, Browser",
+      "description": "Master lighting, material shaders, camera staging, and 3D composition for modern web and digital interfaces. Includes source files, procedural nodes, studio lighting presets, and step-by-step workflow breakdowns.",
+      "related": ["typography-layout-handbook-ebook", "iconography-design-systems-guide-ebook", "mobile-ui-design-system", "pitch-deck-pro-template"]
+    },
+    "brand-identity-starter-kit": {
+      "handle": "brand-identity-starter-kit",
+      "title": "Brand Identity Starter Kit",
+      "category": "Presentation Templates",
+      "price": "$15.00",
+      "compare_at": "$30.00",
+      "save_badge": "Save 50%",
+      "primary_image": "{{ 'mockup-branding-kit.svg' | asset_url }}",
+      "thumbnails": [
+        "{{ 'mockup-branding-kit.svg' | asset_url }}",
+        "{{ 'mockup-branding-kit-hover.svg' | asset_url }}",
+        "{{ 'mockup-pitch-deck.svg' | asset_url }}",
+        "{{ 'mockup-social-templates.svg' | asset_url }}"
+      ],
+      "formats": [".AI", ".EPS", ".INDD", ".FIGMA"],
+      "included": "48-Page Brand Guidelines System, Logo Presentation Mockups, Stationery & Asset Templates",
+      "specs": "Grid-Aligned Layouts, Auto-Layout Components in Figma, CMYK Print Ready with 3mm Bleed",
+      "compatibility": "Adobe Illustrator, InDesign, Photoshop, Figma",
+      "description": "A complete brand identity design kit featuring brand guidelines, logo presentation sheets, typography scales, color token documentation, and stationery collateral templates for client deliverables.",
+      "related": ["pitch-deck-pro-template", "social-media-creator-bundle", "editorial-magazine-layouts", "mobile-ui-design-system"]
+    },
+    "social-media-creator-bundle": {
+      "handle": "social-media-creator-bundle",
+      "title": "Social Media Creator Bundle",
+      "category": "Presentation Templates",
+      "price": "$15.00",
+      "compare_at": "$25.00",
+      "save_badge": "Save 40%",
+      "primary_image": "{{ 'mockup-social-templates.svg' | asset_url }}",
+      "thumbnails": [
+        "{{ 'mockup-social-templates.svg' | asset_url }}",
+        "{{ 'mockup-social-templates-hover.svg' | asset_url }}",
+        "{{ 'mockup-mobile-ui.svg' | asset_url }}",
+        "{{ 'mockup-pitch-deck.svg' | asset_url }}"
+      ],
+      "formats": [".CANVA", ".FIGMA", ".PSD"],
+      "included": "90+ Instagram Posts, Stories & Carousel Templates, TikTok/Reels Cover Layouts",
+      "specs": "1080x1080 (Square), 1080x1920 (Vertical 9:16), 1080x1350 (Portrait), Pixel-Perfect RGB",
+      "compatibility": "Canva, Figma, Photoshop",
+      "description": "Level up your social content with 90+ high-engagement carousel slide templates, quote graphics, product release announcements, and moodboard frames designed for Canva, Figma, and Photoshop.",
+      "related": ["pitch-deck-pro-template", "brand-identity-starter-kit", "mobile-ui-design-system", "editorial-magazine-layouts"]
+    },
+    "typography-layout-handbook-ebook": {
+      "handle": "typography-layout-handbook-ebook",
+      "title": "Typography & Layout Handbook eBook",
+      "category": "eBooks",
+      "price": "$15.00",
+      "compare_at": "$24.00",
+      "save_badge": "Save 38%",
+      "primary_image": "{{ 'mockup-typography-kit.svg' | asset_url }}",
+      "thumbnails": [
+        "{{ 'mockup-typography-kit.svg' | asset_url }}",
+        "{{ 'mockup-typography-kit-hover.svg' | asset_url }}",
+        "{{ 'mockup-vector-graphics.svg' | asset_url }}",
+        "{{ 'mockup-branding-kit.svg' | asset_url }}"
+      ],
+      "formats": [".PDF", ".EPUB", ".FIGMA"],
+      "included": "140-Page Typography Master Guide, Pairing Matrices, Figma Font Hierarchy System",
+      "specs": "Interactive PDF, Responsive EPUB, Figma Variable Styles Included, Baseline Grid Templates",
+      "compatibility": "Any PDF reader, Apple Books, Figma",
+      "description": "The definitive guide to editorial typography, baseline grids, responsive hierarchy, and font pairing. Designed for UI designers, creative directors, and independent publishers seeking typographic excellence.",
+      "related": ["3d-design-masterclass-ebook", "iconography-design-systems-guide-ebook", "editorial-magazine-layouts", "brand-identity-starter-kit"]
+    },
+    "mobile-ui-design-system": {
+      "handle": "mobile-ui-design-system",
+      "title": "Mobile UI Design System",
+      "category": "Presentation Templates",
+      "price": "$15.00",
+      "compare_at": "$35.00",
+      "save_badge": "Save 57%",
+      "primary_image": "{{ 'mockup-mobile-ui.svg' | asset_url }}",
+      "thumbnails": [
+        "{{ 'mockup-mobile-ui.svg' | asset_url }}",
+        "{{ 'mockup-mobile-ui-hover.svg' | asset_url }}",
+        "{{ 'mockup-pitch-deck.svg' | asset_url }}",
+        "{{ 'mockup-branding-kit.svg' | asset_url }}"
+      ],
+      "formats": [".FIGMA", ".SKETCH", ".XD"],
+      "included": "200+ Core Mobile App Screens, 60+ Interactive UI Components, Design Tokens & Variables",
+      "specs": "Auto Layout 5.0, Dark & Light Mode, iOS & Material 3 Compliant, 375px & 390px Mobile Grid",
+      "compatibility": "Figma, Sketch, Adobe XD",
+      "description": "Production-ready mobile design kit with complete authentication, checkout, feed, profile, and analytics screens. Built with native Figma auto-layout, interactive components, and variable color/typography tokens.",
+      "related": ["pitch-deck-pro-template", "brand-identity-starter-kit", "social-media-creator-bundle", "editorial-magazine-layouts"]
+    },
+    "handmade-marble-textures": {
+      "handle": "handmade-marble-textures",
+      "title": "Handmade Marble Textures",
+      "category": "Patterns",
+      "price": "$15.00",
+      "compare_at": "$20.00",
+      "save_badge": "Save 25%",
+      "primary_image": "{{ 'mockup-watercolor-papers-hover.svg' | asset_url }}",
+      "thumbnails": [
+        "{{ 'mockup-watercolor-papers-hover.svg' | asset_url }}",
+        "{{ 'mockup-watercolor-papers.svg' | asset_url }}",
+        "{{ 'mockup-geometric-pack.svg' | asset_url }}",
+        "{{ 'mockup-geometric-pack-hover.svg' | asset_url }}"
+      ],
+      "formats": [".JPG 6000x4000", ".TIFF", ".PAT"],
+      "included": "20 Hand-Swirled Marble Textures, Gold & Foil Accents, Seamless Repeat Patterns",
+      "specs": "6000x4000px, 300 DPI, CMYK Color Profile for Fine Art & Packaging Print",
+      "compatibility": "Photoshop, Illustrator, Procreate, InDesign, Affinity",
+      "description": "Elegant hand-swirled suminagashi and acrylic marble patterns featuring rich veins and fluid mineral forms. Ideal for luxury packaging, book jackets, apparel prints, and premium stationery.",
+      "related": ["geometric-repeat-pack", "watercolor-texture-patterns", "monoline-floral-patterns", "brand-identity-starter-kit"]
+    },
+    "iconography-design-systems-guide-ebook": {
+      "handle": "iconography-design-systems-guide-ebook",
+      "title": "Iconography & Design Systems Guide eBook",
+      "category": "eBooks",
+      "price": "$15.00",
+      "compare_at": "$25.00",
+      "save_badge": "Save 40%",
+      "primary_image": "{{ 'mockup-vector-graphics-hover.svg' | asset_url }}",
+      "thumbnails": [
+        "{{ 'mockup-vector-graphics-hover.svg' | asset_url }}",
+        "{{ 'mockup-vector-graphics.svg' | asset_url }}",
+        "{{ 'mockup-typography-kit.svg' | asset_url }}",
+        "{{ 'mockup-pitch-deck.svg' | asset_url }}"
+      ],
+      "formats": [".PDF", ".EPUB", ".NOTION"],
+      "included": "120-Page Comprehensive Guide, Icon Grid System Keynote, SVG Icon Construction Files",
+      "specs": "Vector SVG Assets, Optical Balancing Rules, Searchable PDF, Figma Master Component Library",
+      "compatibility": "Any PDF reader, Apple Books, Notion, Figma",
+      "description": "Everything you need to know about building, scaling, and maintaining custom icon systems for multi-platform digital products. Includes stroke weight formulas, optical sizing tables, and export automation tips.",
+      "related": ["3d-design-masterclass-ebook", "typography-layout-handbook-ebook", "mobile-ui-design-system", "brand-identity-starter-kit"]
+    },
+    "editorial-magazine-layouts": {
+      "handle": "editorial-magazine-layouts",
+      "title": "Editorial Magazine Layouts",
+      "category": "Presentation Templates",
+      "price": "$15.00",
+      "compare_at": "$28.00",
+      "save_badge": "Save 46%",
+      "primary_image": "{{ 'mockup-pitch-deck-hover.svg' | asset_url }}",
+      "thumbnails": [
+        "{{ 'mockup-pitch-deck-hover.svg' | asset_url }}",
+        "{{ 'mockup-pitch-deck.svg' | asset_url }}",
+        "{{ 'mockup-branding-kit.svg' | asset_url }}",
+        "{{ 'mockup-typography-kit.svg' | asset_url }}"
+      ],
+      "formats": [".INDD", ".IDML", ".FIGMA"],
+      "included": "36 Editorial Page Spreads, Automatic Page Numbering, Paragraph & Character Styles",
+      "specs": "A4 & US Letter, 300 DPI Print-Ready with 3mm Bleeds, Baseline Grid Alignment",
+      "compatibility": "Adobe InDesign, Figma",
+      "description": "Sleek, high-fashion editorial layouts built for modern magazines, annual reports, lookbooks, and photo essays. Master grid systems and baseline text alignments fully configured.",
+      "related": ["pitch-deck-pro-template", "brand-identity-starter-kit", "social-media-creator-bundle", "mobile-ui-design-system"]
+    },
+    "monoline-floral-patterns": {
+      "handle": "monoline-floral-patterns",
+      "title": "Monoline Floral Patterns",
+      "category": "Patterns",
+      "price": "$15.00",
+      "compare_at": "$22.00",
+      "save_badge": "Save 32%",
+      "primary_image": "{{ 'mockup-geometric-pack-hover.svg' | asset_url }}",
+      "thumbnails": [
+        "{{ 'mockup-geometric-pack-hover.svg' | asset_url }}",
+        "{{ 'mockup-geometric-pack.svg' | asset_url }}",
+        "{{ 'mockup-watercolor-papers.svg' | asset_url }}",
+        "{{ 'mockup-branding-kit.svg' | asset_url }}"
+      ],
+      "formats": [".AI", ".EPS", ".SVG", ".PAT"],
+      "included": "16 Seamless Botanical Line Patterns, 40 Individual Floral Motif Vectors",
+      "specs": "Infinite Vector Scalability, Expanded & Live Stroke Variations, 300 DPI Pattern Swatches",
+      "compatibility": "Adobe Illustrator, Photoshop, Procreate, Canva, Affinity",
+      "description": "Delicate botanical and floral line art patterns hand-drawn with consistent monoline stroke weights. Perfect for botanical cosmetics, organic packaging, wedding paper goods, and apparel prints.",
+      "related": ["geometric-repeat-pack", "watercolor-texture-patterns", "handmade-marble-textures", "brand-identity-starter-kit"]
+    }
+  }
+  </script>
 </section>
 
 {% schema %}

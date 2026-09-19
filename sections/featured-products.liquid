@@ -18,6 +18,7 @@
         {%- endfor -%}
       {%- else -%}
         {% render 'product-card',
+          handle: 'geometric-repeat-pack',
           title: 'Geometric Repeat Pack',
           price: '$15.00',
           compare_at_price: '$25.00',
@@ -26,42 +27,49 @@
           formats: 'AI, EPS, SVG, PNG',
           primary_image: 'mockup-geometric-pack.svg',
           secondary_image: 'mockup-geometric-pack-hover.svg',
-          url: routes.all_products_collection_url
+          url: '/products/geometric-repeat-pack'
         %}
 
         {% render 'product-card',
+          handle: 'pitch-deck-pro-template',
           title: 'Pitch Deck Pro Template',
           price: '$15.00',
+          compare_at_price: '$30.00',
           category: 'Presentation Templates',
           badge: 'Bestseller',
           formats: 'PPTX, KEY, FIGMA',
           primary_image: 'mockup-pitch-deck.svg',
           secondary_image: 'mockup-pitch-deck-hover.svg',
-          url: routes.all_products_collection_url
+          url: '/products/pitch-deck-pro-template'
         %}
 
         {% render 'product-card',
+          handle: 'watercolor-texture-patterns',
           title: 'Watercolor Texture Patterns',
           price: '$15.00',
+          compare_at_price: '$22.00',
           category: 'Patterns',
           badge: 'New',
           formats: 'JPG 600DPI, PNG',
           primary_image: 'mockup-watercolor-papers.svg',
           secondary_image: 'mockup-watercolor-papers-hover.svg',
-          url: routes.all_products_collection_url
+          url: '/products/watercolor-texture-patterns'
         %}
 
         {% render 'product-card',
+          handle: '3d-design-masterclass-ebook',
           title: '3D Design Masterclass eBook',
           price: '$15.00',
+          compare_at_price: '$28.00',
           category: 'eBooks',
           formats: 'PDF, EPUB, NOTION',
           primary_image: 'mockup-vector-graphics.svg',
           secondary_image: 'mockup-vector-graphics-hover.svg',
-          url: routes.all_products_collection_url
+          url: '/products/3d-design-masterclass-ebook'
         %}
 
         {% render 'product-card',
+          handle: 'brand-identity-starter-kit',
           title: 'Brand Identity Starter Kit',
           price: '$15.00',
           compare_at_price: '$30.00',
@@ -70,39 +78,45 @@
           formats: 'AI, EPS, INDD, FIGMA',
           primary_image: 'mockup-branding-kit.svg',
           secondary_image: 'mockup-branding-kit-hover.svg',
-          url: routes.all_products_collection_url
+          url: '/products/brand-identity-starter-kit'
         %}
 
         {% render 'product-card',
+          handle: 'social-media-creator-bundle',
           title: 'Social Media Creator Bundle',
           price: '$15.00',
+          compare_at_price: '$25.00',
           category: 'Presentation Templates',
           badge: 'Popular',
           formats: 'CANVA, FIGMA, PSD',
           primary_image: 'mockup-social-templates.svg',
           secondary_image: 'mockup-social-templates-hover.svg',
-          url: routes.all_products_collection_url
+          url: '/products/social-media-creator-bundle'
         %}
 
         {% render 'product-card',
+          handle: 'typography-layout-handbook-ebook',
           title: 'Typography & Layout Handbook eBook',
           price: '$15.00',
+          compare_at_price: '$24.00',
           category: 'eBooks',
           formats: 'PDF, EPUB, FIGMA',
           primary_image: 'mockup-typography-kit.svg',
           secondary_image: 'mockup-typography-kit-hover.svg',
-          url: routes.all_products_collection_url
+          url: '/products/typography-layout-handbook-ebook'
         %}
 
         {% render 'product-card',
+          handle: 'mobile-ui-design-system',
           title: 'Mobile UI Design System',
           price: '$15.00',
+          compare_at_price: '$35.00',
           category: 'Presentation Templates',
           badge: 'New',
           formats: 'FIGMA, SKETCH, XD',
           primary_image: 'mockup-mobile-ui.svg',
           secondary_image: 'mockup-mobile-ui-hover.svg',
-          url: routes.all_products_collection_url
+          url: '/products/mobile-ui-design-system'
         %}
       {%- endif -%}
     </div>

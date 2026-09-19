@@ -1,60 +1,181 @@
-<section class="related-products-section" aria-label="You may also like">
+<section class="related-products-section js-related-products" aria-label="You may also like">
   <div class="related-products-container">
     <div class="section-header text-center">
       <span class="hero-tag">Curated Recommendations</span>
       <h2 class="section-title">You May Also Like</h2>
-      <p class="section-subtitle">Complementary design packs from our studio to level up your creative workflow.</p>
+      <p class="section-subtitle">Complementary design packs from the same category to level up your creative workflow.</p>
     </div>
 
-    <div class="products-grid">
-      {%- assign rec_collection = collections['all'] -%}
-      {%- if rec_collection != blank and rec_collection.products.size > 1 -%}
-        {%- assign rendered_count = 0 -%}
-        {%- for p in rec_collection.products -%}
-          {%- if p.id != product.id and rendered_count < 4 -%}
-            {% render 'product-card', product: p %}
-            {%- assign rendered_count = rendered_count | plus: 1 -%}
-          {%- endif -%}
-        {%- endfor -%}
-      {%- else -%}
-        {% render 'product-card',
-          title: 'Pitch Deck Pro Template',
-          price: '$15.00',
-          category: 'Presentation Templates',
-          formats: 'PPTX, KEY, FIGMA',
-          primary_image: 'mockup-pitch-deck.svg',
-          secondary_image: 'mockup-pitch-deck-hover.svg',
-          url: routes.all_products_collection_url
-        %}
+    <div class="products-grid js-related-grid">
+      {%- liquid
+        assign cur_cat = 'Patterns'
+        if product != blank and product.type != blank
+          assign raw_type = product.type | downcase
+          if raw_type contains 'ebook' or raw_type contains 'book'
+            assign cur_cat = 'eBooks'
+          elsif raw_type contains 'presentation' or raw_type contains 'template'
+            assign cur_cat = 'Presentation Templates'
+          endif
+        endif
+      -%}
 
+      {%- if cur_cat == 'Patterns' -%}
         {% render 'product-card',
+          handle: 'watercolor-texture-patterns',
           title: 'Watercolor Texture Patterns',
           price: '$15.00',
+          compare_at_price: '$22.00',
           category: 'Patterns',
+          badge: 'New',
           formats: 'JPG 600DPI, PNG',
           primary_image: 'mockup-watercolor-papers.svg',
           secondary_image: 'mockup-watercolor-papers-hover.svg',
-          url: routes.all_products_collection_url
+          url: '/products/watercolor-texture-patterns'
         %}
 
         {% render 'product-card',
+          handle: 'handmade-marble-textures',
+          title: 'Handmade Marble Textures',
+          price: '$15.00',
+          compare_at_price: '$20.00',
+          badge: 'Save 25%',
+          category: 'Patterns',
+          formats: 'JPG 6000x4000, TIFF',
+          primary_image: 'mockup-watercolor-papers-hover.svg',
+          secondary_image: 'mockup-watercolor-papers.svg',
+          url: '/products/handmade-marble-textures'
+        %}
+
+        {% render 'product-card',
+          handle: 'monoline-floral-patterns',
+          title: 'Monoline Floral Patterns',
+          price: '$15.00',
+          compare_at_price: '$22.00',
+          badge: 'Save 32%',
+          category: 'Patterns',
+          formats: 'AI, EPS, SVG, PAT',
+          primary_image: 'mockup-geometric-pack-hover.svg',
+          secondary_image: 'mockup-geometric-pack.svg',
+          url: '/products/monoline-floral-patterns'
+        %}
+
+        {% render 'product-card',
+          handle: 'geometric-repeat-pack',
+          title: 'Geometric Repeat Pack',
+          price: '$15.00',
+          compare_at_price: '$25.00',
+          badge: 'Save 40%',
+          category: 'Patterns',
+          formats: 'AI, EPS, SVG, PNG',
+          primary_image: 'mockup-geometric-pack.svg',
+          secondary_image: 'mockup-geometric-pack-hover.svg',
+          url: '/products/geometric-repeat-pack'
+        %}
+
+      {%- elsif cur_cat == 'eBooks' -%}
+        {% render 'product-card',
+          handle: '3d-design-masterclass-ebook',
           title: '3D Design Masterclass eBook',
           price: '$15.00',
+          compare_at_price: '$28.00',
           category: 'eBooks',
+          badge: 'Save 46%',
           formats: 'PDF, EPUB, NOTION',
           primary_image: 'mockup-vector-graphics.svg',
           secondary_image: 'mockup-vector-graphics-hover.svg',
-          url: routes.all_products_collection_url
+          url: '/products/3d-design-masterclass-ebook'
         %}
 
         {% render 'product-card',
+          handle: 'typography-layout-handbook-ebook',
+          title: 'Typography & Layout Handbook eBook',
+          price: '$15.00',
+          compare_at_price: '$24.00',
+          category: 'eBooks',
+          badge: 'Save 38%',
+          formats: 'PDF, EPUB, FIGMA',
+          primary_image: 'mockup-typography-kit.svg',
+          secondary_image: 'mockup-typography-kit-hover.svg',
+          url: '/products/typography-layout-handbook-ebook'
+        %}
+
+        {% render 'product-card',
+          handle: 'iconography-design-systems-guide-ebook',
+          title: 'Iconography & Design Systems Guide eBook',
+          price: '$15.00',
+          compare_at_price: '$25.00',
+          category: 'eBooks',
+          badge: 'Save 40%',
+          formats: 'PDF, EPUB, NOTION',
+          primary_image: 'mockup-vector-graphics-hover.svg',
+          secondary_image: 'mockup-vector-graphics.svg',
+          url: '/products/iconography-design-systems-guide-ebook'
+        %}
+
+        {% render 'product-card',
+          handle: 'mobile-ui-design-system',
+          title: 'Mobile UI Design System',
+          price: '$15.00',
+          compare_at_price: '$35.00',
+          category: 'Presentation Templates',
+          badge: 'New',
+          formats: 'FIGMA, SKETCH, XD',
+          primary_image: 'mockup-mobile-ui.svg',
+          secondary_image: 'mockup-mobile-ui-hover.svg',
+          url: '/products/mobile-ui-design-system'
+        %}
+
+      {%- else -%}
+        {% render 'product-card',
+          handle: 'pitch-deck-pro-template',
+          title: 'Pitch Deck Pro Template',
+          price: '$15.00',
+          compare_at_price: '$30.00',
+          category: 'Presentation Templates',
+          badge: 'Bestseller',
+          formats: 'PPTX, KEY, FIGMA',
+          primary_image: 'mockup-pitch-deck.svg',
+          secondary_image: 'mockup-pitch-deck-hover.svg',
+          url: '/products/pitch-deck-pro-template'
+        %}
+
+        {% render 'product-card',
+          handle: 'brand-identity-starter-kit',
           title: 'Brand Identity Starter Kit',
           price: '$15.00',
+          compare_at_price: '$30.00',
+          badge: 'Save 50%',
           category: 'Presentation Templates',
-          formats: 'AI, EPS, INDD',
+          formats: 'AI, EPS, INDD, FIGMA',
           primary_image: 'mockup-branding-kit.svg',
           secondary_image: 'mockup-branding-kit-hover.svg',
-          url: routes.all_products_collection_url
+          url: '/products/brand-identity-starter-kit'
+        %}
+
+        {% render 'product-card',
+          handle: 'social-media-creator-bundle',
+          title: 'Social Media Creator Bundle',
+          price: '$15.00',
+          compare_at_price: '$25.00',
+          category: 'Presentation Templates',
+          badge: 'Popular',
+          formats: 'CANVA, FIGMA, PSD',
+          primary_image: 'mockup-social-templates.svg',
+          secondary_image: 'mockup-social-templates-hover.svg',
+          url: '/products/social-media-creator-bundle'
+        %}
+
+        {% render 'product-card',
+          handle: 'editorial-magazine-layouts',
+          title: 'Editorial Magazine Layouts',
+          price: '$15.00',
+          compare_at_price: '$28.00',
+          category: 'Presentation Templates',
+          badge: 'Save 46%',
+          formats: 'INDD, IDML, FIGMA',
+          primary_image: 'mockup-pitch-deck-hover.svg',
+          secondary_image: 'mockup-pitch-deck.svg',
+          url: '/products/editorial-magazine-layouts'
         %}
       {%- endif -%}
     </div>
