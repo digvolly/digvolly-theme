@@ -40,7 +40,13 @@
 
   {%- comment -%} Prioritize LCP image fetch in head {%- endcomment -%}
   {%- if template.name == 'index' -%}
-    {%- assign lcp_product = collections['all'].products.first -%}
+    {%- assign lcp_product = nil -%}
+    {%- for p in collections['all'].products -%}
+      {%- unless p.handle == 'custom-6-asset-pack' or p.tags contains 'internal-bundle' or p.type == 'Bundle' -%}
+        {%- assign lcp_product = p -%}
+        {%- break -%}
+      {%- endunless -%}
+    {%- endfor -%}
     {%- if lcp_product != blank -%}
       {%- if lcp_product.featured_media != blank -%}
         <link rel="preload" as="image" href="{{ lcp_product.featured_media | image_url: width: 450, format: 'webp' }}" fetchpriority="high" type="image/webp">
