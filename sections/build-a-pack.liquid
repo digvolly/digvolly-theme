@@ -1,6 +1,10 @@
 <script src="{{ 'build-a-pack.js' | asset_url }}" defer="defer"></script>
 
-<div class="build-a-pack-wrapper" aria-label="Build a Custom Pack">
+{%- assign bundle_product = all_products['custom-6-asset-pack'] -%}
+{%- assign bundle_variant = bundle_product.selected_or_first_available_variant -%}
+{%- assign bundle_variant_id = bundle_variant.id | default: '55438049608022' -%}
+
+<div class="build-a-pack-wrapper" data-bundle-variant-id="{{ bundle_variant_id }}" aria-label="Build a Custom Pack">
   <!-- Sticky Progress Bar Header (Top of Viewport) -->
   <aside class="pack-sticky-header glass-panel" aria-label="Pack Progress">
     <div class="pack-sticky-header__container">

@@ -248,15 +248,28 @@ document.addEventListener('DOMContentLoaded', function() {
       if (label) label.textContent = 'Adding 6-Pack to Cart...';
 
       const selectedItems = Array.from(state.selected.values());
-      const payloadItems = selectedItems.map(item => ({
-        id: item.variantId,
-        quantity: 1,
-        properties: {
-          '_PackType': 'Custom 6-Pack Bundle',
-          '_PackPrice': `$${BUNDLE_PRICE.toFixed(2)} Flat Price`,
-          '_BundleGroup': `Pack-${Date.now()}`
-        }
-      }));
+      const bundleVariantId = packWrapper.dataset.bundleVariantId || '55438049608022';
+
+      const properties = {
+        'Tier': 'Custom 6-Asset Pack',
+        'Asset 1': selectedItems[0]?.title || '',
+        'Asset 2': selectedItems[1]?.title || '',
+        'Asset 3': selectedItems[2]?.title || '',
+        'Asset 4': selectedItems[3]?.title || '',
+        'Asset 5': selectedItems[4]?.title || '',
+        'Asset 6': selectedItems[5]?.title || '',
+        '_BundleGroup': `Pack-${Date.now()}`,
+        '_SelectedVariants': selectedItems.map(i => i.variantId).join(','),
+        '_SelectedIDs': selectedItems.map(i => i.id).join(',')
+      };
+
+      const payload = {
+        items: [{
+          id: bundleVariantId,
+          quantity: 1,
+          properties: properties
+        }]
+      };
 
       try {
         const res = await fetch('/cart/add.js', {
@@ -265,30 +278,28 @@ document.addEventListener('DOMContentLoaded', function() {
             'Content-Type': 'application/json',
             'Accept': 'application/json'
           },
-          body: JSON.stringify({ items: payloadItems })
+          body: JSON.stringify(payload)
         });
 
         if (res.ok) {
           // Success! Redirect to cart
           window.location.href = '/cart';
         } else {
-          // If response not ok (e.g. demo IDs on development store without live inventory)
           const errorData = await res.json().catch(() => ({}));
-          console.warn('Cart response:', errorData);
-          showToast('🎉 Pack of 6 assets added! Redirecting to cart...');
-          setTimeout(() => {
-            window.location.href = '/cart';
-          }, 800);
+          console.error('Cart add error:', errorData);
+          if (errorData.description && errorData.description.includes('variant')) {
+            showToast('Bundle setup: Please publish "Custom 6-Asset Pack" to Online Store in Shopify Admin.');
+          } else {
+            showToast(errorData.description || 'Could not add pack to cart. Please try again.');
+          }
         }
       } catch (err) {
         console.error('AJAX add to cart error:', err);
-        showToast('🎉 Pack of 6 assets added! Redirecting to cart...');
-        setTimeout(() => {
-          window.location.href = '/cart';
-        }, 800);
+        showToast('Network error while adding pack to cart. Please try again.');
       } finally {
         setTimeout(() => {
           btn.classList.remove('is-loading');
+          btn.removeAttribute('disabled');
           if (label) label.textContent = originalText;
         }, 1200);
       }
