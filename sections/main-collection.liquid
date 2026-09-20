@@ -5,17 +5,28 @@
     <span class="hero-tag">Creative Studio Vault</span>
     <h1 class="collection-title">{{ collection.title | default: 'All Creative Digital Assets' }}</h1>
     <p class="collection-desc">
-      Explore high-converting presentation templates, comprehensive creator eBooks, and seamless vector pattern packs. Instant commercial licensing on all packs.
+      {%- if collection.description != blank -%}
+        {{ collection.description }}
+      {%- elsif collection.handle == 'ebooks' -%}
+        Comprehensive creator eBooks, actionable typography guides, and design playbooks.
+      {%- elsif collection.handle == 'presentation-templates' -%}
+        High-converting presentation decks, keynote templates, and multi-format slide toolkits.
+      {%- elsif collection.handle == 'patterns' -%}
+        Seamless vector patterns, abstract repeats, and handcrafted background packs.
+      {%- else -%}
+        Explore high-converting presentation templates, comprehensive creator eBooks, and seamless vector pattern packs. Instant commercial licensing on all packs.
+      {%- endif -%}
     </p>
   </div>
 
   <div class="collection-container">
-    <!-- Filter Sidebar & Toolbar -->
-    <div class="collection-toolbar glass-panel">
-      <div class="collection-toolbar__left">
-        <span class="collection-results-count js-results-count">8 assets found</span>
-        <button type="button" class="clear-filters-btn js-clear-filters" style="display: none;">Clear all filters <span class="js-active-filter-count"></span></button>
-      </div>
+    {%- if collection.products.size > 0 -%}
+      <!-- Filter Sidebar & Toolbar -->
+      <div class="collection-toolbar glass-panel">
+        <div class="collection-toolbar__left">
+          <span class="collection-results-count js-results-count">{{ collection.products.size }} asset{% if collection.products.size != 1 %}s{% endif %} found</span>
+          <button type="button" class="clear-filters-btn js-clear-filters" style="display: none;">Clear all filters <span class="js-active-filter-count"></span></button>
+        </div>
 
       <div class="collection-toolbar__right">
         <!-- Compact Mobile Filter Trigger Button (mobile only) -->
@@ -171,116 +182,89 @@
       <!-- Products Grid / Masonry Area -->
       <main class="collection-main">
         <div class="products-container products-container--grid js-products-container">
-          {%- if collection.products.size > 0 -%}
-            {%- for product in collection.products -%}
-              {% render 'product-card', product: product %}
-            {%- endfor -%}
-          {%- else -%}
-            {% render 'product-card',
-              handle: 'geometric-repeat-pack',
-              title: 'Geometric Repeat Pack',
-              price: '$15.00',
-              compare_at_price: '$25.00',
-              badge: 'Save 40%',
-              category: 'Patterns',
-              formats: 'AI, EPS, SVG, PNG',
-              primary_image: 'mockup-geometric-pack.svg',
-              secondary_image: 'mockup-geometric-pack-hover.svg',
-              url: '/products/geometric-repeat-pack'
-            %}
+          {%- for product in collection.products -%}
+            {% render 'product-card', product: product %}
+          {%- endfor -%}
 
-            {% render 'product-card',
-              handle: 'pitch-deck-pro-template',
-              title: 'Pitch Deck Pro Template',
-              price: '$15.00',
-              compare_at_price: '$30.00',
-              category: 'Presentation Templates',
-              badge: 'Bestseller',
-              formats: 'PPTX, KEY, FIGMA',
-              primary_image: 'mockup-pitch-deck.svg',
-              secondary_image: 'mockup-pitch-deck-hover.svg',
-              url: '/products/pitch-deck-pro-template'
-            %}
-
-            {% render 'product-card',
-              handle: 'watercolor-texture-patterns',
-              title: 'Watercolor Texture Patterns',
-              price: '$15.00',
-              compare_at_price: '$22.00',
-              category: 'Patterns',
-              badge: 'New',
-              formats: 'JPG 600DPI, PNG',
-              primary_image: 'mockup-watercolor-papers.svg',
-              secondary_image: 'mockup-watercolor-papers-hover.svg',
-              url: '/products/watercolor-texture-patterns'
-            %}
-
-            {% render 'product-card',
-              handle: '3d-design-masterclass-ebook',
-              title: '3D Design Masterclass eBook',
-              price: '$15.00',
-              compare_at_price: '$28.00',
-              category: 'eBooks',
-              formats: 'PDF, EPUB, NOTION',
-              primary_image: 'mockup-vector-graphics.svg',
-              secondary_image: 'mockup-vector-graphics-hover.svg',
-              url: '/products/3d-design-masterclass-ebook'
-            %}
-
-            {% render 'product-card',
-              handle: 'brand-identity-starter-kit',
-              title: 'Brand Identity Starter Kit',
-              price: '$15.00',
-              compare_at_price: '$30.00',
-              badge: 'Save 50%',
-              category: 'Presentation Templates',
-              formats: 'AI, EPS, INDD, FIGMA',
-              primary_image: 'mockup-branding-kit.svg',
-              secondary_image: 'mockup-branding-kit-hover.svg',
-              url: '/products/brand-identity-starter-kit'
-            %}
-
-            {% render 'product-card',
-              handle: 'social-media-creator-bundle',
-              title: 'Social Media Creator Bundle',
-              price: '$15.00',
-              compare_at_price: '$25.00',
-              category: 'Presentation Templates',
-              badge: 'Popular',
-              formats: 'CANVA, FIGMA, PSD',
-              primary_image: 'mockup-social-templates.svg',
-              secondary_image: 'mockup-social-templates-hover.svg',
-              url: '/products/social-media-creator-bundle'
-            %}
-
-            {% render 'product-card',
-              handle: 'typography-layout-handbook-ebook',
-              title: 'Typography & Layout Handbook eBook',
-              price: '$15.00',
-              compare_at_price: '$24.00',
-              category: 'eBooks',
-              formats: 'PDF, EPUB, FIGMA',
-              primary_image: 'mockup-typography-kit.svg',
-              secondary_image: 'mockup-typography-kit-hover.svg',
-              url: '/products/typography-layout-handbook-ebook'
-            %}
-
-            {% render 'product-card',
-              handle: 'mobile-ui-design-system',
-              title: 'Mobile UI Design System',
-              price: '$15.00',
-              compare_at_price: '$35.00',
-              category: 'Presentation Templates',
-              badge: 'New',
-              formats: 'FIGMA, SKETCH, XD',
-              primary_image: 'mockup-mobile-ui.svg',
-              secondary_image: 'mockup-mobile-ui-hover.svg',
-              url: '/products/mobile-ui-design-system'
-            %}
-          {%- endif -%}
+          <div class="collection-no-results js-no-results" style="display: none;">
+            <p class="collection-no-results__title">No assets match the selected filters</p>
+            <p class="collection-no-results__desc">Try clearing or adjusting your filter criteria to see more design assets.</p>
+            <button type="button" class="button button--secondary js-clear-filters">Clear All Filters</button>
+          </div>
         </div>
       </main>
     </div>
+  {%- else -%}
+    <!-- Empty Collection / Coming Soon State -->
+    <div class="collection-empty card glass-panel">
+      <div class="collection-empty__icon-wrap">
+        {%- if collection.handle == 'ebooks' -%}
+          <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+          </svg>
+        {%- elsif collection.handle == 'presentation-templates' -%}
+          <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+            <line x1="8" y1="21" x2="16" y2="21"></line>
+            <line x1="12" y1="17" x2="12" y2="21"></line>
+          </svg>
+        {%- else -%}
+          <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+            <polyline points="2 17 12 22 22 17"></polyline>
+            <polyline points="2 12 12 17 22 12"></polyline>
+          </svg>
+        {%- endif -%}
+      </div>
+
+      <span class="collection-empty__badge">Coming Soon</span>
+
+      <h2 class="collection-empty__title">
+        {%- if collection.handle == 'ebooks' -%}
+          New eBooks Coming Soon
+        {%- elsif collection.handle == 'presentation-templates' -%}
+          New Presentation Templates Coming Soon
+        {%- else -%}
+          New {{ collection.title | default: 'Assets' }} Coming Soon
+        {%- endif -%}
+      </h2>
+
+      <p class="collection-empty__desc">
+        {%- if collection.handle == 'ebooks' -%}
+          We are currently curating and formatting brand new comprehensive creator eBooks, design guides, and actionable toolkits. Check back soon or explore our available design asset vault!
+        {%- elsif collection.handle == 'presentation-templates' -%}
+          High-converting pitch decks, slide frameworks, and keynote presentation templates are currently in final development. Check back soon or explore our available design assets!
+        {%- else -%}
+          New digital asset packs are currently being prepared for this collection. Browse our full creative catalog in the meantime!
+        {%- endif -%}
+      </p>
+
+      <div class="collection-empty__actions">
+        <a href="{{ routes.all_products_collection_url }}" class="button button--primary collection-empty__btn">
+          Browse All Assets
+        </a>
+        <a href="/pages/build-a-pack" class="button button--secondary collection-empty__btn">
+          Build a Custom Pack ($29)
+        </a>
+      </div>
+
+      <div class="collection-empty__trust-row">
+        <div class="cart-trust-item">
+          <span class="cart-trust-icon">⚡</span>
+          <span>Instant ZIP Downloads</span>
+        </div>
+        <div class="cart-trust-item">
+          <span class="cart-trust-icon">🛡️</span>
+          <span>Commercial License Included</span>
+        </div>
+        <div class="cart-trust-item">
+          <span class="cart-trust-icon">🔄</span>
+          <span>Lifetime Re-downloads</span>
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
   </div>
 </section>
 

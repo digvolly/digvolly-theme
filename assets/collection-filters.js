@@ -162,6 +162,11 @@ document.addEventListener('DOMContentLoaded', function() {
     if (resultsCountEl) {
       resultsCountEl.textContent = `${visibleCount} asset${visibleCount === 1 ? '' : 's'} found`;
     }
+
+    const noResultsEl = collectionWrapper.querySelector('.js-no-results');
+    if (noResultsEl) {
+      noResultsEl.style.display = (visibleCount === 0 && cards.length > 0) ? 'block' : 'none';
+    }
   }
 
   filterCheckboxes.forEach(cb => {
