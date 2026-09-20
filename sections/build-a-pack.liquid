@@ -75,7 +75,10 @@
     <div class="pack-items-grid" id="PackItemsGrid">
       {%- assign all_products = collections['all'].products -%}
       {%- if all_products != blank and all_products.size > 0 -%}
-        {%- for product in all_products limit: 16 -%}
+        {%- for product in all_products limit: 17 -%}
+          {%- if product.handle == 'custom-6-asset-pack' or product.type == 'Bundle' or product.tags contains 'bundle' -%}
+            {%- continue -%}
+          {%- endif -%}
           {%- assign p_cat = 'Presentation Templates' -%}
           {%- assign p_type = product.type | downcase -%}
           {%- if p_type contains 'ebook' or p_type contains 'book' or p_type contains 'guide' -%}
