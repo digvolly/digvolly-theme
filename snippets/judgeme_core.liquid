@@ -1,0 +1,63 @@
+﻿<!-- Start of Judge.me Core Integration -->
+<link rel="dns-prefetch" href="https://cdn.judge.me/">
+<link rel="preconnect" href="https://cdn.judge.me/" crossorigin>
+<link rel="stylesheet" type="text/css" media="all" href="https://cdn.judge.me/shopify_v2.css">
+
+<script>
+  window.jdgmSettings = window.jdgmSettings || {};
+  window.jdgmSettings.platform = 'shopify';
+  window.jdgmSettings.shop_domain = '{{ shop.permanent_domain }}';
+  window.jdgmSettings.widget_load_mode = 'lazy';
+</script>
+
+<script data-cfasync="false" class="jdgm-script">
+  (function(){
+    window.jdgm = window.jdgm || {};
+    window.jdgm.CDN_HOST = "https://cdn.judge.me/";
+    
+    function loadJudgeMe() {
+      if (window.jdgm._loaderExecuted) return;
+      var widgets = document.querySelectorAll('.jdgm-widget, .jdgm-review-widget, .jdgm-preview-badge');
+      if (widgets.length > 0) {
+        var s = document.createElement('script');
+        s.type = 'text/javascript';
+        s.async = true;
+        s.src = window.jdgm.CDN_HOST + 'loader.js';
+        document.head.appendChild(s);
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', loadJudgeMe);
+    } else {
+      loadJudgeMe();
+    }
+
+    // Observer to hide empty / 0-review badges on collection & pack cards
+    function checkEmptyCardBadges() {
+      var badges = document.querySelectorAll('.product-card__reviews .jdgm-prev-badge, .pack-card__reviews .jdgm-prev-badge');
+      badges.forEach(function(badge) {
+        var numReviews = badge.getAttribute('data-number-of-reviews');
+        var avgRating = badge.getAttribute('data-average-rating');
+        var text = (badge.innerText || '').toLowerCase();
+        if (numReviews === '0' || avgRating === '0' || avgRating === '0.00' || text.indexOf('no review') !== -1 || text.indexOf('0 review') !== -1) {
+          var container = badge.closest('.product-card__reviews');
+          if (container) {
+            container.classList.add('is-zero-reviews');
+            container.style.display = 'none';
+          }
+        }
+      });
+    }
+
+    if (window.MutationObserver) {
+      var observer = new MutationObserver(function(mutations) {
+        checkEmptyCardBadges();
+      });
+      observer.observe(document.documentElement, { childList: true, subtree: true });
+    }
+    document.addEventListener('DOMContentLoaded', checkEmptyCardBadges);
+    window.addEventListener('load', checkEmptyCardBadges);
+  })();
+</script>
+<!-- End of Judge.me Core Integration -->

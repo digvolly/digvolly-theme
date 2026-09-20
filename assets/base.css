@@ -5889,5 +5889,365 @@ body.mobile-nav-open {
   }
 }
 
+/* ==========================================================================
+   JUDGE.ME PRODUCT REVIEWS DESIGN SYSTEM INTEGRATION
+   ========================================================================== */
 
+/* 1. Global Star & Badge Tokens */
+.jdgm-star {
+  color: #F59E0B !important;
+}
 
+.jdgm-star.jdgm--off {
+  color: #D1D5DB !important;
+}
+
+.jdgm-widget {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+}
+
+/* 2. Top Review Summary Badge (Product Detail Page) */
+.product-info__review-badge-wrap {
+  margin: 6px 0 14px 0;
+  display: flex;
+  align-items: center;
+}
+
+.product-info__review-badge-link {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  cursor: pointer;
+}
+
+.product-info__review-badge-link:hover {
+  opacity: 0.85;
+  transform: translateY(-1px);
+}
+
+.product-info__review-badge-wrap .jdgm-widget {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #4B5563;
+}
+
+.product-info__review-badge-wrap .jdgm-prev-badge__stars {
+  font-size: 15px;
+  letter-spacing: 1px;
+}
+
+.product-info__review-badge-wrap .jdgm-prev-badge__text {
+  font-size: 13.5px;
+  color: #4B5563;
+  font-weight: 600;
+  margin-left: 6px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* 3. Collection & Build-a-Pack Cards Review Badges */
+.product-card__reviews {
+  display: block;
+  margin-bottom: 8px;
+  min-height: 18px;
+}
+
+.product-card__reviews .jdgm-widget {
+  display: inline-flex;
+  align-items: center;
+  font-size: 12px;
+  color: #6B7280;
+}
+
+.product-card__reviews .jdgm-prev-badge__stars {
+  font-size: 12.5px;
+  letter-spacing: 1px;
+}
+
+.product-card__reviews .jdgm-prev-badge__text {
+  font-size: 12px;
+  color: #6B7280;
+  font-weight: 600;
+  margin-left: 4px;
+}
+
+/* Hide rating display on collection & pack cards if product has 0 reviews */
+.product-card__reviews:empty,
+.product-card__reviews:has(.jdgm-widget:empty),
+.product-card__reviews .jdgm-prev-badge[data-number-of-reviews="0"],
+.product-card__reviews .jdgm-prev-badge[data-average-rating="0"],
+.product-card__reviews .jdgm-prev-badge[data-average-rating="0.00"],
+.product-card__reviews .jdgm-prev-badge[data-score="0"],
+.product-card__reviews .jdgm-prev-badge[data-score="0.00"],
+.product-card__reviews.is-zero-reviews {
+  display: none !important;
+}
+
+.product-card__reviews:has(.jdgm-prev-badge[data-number-of-reviews="0"]),
+.product-card__reviews:has(.jdgm-prev-badge[data-average-rating="0"]),
+.product-card__reviews:has(.jdgm-prev-badge[data-average-rating="0.00"]),
+.product-card__reviews:has(.jdgm-prev-badge[data-score="0"]) {
+  display: none !important;
+}
+
+/* 4. Full Customer Reviews Widget Section (Product Page) */
+.product-reviews-section {
+  margin-top: 56px;
+  width: 100%;
+}
+
+.product-reviews-card {
+  padding: 40px;
+  border-radius: 20px;
+  background: #FFFFFF;
+  border: 1px solid #E5E7EB;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+}
+
+.product-reviews-header {
+  margin-bottom: 28px;
+  border-bottom: 1px solid #F3F4F6;
+  padding-bottom: 24px;
+}
+
+.product-reviews-title {
+  font-size: 26px;
+  font-weight: 800;
+  color: #111827;
+  margin: 10px 0 6px 0;
+  letter-spacing: -0.02em;
+}
+
+.product-reviews-subtitle {
+  font-size: 15px;
+  color: #6B7280;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* 5. Judge.me Review Widget DOM Overrides */
+#judgeme_product_reviews,
+.jdgm-review-widget {
+  font-family: 'Inter', sans-serif !important;
+  border: none !important;
+  background: transparent !important;
+  padding: 0 !important;
+}
+
+.jdgm-rev-widg__header {
+  border-bottom: 1px solid #F3F4F6 !important;
+  padding-bottom: 24px !important;
+  margin-bottom: 28px !important;
+}
+
+.jdgm-rev-widg__summary {
+  font-size: 15px !important;
+  color: #374151 !important;
+}
+
+.jdgm-rev-widg__summary .jdgm-rev-widg__summary-text {
+  font-size: 14.5px !important;
+  font-weight: 600 !important;
+  color: #4B5563 !important;
+}
+
+/* "Write a Review" Button */
+.jdgm-write-rev-btn {
+  background: linear-gradient(135deg, #6366F1 0%, #4F46E5 100%) !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  border-radius: 12px !important;
+  padding: 12px 24px !important;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  letter-spacing: 0.01em !important;
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.28) !important;
+  transition: all 0.25s ease !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.jdgm-write-rev-btn:hover {
+  background: #4338CA !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 18px rgba(99, 102, 241, 0.38) !important;
+}
+
+/* "Write a Review" Form Container */
+.jdgm-form {
+  background: #F9FAFB !important;
+  border: 1px solid #E5E7EB !important;
+  border-radius: 16px !important;
+  padding: 30px !important;
+  margin: 20px 0 32px 0 !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03) !important;
+}
+
+.jdgm-form__title {
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  color: #111827 !important;
+  margin-bottom: 18px !important;
+}
+
+.jdgm-form label {
+  font-size: 13.5px !important;
+  font-weight: 700 !important;
+  color: #374151 !important;
+  margin-bottom: 6px !important;
+}
+
+.jdgm-form input[type="text"],
+.jdgm-form input[type="email"],
+.jdgm-form textarea {
+  width: 100% !important;
+  border: 1px solid #D1D5DB !important;
+  border-radius: 10px !important;
+  padding: 12px 14px !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 14px !important;
+  background: #FFFFFF !important;
+  color: #111827 !important;
+  box-sizing: border-box !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.jdgm-form input[type="text"]:focus,
+.jdgm-form input[type="email"]:focus,
+.jdgm-form textarea:focus {
+  border-color: #6366F1 !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15) !important;
+}
+
+/* Form Action Buttons */
+.jdgm-submit-rev-btn {
+  background: #6366F1 !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  border-radius: 10px !important;
+  padding: 12px 26px !important;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  cursor: pointer !important;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25) !important;
+  transition: all 0.2s ease !important;
+}
+
+.jdgm-submit-rev-btn:hover {
+  background: #4F46E5 !important;
+  transform: translateY(-1px) !important;
+}
+
+.jdgm-cancel-rev-btn {
+  background: #FFFFFF !important;
+  color: #4B5563 !important;
+  border: 1px solid #D1D5DB !important;
+  border-radius: 10px !important;
+  padding: 12px 20px !important;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  transition: all 0.2s ease !important;
+}
+
+.jdgm-cancel-rev-btn:hover {
+  background: #F3F4F6 !important;
+  color: #111827 !important;
+}
+
+/* Individual Review Cards */
+.jdgm-rev {
+  border-bottom: 1px solid #F3F4F6 !important;
+  padding: 24px 0 !important;
+}
+
+.jdgm-rev:last-child {
+  border-bottom: none !important;
+}
+
+.jdgm-rev__author {
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  color: #111827 !important;
+}
+
+.jdgm-rev__buyer-badge {
+  background: #EEF2FF !important;
+  color: #4F46E5 !important;
+  font-size: 11.5px !important;
+  font-weight: 700 !important;
+  border-radius: 999px !important;
+  padding: 3px 10px !important;
+  margin-left: 8px !important;
+}
+
+.jdgm-rev__timestamp {
+  color: #9CA3AF !important;
+  font-size: 13px !important;
+}
+
+.jdgm-rev__title {
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  color: #111827 !important;
+  margin: 8px 0 6px 0 !important;
+}
+
+.jdgm-rev__body {
+  font-size: 14.5px !important;
+  line-height: 1.65 !important;
+  color: #4B5563 !important;
+}
+
+/* Pagination */
+.jdgm-paginate .jdgm-cur-page {
+  background: #6366F1 !important;
+  color: #FFFFFF !important;
+  border-radius: 8px !important;
+  font-weight: 700 !important;
+}
+
+/* Mobile Responsiveness for Reviews */
+@media (max-width: 768px) {
+  .product-reviews-section {
+    margin-top: 36px;
+  }
+
+  .product-reviews-card {
+    padding: 24px 18px;
+    border-radius: 16px;
+  }
+
+  .product-reviews-title {
+    font-size: 22px;
+  }
+
+  .jdgm-rev-widg__header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+  }
+
+  .jdgm-write-rev-btn {
+    width: 100% !important;
+    text-align: center;
+  }
+
+  .jdgm-form {
+    padding: 20px 16px !important;
+    border-radius: 12px !important;
+  }
+
+  .product-info__review-badge-wrap {
+    margin: 4px 0 10px 0;
+  }
+}

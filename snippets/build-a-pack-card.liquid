@@ -157,6 +157,19 @@
     </h3>
 
     <div class="product-card__meta">
+      {%- assign pack_prod_id = variant_id | default: id -%}
+      {%- if product != blank and product.id != blank -%}
+        {%- assign pack_prod_id = product.id -%}
+      {%- endif -%}
+      {%- if pack_prod_id != blank -%}
+        <div class="product-card__reviews pack-card__reviews js-card-reviews" data-product-id="{{ pack_prod_id }}">
+          {%- if product != blank -%}
+            {% render 'judgeme_widgets', widget_type: 'judgeme_preview_badge', concise: true, concierge_install: true, product: product %}
+          {%- else -%}
+            <div class="jdgm-widget jdgm-preview-badge" data-id="{{ pack_prod_id }}" data-template="compact" data-auto-install="false"></div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
       <div class="product-card__price-row">
         <span class="product-card__price">{{ price | default: '$15.00' }}</span>
         <span class="pack-card__value-note">Individual value</span>

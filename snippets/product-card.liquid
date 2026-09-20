@@ -243,6 +243,11 @@
     </h3>
 
     <div class="product-card__meta">
+      {%- if product != blank and product.id != blank -%}
+        <div class="product-card__reviews js-card-reviews" data-product-id="{{ product.id }}">
+          {% render 'judgeme_widgets', widget_type: 'judgeme_preview_badge', concise: true, concierge_install: true, product: product %}
+        </div>
+      {%- endif -%}
       <div class="product-card__price-row">
         <span class="product-card__price">{{ card_price }}</span>
         {% if card_compare_price != blank %}

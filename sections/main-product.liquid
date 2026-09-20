@@ -242,6 +242,13 @@
           <!-- Product Title -->
           <h1 class="product-info__title js-product-title">{{ p_title }}</h1>
           
+          <!-- Judge.me Review Summary / Star Rating (Top Badge) -->
+          <div class="product-info__review-badge-wrap js-product-top-review-badge">
+            <a href="#product-reviews-section" class="product-info__review-badge-link" aria-label="Jump to customer reviews">
+              {% render 'judgeme_widgets', widget_type: 'judgeme_preview_badge', concierge_install: true, product: current_product %}
+            </a>
+          </div>
+
           <!-- Price & Savings Row -->
           <div class="product-info__price-box">
             <div class="product-info__price-row">
@@ -306,6 +313,25 @@
       </div>
 
     </div>
+
+    <!-- ==========================================================================
+         Judge.me Product Reviews Widget Section
+         ========================================================================== -->
+    <section class="product-reviews-section js-product-reviews-section" id="product-reviews-section" aria-label="Customer Reviews">
+      <div class="product-reviews-card card glass-panel">
+        <div class="product-reviews-header">
+          <div class="product-reviews-header__titles">
+            <span class="hero-tag">Verified Creator Feedback</span>
+            <h2 class="product-reviews-title">Customer Reviews</h2>
+            <p class="product-reviews-subtitle">Real experiences and feedback from designers, founders, and studios using our digital assets.</p>
+          </div>
+        </div>
+
+        <div class="product-reviews-widget-wrap">
+          {% render 'judgeme_widgets', widget_type: 'judgeme_review_widget', concierge_install: true, product: current_product %}
+        </div>
+      </div>
+    </section>
   </div>
 
   <!-- Mobile Sticky Bottom Checkout Bar -->
@@ -675,6 +701,11 @@
 {
   "name": "Product Main",
   "settings": [],
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ],
   "presets": [
     {
       "name": "Product Main"
