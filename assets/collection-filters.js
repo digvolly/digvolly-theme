@@ -78,9 +78,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function getActiveFilters() {
     const active = {
-      category: [],
-      style: [],
-      format: []
+      category: []
     };
 
     filterCheckboxes.forEach(cb => {
@@ -98,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function applyFilters() {
     const filters = getActiveFilters();
-    const totalActive = filters.category.length + filters.style.length + filters.format.length;
+    const totalActive = filters.category.length;
 
     // Desktop clear button text
     if (activeCountEl) {
@@ -144,14 +142,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     cards.forEach(card => {
       const cardCategory = (card.dataset.category || '').toLowerCase();
-      const cardStyle = (card.dataset.style || '').toLowerCase();
-      const cardFormats = (card.dataset.formats || '').toLowerCase();
-
       const matchCategory = filters.category.length === 0 || filters.category.includes(cardCategory);
-      const matchStyle = filters.style.length === 0 || filters.style.some(s => cardStyle.includes(s));
-      const matchFormat = filters.format.length === 0 || filters.format.some(f => cardFormats.includes(f));
 
-      if (matchCategory && matchStyle && matchFormat) {
+      if (matchCategory) {
         card.style.display = '';
         visibleCount++;
       } else {
