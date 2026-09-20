@@ -10,10 +10,16 @@
       {%- assign featured_collection = section.settings.collection -%}
       {%- if featured_collection != blank and featured_collection.products.size > 0 -%}
         {%- for product in featured_collection.products limit: section.settings.products_to_show -%}
+          {%- if product.handle == 'custom-6-asset-pack' or product.tags contains 'internal-bundle' or product.type == 'Bundle' -%}
+            {%- continue -%}
+          {%- endif -%}
           {% render 'product-card', product: product %}
         {%- endfor -%}
       {%- elsif collections['all'] != blank and collections['all'].products.size > 0 -%}
         {%- for product in collections['all'].products limit: section.settings.products_to_show -%}
+          {%- if product.handle == 'custom-6-asset-pack' or product.tags contains 'internal-bundle' or product.type == 'Bundle' -%}
+            {%- continue -%}
+          {%- endif -%}
           {% render 'product-card', product: product %}
         {%- endfor -%}
       {%- else -%}

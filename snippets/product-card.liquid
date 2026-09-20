@@ -13,6 +13,7 @@
   - url: string (optional)
 {% endcomment %}
 
+{%- unless product.handle == 'custom-6-asset-pack' or product.tags contains 'internal-bundle' or product.type == 'Bundle' or handle == 'custom-6-asset-pack' -%}
 {%- liquid
   assign card_title = title | default: product.title | default: 'Digital Creative Asset'
   if product != blank and product.url != blank
@@ -221,3 +222,4 @@
     </a>
   </div>
 </div>
+{%- endunless -%}

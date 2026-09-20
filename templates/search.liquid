@@ -1,0 +1,74 @@
+<section class="collection-wrapper" aria-label="Search Results">
+  <div class="collection-header text-center">
+    <span class="hero-tag">Creative Studio Vault</span>
+    <h1 class="collection-title">
+      {%- if search.performed -%}
+        Search Results for &ldquo;{{ search.terms | escape }}&rdquo;
+      {%- else -%}
+        Search Our Creative Catalog
+      {%- endif -%}
+    </h1>
+    <p class="collection-desc">
+      Explore vector patterns, presentation templates, and digital design toolkits with instant commercial licensing.
+    </p>
+  </div>
+
+  <div class="collection-container" style="max-width: 1280px; margin: 0 auto; padding: 20px 24px 80px;">
+    {%- if search.performed -%}
+      {%- paginate search.results by 24 -%}
+        {%- assign visible_search_count = 0 -%}
+        {%- for item in search.results -%}
+          {%- if item.object_type == 'product' -%}
+            {%- unless item.handle == 'custom-6-asset-pack' or item.tags contains 'internal-bundle' or item.type == 'Bundle' -%}
+              {%- assign visible_search_count = visible_search_count | plus: 1 -%}
+            {%- endunless -%}
+          {%- endif -%}
+        {%- endfor -%}
+
+        {%- if visible_search_count > 0 -%}
+          <div class="collection-toolbar glass-panel" style="margin-bottom: 32px;">
+            <div class="collection-toolbar__left">
+              <span class="collection-results-count">{{ visible_search_count }} asset{% if visible_search_count != 1 %}s{% endif %} found</span>
+            </div>
+          </div>
+
+          <div class="products-container products-container--grid">
+            {%- for item in search.results -%}
+              {%- if item.object_type == 'product' -%}
+                {%- if item.handle == 'custom-6-asset-pack' or item.tags contains 'internal-bundle' or item.type == 'Bundle' -%}
+                  {%- continue -%}
+                {%- endif -%}
+                {% render 'product-card', product: item %}
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+
+          {%- if paginate.pages > 1 -%}
+            <div class="pagination-wrapper text-center" style="margin-top: 40px;">
+              {{ paginate | default_pagination }}
+            </div>
+          {%- endif -%}
+        {%- else -%}
+          <div class="collection-empty card glass-panel text-center" style="max-width: 600px; margin: 40px auto; padding: 60px 32px;">
+            <div class="collection-empty__icon-wrap">
+              <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <h2 class="collection-empty__title" style="margin: 16px 0 12px; font-size: 24px;">No matching assets found</h2>
+            <p class="collection-empty__desc" style="color: #6B7280; margin-bottom: 24px;">
+              We couldn&rsquo;t find any assets matching &ldquo;{{ search.terms | escape }}&rdquo;. Try searching for patterns or templates.
+            </p>
+            <a href="/collections/all" class="button button--secondary">Browse All Products</a>
+          </div>
+        {%- endif -%}
+      {%- endpaginate -%}
+    {%- else -%}
+      <div class="card glass-panel text-center" style="max-width: 600px; margin: 40px auto; padding: 48px 32px;">
+        <p style="color: #6B7280; margin-bottom: 20px;">Enter a keyword above or browse our full digital asset vault.</p>
+        <a href="/collections/all" class="button button--primary">View All Products</a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>

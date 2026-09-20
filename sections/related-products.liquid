@@ -1,3 +1,4 @@
+{%- unless product.handle == 'custom-6-asset-pack' or product.tags contains 'internal-bundle' or product.type == 'Bundle' -%}
 <section class="related-products-section js-related-products" aria-label="You may also like">
   <div class="related-products-container">
     <div class="section-header text-center">
@@ -181,6 +182,7 @@
     </div>
   </div>
 </section>
+{%- endunless -%}
 
 {% schema %}
 {

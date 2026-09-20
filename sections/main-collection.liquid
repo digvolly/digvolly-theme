@@ -20,11 +20,18 @@
   </div>
 
   <div class="collection-container">
-    {%- if collection.products.size > 0 -%}
+    {%- assign visible_products_count = 0 -%}
+    {%- for p in collection.products -%}
+      {%- unless p.handle == 'custom-6-asset-pack' or p.tags contains 'internal-bundle' or p.type == 'Bundle' -%}
+        {%- assign visible_products_count = visible_products_count | plus: 1 -%}
+      {%- endunless -%}
+    {%- endfor -%}
+
+    {%- if visible_products_count > 0 -%}
       <!-- Filter Sidebar & Toolbar -->
       <div class="collection-toolbar glass-panel">
         <div class="collection-toolbar__left">
-          <span class="collection-results-count js-results-count">{{ collection.products.size }} asset{% if collection.products.size != 1 %}s{% endif %} found</span>
+          <span class="collection-results-count js-results-count">{{ visible_products_count }} asset{% if visible_products_count != 1 %}s{% endif %} found</span>
           <button type="button" class="clear-filters-btn js-clear-filters" style="display: none;">Clear all filters <span class="js-active-filter-count"></span></button>
         </div>
 
@@ -121,6 +128,9 @@
       <main class="collection-main">
         <div class="products-container products-container--grid js-products-container">
           {%- for product in collection.products -%}
+            {%- if product.handle == 'custom-6-asset-pack' or product.tags contains 'internal-bundle' or product.type == 'Bundle' -%}
+              {%- continue -%}
+            {%- endif -%}
             {% render 'product-card', product: product %}
           {%- endfor -%}
 
