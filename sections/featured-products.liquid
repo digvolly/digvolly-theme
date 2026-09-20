@@ -13,14 +13,14 @@
           {%- if product.handle == 'custom-6-asset-pack' or product.tags contains 'internal-bundle' or product.type == 'Bundle' -%}
             {%- continue -%}
           {%- endif -%}
-          {% render 'product-card', product: product %}
+          {% render 'product-card', product: product, is_lcp: forloop.first %}
         {%- endfor -%}
       {%- elsif collections['all'] != blank and collections['all'].products.size > 0 -%}
         {%- for product in collections['all'].products limit: section.settings.products_to_show -%}
           {%- if product.handle == 'custom-6-asset-pack' or product.tags contains 'internal-bundle' or product.type == 'Bundle' -%}
             {%- continue -%}
           {%- endif -%}
-          {% render 'product-card', product: product %}
+          {% render 'product-card', product: product, is_lcp: forloop.first %}
         {%- endfor -%}
       {%- else -%}
         {% render 'product-card',

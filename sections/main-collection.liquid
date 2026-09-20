@@ -127,11 +127,17 @@
       <!-- Products Grid / Masonry Area -->
       <main class="collection-main">
         <div class="products-container products-container--grid js-products-container">
+          {%- assign card_idx = 0 -%}
           {%- for product in collection.products -%}
             {%- if product.handle == 'custom-6-asset-pack' or product.tags contains 'internal-bundle' or product.type == 'Bundle' -%}
               {%- continue -%}
             {%- endif -%}
-            {% render 'product-card', product: product %}
+            {%- assign card_idx = card_idx | plus: 1 -%}
+            {%- assign is_lcp_card = false -%}
+            {%- if card_idx == 1 -%}
+              {%- assign is_lcp_card = true -%}
+            {%- endif -%}
+            {% render 'product-card', product: product, is_lcp: is_lcp_card %}
           {%- endfor -%}
 
           <div class="collection-no-results js-no-results" style="display: none;">

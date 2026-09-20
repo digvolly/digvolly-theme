@@ -27,12 +27,40 @@
     <meta name="description" content="{{ page_description | escape }}">
   {% endif %}
   
-  <!-- Google Fonts - Inter -->
+  <!-- Google Fonts - Inter (Non-blocking async load with font-display: swap) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'">
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+  </noscript>
+
   {{ 'base.css' | asset_url | stylesheet_tag }}
+
+  {%- comment -%} Prioritize LCP image fetch in head {%- endcomment -%}
+  {%- if template.name == 'index' -%}
+    {%- assign lcp_product = collections['all'].products.first -%}
+    {%- if lcp_product != blank -%}
+      {%- if lcp_product.featured_media != blank -%}
+        <link rel="preload" as="image" href="{{ lcp_product.featured_media | image_url: width: 450, format: 'webp' }}" fetchpriority="high" type="image/webp">
+      {%- elsif lcp_product.featured_image != blank -%}
+        <link rel="preload" as="image" href="{{ lcp_product.featured_image | image_url: width: 450, format: 'webp' }}" fetchpriority="high" type="image/webp">
+      {%- endif -%}
+    {%- endif -%}
+  {%- elsif template.name == 'product' -%}
+    {%- if product != blank and product.featured_media != blank -%}
+      <link rel="preload" as="image" href="{{ product.featured_media | image_url: width: 600, format: 'webp' }}" fetchpriority="high" type="image/webp">
+    {%- endif -%}
+  {%- endif -%}
+
+  {%- if request.path contains '/products/custom-6-asset-pack' or product.handle == 'custom-6-asset-pack' or product.tags contains 'internal-bundle' -%}
+    <meta name="robots" content="noindex, nofollow">
+    <script>
+      window.location.replace('/pages/build-a-pack');
+    </script>
+    <meta http-equiv="refresh" content="0; url=/pages/build-a-pack">
+  {%- endif -%}
 
   {{ content_for_header }}
 </head>

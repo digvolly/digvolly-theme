@@ -1,5 +1,4 @@
 /* === DIGVOLLY DESIGN SYSTEM === */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 /* Universal Box-Sizing Reset */
 *, *::before, *::after {
@@ -26,7 +25,7 @@ html {
 body, .gradient, .color-background-1 {
   background-color: var(--color-background) !important;
   color: var(--color-foreground) !important;
-  font-family: 'Inter', sans-serif !important;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
   margin: 0;
   padding: 0;
   width: 100%;
@@ -398,8 +397,6 @@ body.mobile-nav-open {
   background: 
     linear-gradient(to bottom, transparent 0%, transparent 45%, rgba(255, 255, 255, 0.6) 75%, #FFFFFF 100%),
     linear-gradient(135deg, rgba(99, 102, 241, 0.12) 0%, rgba(139, 92, 246, 0.15) 35%, rgba(236, 72, 153, 0.10) 70%, rgba(244, 114, 182, 0.08) 100%);
-  background-size: 100% 100%, 200% 200%;
-  animation: heroGradientShift 14s ease-in-out infinite alternate;
   padding: 100px 40px 70px;
   margin-bottom: -1px;
   border: none !important;

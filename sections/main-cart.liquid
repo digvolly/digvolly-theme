@@ -72,12 +72,13 @@
                   <a href="{{ item.url }}" class="cart-item__thumb-link" aria-label="View {{ item.product.title | escape }}">
                     {%- if item.image != blank -%}
                       <img 
-                        src="{{ item.image | image_url: width: 220, height: 160, crop: 'center' }}" 
+                        src="{{ item.image | image_url: width: 220, height: 160, crop: 'center', format: 'webp' }}" 
                         alt="{{ item.title | escape }}" 
                         class="cart-item__thumb-img"
                         width="110" 
                         height="80" 
                         loading="lazy"
+                        decoding="async"
                       >
                     {%- else -%}
                       <img 
