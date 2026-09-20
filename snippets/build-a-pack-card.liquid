@@ -12,15 +12,46 @@
 {% endcomment %}
 
 {%- liquid
-  assign has_secondary = false
-  if secondary_image != blank
-    assign has_secondary = true
+  assign primary_img_src = ''
+  if product != blank and product.featured_media != blank
+    assign primary_img_src = product.featured_media | image_url: width: 600
+  elsif product != blank and product.featured_image != blank
+    assign primary_img_src = product.featured_image | image_url: width: 600
+  elsif primary_image != blank
+    if primary_image.src != blank or primary_image.width != blank
+      assign primary_img_src = primary_image | image_url: width: 600
+    elsif primary_image contains '//' or primary_image contains 'http' or primary_image contains 'cdn.shopify.com' or primary_image contains 'files/'
+      assign primary_img_src = primary_image
+    else
+      assign primary_img_src = primary_image | asset_url
+    endif
   endif
-  assign card_primary_img = primary_image | default: 'mockup-geometric-pack.svg'
+
+  if primary_img_src == blank
+    assign primary_img_src = 'mockup-geometric-pack.svg' | asset_url
+  endif
+
+  assign has_secondary = false
+  assign secondary_img_src = ''
+  if product != blank and product.images.size > 1 and product.images[1] != blank
+    assign secondary_img_src = product.images[1] | image_url: width: 600
+    assign has_secondary = true
+  elsif secondary_image != blank
+    if secondary_image.src != blank or secondary_image.width != blank
+      assign secondary_img_src = secondary_image | image_url: width: 600
+      assign has_secondary = true
+    elsif secondary_image contains '//' or secondary_image contains 'http' or secondary_image contains 'cdn.shopify.com' or secondary_image contains 'files/'
+      assign secondary_img_src = secondary_image
+      assign has_secondary = true
+    else
+      assign secondary_img_src = secondary_image | asset_url
+      assign has_secondary = true
+    endif
+  endif
 -%}
 
 <div 
-  class="pack-item-card product-card {% if has_secondary %}pack-item-card--has-hover-image product-card--has-hover-image{% else %}pack-item-card--single-image product-card--single-image{% endif %}" 
+  class="pack-item-card product-card {% if has_secondary and secondary_img_src != blank %}pack-item-card--has-hover-image product-card--has-hover-image{% else %}pack-item-card--single-image product-card--single-image{% endif %}" 
   data-id="{{ id | escape }}" 
   data-variant-id="{{ variant_id | default: id | escape }}"
   data-title="{{ title | escape }}" 
@@ -45,7 +76,7 @@
     <!-- Image Container with Hover Preview -->
     <div class="product-card__image-box">
       <img 
-        src="{{ card_primary_img | asset_url }}" 
+        src="{{ primary_img_src }}" 
         alt="{{ title | escape }}" 
         class="product-card__img product-card__img--primary"
         width="600" 
@@ -53,9 +84,9 @@
         loading="lazy"
         style="object-fit: cover;"
       >
-      {%- if has_secondary -%}
+      {%- if has_secondary and secondary_img_src != blank -%}
         <img 
-          src="{{ secondary_image | asset_url }}" 
+          src="{{ secondary_img_src }}" 
           alt="{{ title | escape }} - Preview" 
           class="product-card__img product-card__img--secondary"
           width="600" 

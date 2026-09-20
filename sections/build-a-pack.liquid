@@ -93,12 +93,17 @@
               {%- endif -%}
             {%- endfor -%}
           {%- endif -%}
+          {%- assign card_price = '$15.00' -%}
+          {%- if product.price > 0 -%}
+            {%- assign card_price = product.price | money -%}
+          {%- endif -%}
           {% render 'build-a-pack-card',
+            product: product,
             id: product.id,
             variant_id: product.selected_or_first_available_variant.id,
             title: product.title,
             category: p_cat,
-            price: '$15.00',
+            price: card_price,
             primary_image: product.featured_image,
             secondary_image: product.images[1]
           %}
