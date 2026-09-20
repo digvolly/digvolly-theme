@@ -1,0 +1,98 @@
+<section class="browse-categories-section" aria-label="Browse Digital Asset Categories">
+  <div class="homepage-section-container">
+    <div class="section-header text-center">
+      <span class="hero-tag">Curated Collections</span>
+      <h2 class="section-title">Browse by Category</h2>
+      <p class="section-subtitle">Find the exact design toolkit you need for your next creative project.</p>
+    </div>
+
+    <div class="browse-categories-grid">
+      <!-- Category 1: Patterns -->
+      <a href="{{ routes.collections_url }}/patterns" class="category-showcase-card card glass-panel" aria-label="Browse Patterns Collection">
+        <div class="category-showcase-card__img-wrap">
+          <img 
+            src="{{ 'mockup-geometric-pack.svg' | asset_url }}" 
+            alt="Seamless Vector Patterns — repeatable geometric and floral swatches preview" 
+            class="category-showcase-card__img" 
+            width="600" 
+            height="400" 
+            loading="lazy"
+            decoding="async"
+          >
+          <span class="category-showcase-card__badge">14+ Assets</span>
+        </div>
+        <div class="category-showcase-card__content">
+          <div class="category-showcase-card__header">
+            <h3 class="category-showcase-card__title">Patterns</h3>
+            <span class="category-showcase-card__arrow" aria-hidden="true">&rarr;</span>
+          </div>
+          <p class="category-showcase-card__desc">
+            Seamless vector pattern repeats, modern abstract textures, and handcrafted holiday motifs in AI, EPS &amp; SVG.
+          </p>
+        </div>
+      </a>
+
+      <!-- Category 2: Presentation Templates -->
+      <a href="{{ routes.collections_url }}/presentation-templates" class="category-showcase-card card glass-panel" aria-label="Browse Presentation Templates Collection">
+        <div class="category-showcase-card__img-wrap">
+          <img 
+            src="{{ 'mockup-pitch-deck.svg' | asset_url }}" 
+            alt="Presentation Templates — editable PowerPoint, Keynote, and Figma slide decks preview" 
+            class="category-showcase-card__img" 
+            width="600" 
+            height="400" 
+            loading="lazy"
+            decoding="async"
+          >
+          <span class="category-showcase-card__badge">Editable Slides</span>
+        </div>
+        <div class="category-showcase-card__content">
+          <div class="category-showcase-card__header">
+            <h3 class="category-showcase-card__title">Presentation Templates</h3>
+            <span class="category-showcase-card__arrow" aria-hidden="true">&rarr;</span>
+          </div>
+          <p class="category-showcase-card__desc">
+            Investor pitch decks, Keynote templates, and Figma slide toolkits designed to convert stakeholders and audiences.
+          </p>
+        </div>
+      </a>
+
+      <!-- Category 3: eBooks -->
+      <a href="{{ routes.collections_url }}/ebooks" class="category-showcase-card card glass-panel" aria-label="Browse eBooks Collection">
+        <div class="category-showcase-card__img-wrap">
+          <img 
+            src="{{ 'mockup-vector-graphics.svg' | asset_url }}" 
+            alt="eBooks & Design Guides — searchable PDF and EPUB digital handbooks preview" 
+            class="category-showcase-card__img" 
+            width="600" 
+            height="400" 
+            loading="lazy"
+            decoding="async"
+          >
+          <span class="category-showcase-card__badge">PDF &amp; EPUB</span>
+        </div>
+        <div class="category-showcase-card__content">
+          <div class="category-showcase-card__header">
+            <h3 class="category-showcase-card__title">eBooks &amp; Guides</h3>
+            <span class="category-showcase-card__arrow" aria-hidden="true">&rarr;</span>
+          </div>
+          <p class="category-showcase-card__desc">
+            Actionable design playbooks, editorial typography guides, and 3D masterclasses with exercises and source files.
+          </p>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Browse Categories",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Browse Categories"
+    }
+  ]
+}
+{% endschema %}

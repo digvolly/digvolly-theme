@@ -8,23 +8,47 @@
   <link rel="canonical" href="{{ canonical_url }}">
   
   <title>
-    {%- if request.path == '/pages/privacy' -%}
-      Privacy Policy - Digvolly
+    {%- if template.name == 'index' -%}
+      {%- if page_title != blank and page_title != 'My Store' and page_title != 'Digvolly' -%}
+        {{ page_title }}
+      {%- else -%}
+        Digvolly — Premium Digital Design Assets for Creators
+      {%- endif -%}
+    {%- elsif request.path == '/pages/build-a-pack' -%}
+      Build Your Custom Pack (6 Assets for $29) | Digvolly
+    {%- elsif request.path == '/pages/privacy' -%}
+      Privacy Policy — Digvolly
     {%- elsif request.path == '/pages/terms' -%}
-      Terms of Service - Digvolly
+      Terms of Service — Digvolly
     {%- elsif request.path == '/pages/commercial-license' -%}
-      Commercial License Rights - Digvolly
+      Commercial License Rights — Digvolly
     {%- elsif request.path == '/pages/faq' -%}
-      Download &amp; Format FAQs - Digvolly
+      Download &amp; Format FAQs — Digvolly
     {%- elsif request.path == '/pages/contact' -%}
-      Studio Support - Digvolly
+      Studio Support — Digvolly
+    {%- elsif page_title contains 'Digvolly' -%}
+      {{ page_title }}
+    {%- elsif template.name == 'product' and product != blank -%}
+      {{ product.title }} — {{ product.type | default: 'Digital Asset' | capitalize }} | Digvolly
     {%- else -%}
-      {{ page_title }} - Digvolly
+      {{ page_title }} | Digvolly
     {%- endif -%}
   </title>
   
-  {% if page_description %}
-    <meta name="description" content="{{ page_description | escape }}">
+  {%- liquid
+    assign meta_desc = page_description
+    if template.name == 'index' and meta_desc == blank
+      assign meta_desc = 'Shop premium seamless patterns, presentation templates & eBooks. Instant download, commercial license included. Build your own 6-pack from $29.'
+    elsif request.path == '/pages/build-a-pack' and meta_desc == blank
+      assign meta_desc = 'Build your own custom 6-asset pack from $29. Choose from seamless vector patterns, presentation decks, and eBooks. Commercial license included.'
+    elsif template.name == 'collection' and meta_desc == blank
+      assign meta_desc = 'Explore ' | append: collection.title | append: ' at Digvolly. Handcrafted digital design assets with commercial license and instant download.'
+    elsif template.name == 'product' and meta_desc == blank and product != blank
+      assign meta_desc = product.title | append: ' — Premium digital ' | append: product.type | default: 'design asset' | append: '. Includes commercial license and instant download.'
+    endif
+  -%}
+  {% if meta_desc != blank %}
+    <meta name="description" content="{{ meta_desc | strip | escape }}">
   {% endif %}
   
   {%- comment -%} Prioritize LCP image fetch in head before stylesheet parsing {%- endcomment -%}

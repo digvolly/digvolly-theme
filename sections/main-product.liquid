@@ -65,7 +65,7 @@
                             {{ image | image_url: width: 700, format: 'webp' }} 700w,
                             {{ image | image_url: width: 1000, format: 'webp' }} 1000w"
                     sizes="(max-width: 640px) 92vw, (max-width: 1024px) 48vw, 600px"
-                    alt="{{ image.alt | default: p_title }} - View {{ forloop.index }}" 
+                    alt="{{ p_title }} — {{ p_cat | default: 'digital design asset' }} slide preview {{ forloop.index }}" 
                     class="{% if forloop.first %}product-gallery-main__img js-gallery-main-img{% else %}gallery-slide__img{% endif %}"
                     width="600" 
                     height="400"
@@ -79,40 +79,40 @@
               <div class="gallery-slide is-active" data-index="0">
                 <img 
                   src="{{ 'mockup-geometric-pack.svg' | asset_url }}" 
-                  alt="{{ p_title }} - View 1" 
+                  alt="{{ p_title }} — {{ p_cat | default: 'digital design asset' }} slide preview 1" 
                   class="product-gallery-main__img js-gallery-main-img"
                   width="600" 
-                  height="400"
+                  height="400" 
                   loading="eager"
                 >
               </div>
               <div class="gallery-slide" data-index="1">
                 <img 
                   src="{{ 'mockup-geometric-pack-hover.svg' | asset_url }}" 
-                  alt="{{ p_title }} - View 2" 
+                  alt="{{ p_title }} — {{ p_cat | default: 'digital design asset' }} slide preview 2" 
                   class="gallery-slide__img"
                   width="600" 
-                  height="400"
+                  height="400" 
                   loading="lazy"
                 >
               </div>
               <div class="gallery-slide" data-index="2">
                 <img 
                   src="{{ 'mockup-pitch-deck.svg' | asset_url }}" 
-                  alt="{{ p_title }} - View 3" 
+                  alt="{{ p_title }} — {{ p_cat | default: 'digital design asset' }} slide preview 3" 
                   class="gallery-slide__img"
                   width="600" 
-                  height="400"
+                  height="400" 
                   loading="lazy"
                 >
               </div>
               <div class="gallery-slide" data-index="3">
                 <img 
                   src="{{ 'mockup-watercolor-papers.svg' | asset_url }}" 
-                  alt="{{ p_title }} - View 4" 
+                  alt="{{ p_title }} — {{ p_cat | default: 'digital design asset' }} slide preview 4" 
                   class="gallery-slide__img"
                   width="600" 
-                  height="400"
+                  height="400" 
                   loading="lazy"
                 >
               </div>
@@ -169,21 +169,21 @@
             {%- if current_product.images.size > 0 -%}
               {%- for image in current_product.images -%}
                 <button type="button" class="gallery-thumb js-gallery-thumb {% if forloop.first %}is-active{% endif %}" data-index="{{ forloop.index0 }}" data-full-src="{{ image | image_url: width: 1200, format: 'webp' }}" data-alt="View {{ forloop.index }}">
-                  <img src="{{ image | image_url: width: 140, height: 100, crop: 'center', format: 'webp' }}" alt="Thumbnail {{ forloop.index }}" width="100" height="70" loading="lazy" decoding="async">
+                  <img src="{{ image | image_url: width: 140, height: 100, crop: 'center', format: 'webp' }}" alt="{{ p_title }} — thumbnail {{ forloop.index }}" width="100" height="70" loading="lazy" decoding="async">
                 </button>
               {%- endfor -%}
             {%- else -%}
               <button type="button" class="gallery-thumb js-gallery-thumb is-active" data-index="0" data-full-src="{{ 'mockup-geometric-pack.svg' | asset_url }}" data-alt="Cover View">
-                <img src="{{ 'mockup-geometric-pack.svg' | asset_url }}" alt="Thumbnail 1" width="100" height="70" loading="lazy">
+                <img src="{{ 'mockup-geometric-pack.svg' | asset_url }}" alt="{{ p_title }} — thumbnail 1" width="100" height="70" loading="lazy">
               </button>
               <button type="button" class="gallery-thumb js-gallery-thumb" data-index="1" data-full-src="{{ 'mockup-geometric-pack-hover.svg' | asset_url }}" data-alt="Slide 2: Pattern Inverted Detail">
-                <img src="{{ 'mockup-geometric-pack-hover.svg' | asset_url }}" alt="Thumbnail 2" width="100" height="70" loading="lazy">
+                <img src="{{ 'mockup-geometric-pack-hover.svg' | asset_url }}" alt="{{ p_title }} — thumbnail 2" width="100" height="70" loading="lazy">
               </button>
               <button type="button" class="gallery-thumb js-gallery-thumb" data-index="2" data-full-src="{{ 'mockup-pitch-deck.svg' | asset_url }}" data-alt="Slide 3: Layout Specs">
-                <img src="{{ 'mockup-pitch-deck.svg' | asset_url }}" alt="Thumbnail 3" width="100" height="70" loading="lazy">
+                <img src="{{ 'mockup-pitch-deck.svg' | asset_url }}" alt="{{ p_title }} — thumbnail 3" width="100" height="70" loading="lazy">
               </button>
               <button type="button" class="gallery-thumb js-gallery-thumb" data-index="3" data-full-src="{{ 'mockup-watercolor-papers.svg' | asset_url }}" data-alt="Slide 4: Swatch Zoom">
-                <img src="{{ 'mockup-watercolor-papers.svg' | asset_url }}" alt="Thumbnail 4" width="100" height="70" loading="lazy">
+                <img src="{{ 'mockup-watercolor-papers.svg' | asset_url }}" alt="{{ p_title }} — thumbnail 4" width="100" height="70" loading="lazy">
               </button>
             {%- endif -%}
           </div>
@@ -326,14 +326,14 @@
         -%}
         <img 
           src="{{ p_sticky_img }}" 
-          alt="{{ p_title | escape }}" 
+          alt="{{ p_title | escape }} — thumbnail preview" 
           class="product-sticky-bar__thumb js-sticky-thumb" 
           width="48" 
           height="48" 
           loading="lazy"
         >
         <div class="product-sticky-bar__details">
-          <h4 class="product-sticky-bar__title js-sticky-title">{{ p_title }}</h4>
+          <span class="product-sticky-bar__title js-sticky-title">{{ p_title }}</span>
           <span class="product-sticky-bar__price js-sticky-price">{{ p_price }}</span>
         </div>
       </div>

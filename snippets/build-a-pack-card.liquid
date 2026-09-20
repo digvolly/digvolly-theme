@@ -116,10 +116,16 @@
 
     <!-- Image Container with Hover Preview -->
     <div class="product-card__image-box">
+      {%- capture pack_primary_alt -%}
+        {{ title }} — {{ category | default: 'digital design asset' }} preview
+      {%- endcapture -%}
+      {%- capture pack_secondary_alt -%}
+        {{ title }} — {{ category | default: 'digital design asset' }} detail view
+      {%- endcapture -%}
       <img 
         src="{{ primary_img_src }}" 
         {% if primary_srcset != blank %}srcset="{{ primary_srcset }}" sizes="(max-width: 480px) 350px, (max-width: 768px) 450px, 600px"{% endif %}
-        alt="{{ title | escape }}" 
+        alt="{{ pack_primary_alt | strip | escape }}" 
         class="product-card__img product-card__img--primary"
         width="600" 
         height="400" 
@@ -132,7 +138,7 @@
           <source media="(hover: hover) and (min-width: 769px)" {% if secondary_srcset != blank %}srcset="{{ secondary_srcset }}" sizes="(max-width: 480px) 350px, (max-width: 768px) 450px, 600px"{% else %}srcset="{{ secondary_img_src }}"{% endif %}>
           <img 
             src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" 
-            alt="{{ title | escape }} - Preview" 
+            alt="{{ pack_secondary_alt | strip | escape }}" 
             class="product-card__img product-card__img--secondary"
             width="600" 
             height="400" 

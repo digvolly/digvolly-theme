@@ -20,6 +20,7 @@
   </div>
 
   <div class="collection-container">
+    <h2 class="visually-hidden">{{ collection.title | default: 'Creative Digital Assets' }} Catalog</h2>
     {%- assign visible_products_count = 0 -%}
     {%- for p in collection.products -%}
       {%- unless p.handle == 'custom-6-asset-pack' or p.tags contains 'internal-bundle' or p.type == 'Bundle' -%}
@@ -77,7 +78,7 @@
           <!-- Mobile Bottom Sheet Header (hidden on desktop) -->
           <div class="collection-filter-sheet__header">
             <div class="collection-filter-sheet__title-box">
-              <h3 class="collection-filter-sheet__title">Filters</h3>
+              <div class="collection-filter-sheet__title">Filters</div>
               <span class="collection-filter-sheet__active-pill js-sheet-active-pill" style="display: none;">0 active</span>
             </div>
             <button type="button" class="collection-filter-sheet__close-btn js-close-filter-drawer" aria-label="Close filters">
@@ -92,7 +93,7 @@
           <div class="collection-filter-sheet__scroll">
             <div class="filter-group js-filter-accordion is-open">
               <button type="button" class="filter-group__header js-filter-accordion-toggle" aria-expanded="true">
-                <h4 class="filter-group__heading">Asset Category</h4>
+                <span class="filter-group__heading">Asset Category</span>
                 <svg class="filter-group__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <polyline points="6 9 12 15 18 9"></polyline>
                 </svg>

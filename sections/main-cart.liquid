@@ -73,7 +73,7 @@
                     {%- if item.image != blank -%}
                       <img 
                         src="{{ item.image | image_url: width: 220, height: 160, crop: 'center', format: 'webp' }}" 
-                        alt="{{ item.title | escape }}" 
+                        alt="{{ item.product.title | default: item.title | escape }} — {{ item.product.type | default: 'digital asset' }} in cart" 
                         class="cart-item__thumb-img"
                         width="110" 
                         height="80" 
@@ -83,7 +83,7 @@
                     {%- else -%}
                       <img 
                         src="{{ 'mockup-geometric-pack.svg' | asset_url }}" 
-                        alt="{{ item.title | escape }}" 
+                        alt="{{ item.product.title | default: item.title | escape }} — {{ item.product.type | default: 'digital asset' }} in cart" 
                         class="cart-item__thumb-img"
                         width="110" 
                         height="80" 

@@ -1,14 +1,45 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
-      "type": "hero"
+      "type": "hero",
+      "settings": {}
     },
     "featured_products": {
-      "type": "featured-products"
+      "type": "featured-products",
+      "settings": {}
+    },
+    "how_it_works": {
+      "type": "how-it-works",
+      "settings": {}
+    },
+    "why_choose_us": {
+      "type": "why-choose-us",
+      "settings": {}
+    },
+    "browse_categories": {
+      "type": "browse-categories",
+      "settings": {}
+    },
+    "home_faq": {
+      "type": "home-faq",
+      "settings": {}
     }
   },
   "order": [
     "hero",
-    "featured_products"
+    "featured_products",
+    "how_it_works",
+    "why_choose_us",
+    "browse_categories",
+    "home_faq"
   ]
 }
