@@ -128,17 +128,19 @@
         style="object-fit: cover;"
       >
       {%- if has_secondary and secondary_img_src != blank -%}
-        <img 
-          src="{{ secondary_img_src }}" 
-          {% if secondary_srcset != blank %}srcset="{{ secondary_srcset }}" sizes="(max-width: 480px) 350px, (max-width: 768px) 450px, 600px"{% endif %}
-          alt="{{ title | escape }} - Preview" 
-          class="product-card__img product-card__img--secondary"
-          width="600" 
-          height="400" 
-          loading="lazy"
-          decoding="async"
-          style="object-fit: cover;"
-        >
+        <picture class="product-card__secondary-picture">
+          <source media="(hover: hover) and (min-width: 769px)" {% if secondary_srcset != blank %}srcset="{{ secondary_srcset }}" sizes="(max-width: 480px) 350px, (max-width: 768px) 450px, 600px"{% else %}srcset="{{ secondary_img_src }}"{% endif %}>
+          <img 
+            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" 
+            alt="{{ title | escape }} - Preview" 
+            class="product-card__img product-card__img--secondary"
+            width="600" 
+            height="400" 
+            loading="lazy"
+            decoding="async"
+            style="object-fit: cover;"
+          >
+        </picture>
       {%- endif -%}
     </div>
   </div>
