@@ -755,7 +755,7 @@ body.mobile-nav-open {
 .product-card__image-box {
   position: relative;
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 3 / 2;
   overflow: hidden;
   border-radius: 8px;
   background: #F9FAFB;

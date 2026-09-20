@@ -130,14 +130,16 @@
   endif
 
   if primary_media_obj != blank
-    assign primary_img_src = primary_media_obj | image_url: width: 450, format: 'webp'
+    assign primary_img_src = primary_media_obj | image_url: width: 400, format: 'webp'
     capture primary_srcset
-      echo primary_media_obj | image_url: width: 350, format: 'webp'
-      echo ' 350w, '
-      echo primary_media_obj | image_url: width: 450, format: 'webp'
-      echo ' 450w, '
-      echo primary_media_obj | image_url: width: 600, format: 'webp'
-      echo ' 600w'
+      echo primary_media_obj | image_url: width: 320, format: 'webp'
+      echo ' 320w, '
+      echo primary_media_obj | image_url: width: 400, format: 'webp'
+      echo ' 400w, '
+      echo primary_media_obj | image_url: width: 500, format: 'webp'
+      echo ' 500w, '
+      echo primary_media_obj | image_url: width: 640, format: 'webp'
+      echo ' 640w'
     endcapture
   elsif primary_image != blank
     if primary_image contains '/' or primary_image contains 'http'
@@ -195,7 +197,7 @@
       <div class="product-card__image-box">
         <img 
           src="{{ primary_img_src }}" 
-          {% if primary_srcset != blank %}srcset="{{ primary_srcset }}" sizes="(max-width: 480px) 350px, (max-width: 768px) 450px, 600px"{% endif %}
+          {% if primary_srcset != blank %}srcset="{{ primary_srcset }}" sizes="(max-width: 480px) calc(100vw - 40px), (max-width: 768px) 350px, (max-width: 1024px) 45vw, 300px"{% endif %}
           alt="{{ card_title | escape }}" 
           class="product-card__img product-card__img--primary"
           width="600" 

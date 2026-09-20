@@ -27,18 +27,7 @@
     <meta name="description" content="{{ page_description | escape }}">
   {% endif %}
   
-  <!-- Google Fonts - Inter (Non-blocking async load with font-display: swap) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" media="print" onload="this.media='all'">
-  <noscript>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
-  </noscript>
-
-  {{ 'base.css' | asset_url | stylesheet_tag }}
-
-  {%- comment -%} Prioritize LCP image fetch in head {%- endcomment -%}
+  {%- comment -%} Prioritize LCP image fetch in head before stylesheet parsing {%- endcomment -%}
   {%- if template.name == 'index' -%}
     {%- assign lcp_product = nil -%}
     {%- for p in collections['all'].products -%}
@@ -51,11 +40,12 @@
       {%- assign lcp_img = lcp_product.featured_media | default: lcp_product.featured_image -%}
       {%- if lcp_img != blank -%}
         {%- capture lcp_srcset -%}
-          {{ lcp_img | image_url: width: 350, format: 'webp' }} 350w,
-          {{ lcp_img | image_url: width: 450, format: 'webp' }} 450w,
-          {{ lcp_img | image_url: width: 600, format: 'webp' }} 600w
+          {{ lcp_img | image_url: width: 320, format: 'webp' }} 320w,
+          {{ lcp_img | image_url: width: 400, format: 'webp' }} 400w,
+          {{ lcp_img | image_url: width: 500, format: 'webp' }} 500w,
+          {{ lcp_img | image_url: width: 640, format: 'webp' }} 640w
         {%- endcapture -%}
-        <link rel="preload" as="image" href="{{ lcp_img | image_url: width: 600, format: 'webp' }}" imagesrcset="{{ lcp_srcset | strip_newlines }}" imagesizes="(max-width: 480px) 350px, (max-width: 768px) 450px, 600px" fetchpriority="high" type="image/webp">
+        <link rel="preload" as="image" href="{{ lcp_img | image_url: width: 400, format: 'webp' }}" imagesrcset="{{ lcp_srcset | strip_newlines }}" imagesizes="(max-width: 480px) calc(100vw - 40px), (max-width: 768px) 350px, (max-width: 1024px) 45vw, 300px" fetchpriority="high" type="image/webp">
       {%- endif -%}
     {%- endif -%}
   {%- elsif template.name == 'product' -%}
@@ -63,6 +53,17 @@
       <link rel="preload" as="image" href="{{ product.featured_media | image_url: width: 700, format: 'webp' }}" fetchpriority="high" type="image/webp">
     {%- endif -%}
   {%- endif -%}
+
+  <link rel="preload" href="{{ 'base.css' | asset_url }}" as="style">
+  {{ 'base.css' | asset_url | stylesheet_tag }}
+
+  <!-- Google Fonts - Inter (Non-blocking async load with font-display: swap) -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" media="print" onload="this.media='all'">
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
+  </noscript>
 
   {%- if request.path contains '/products/custom-6-asset-pack' or product.handle == 'custom-6-asset-pack' or product.tags contains 'internal-bundle' -%}
     <meta name="robots" content="noindex, nofollow">
