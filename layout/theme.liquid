@@ -121,6 +121,8 @@
       {% section 'main-faq' %}
     {%- elsif request.path == '/pages/contact' -%}
       {% section 'main-contact' %}
+    {%- elsif request.path == '/pages/build-a-pack' -%}
+      {% section 'build-a-pack' %}
     {%- else -%}
       {{ content_for_layout }}
     {%- endif -%}
