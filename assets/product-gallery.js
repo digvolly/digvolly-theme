@@ -307,6 +307,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const prevArrow = gallery.querySelector('.js-gallery-arrow-prev');
     const nextArrow = gallery.querySelector('.js-gallery-arrow-next');
+    const thumbsContainer = gallery.querySelector('.js-gallery-thumbs');
+    const dotsContainer = gallery.querySelector('.js-gallery-dots');
+
+    const initialSlides = getSlides();
+    if (initialSlides.length <= 1) {
+      if (prevArrow) prevArrow.style.display = 'none';
+      if (nextArrow) nextArrow.style.display = 'none';
+      if (thumbsContainer) thumbsContainer.style.display = 'none';
+      if (dotsContainer) dotsContainer.style.display = 'none';
+    }
 
     if (prevArrow) {
       prevArrow.addEventListener('click', function(e) {

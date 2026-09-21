@@ -739,17 +739,24 @@ body.mobile-nav-open {
 
 .product-card__category-badge {
   position: absolute;
-  top: 12px;
-  right: 12px;
-  background: rgba(15, 23, 42, 0.75);
-  color: #FFFFFF;
+  top: 22px;
+  left: 22px;
+  z-index: 10;
+  display: inline-flex;
+  align-items: center;
+  background: rgba(15, 23, 42, 0.85);
+  color: #FFFFFF !important;
   font-size: 11px;
   font-weight: 700;
   padding: 4px 10px;
   border-radius: 6px;
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  z-index: 3;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  pointer-events: none;
 }
 
 .product-card__image-box {
@@ -828,16 +835,19 @@ body.mobile-nav-open {
 /* Single-image cards: single image stays completely visible and static at all times */
 .product-card--single-image .product-card__img--primary,
 .product-card--single-image:hover .product-card__img--primary,
-.product-card:not(:has(.product-card__img--secondary)) .product-card__img--primary,
-.product-card:not(:has(.product-card__img--secondary)):hover .product-card__img--primary {
+.product-card:not(:has(.product-card__img--secondary)):not(:has(.product-card__secondary-picture)) .product-card__img--primary,
+.product-card:not(:has(.product-card__img--secondary)):not(:has(.product-card__secondary-picture)):hover .product-card__img--primary {
   opacity: 1 !important;
   transform: none !important;
 }
 
+.product-card--single-image .product-card__secondary-picture,
+.product-card--single-image:hover .product-card__secondary-picture,
 .product-card--single-image .product-card__img--secondary,
 .product-card--single-image:hover .product-card__img--secondary {
   display: none !important;
   opacity: 0 !important;
+  visibility: hidden !important;
 }
 
 .product-card__placeholder {
@@ -2663,18 +2673,24 @@ body.mobile-nav-open {
 /* ---- Category Badge on card image ---- */
 .product-card__category-badge {
   position: absolute;
-  top: 10px;
-  left: 10px;
+  top: 22px;
+  left: 22px;
   z-index: 10;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(4px);
+  display: inline-flex;
+  align-items: center;
+  background: rgba(15, 23, 42, 0.85);
+  color: #FFFFFF !important;
   font-size: 11px;
   font-weight: 700;
-  color: #374151;
-  padding: 3px 8px;
+  padding: 4px 10px;
   border-radius: 6px;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  pointer-events: none;
 }
 
 /* ---- Card Content ---- */

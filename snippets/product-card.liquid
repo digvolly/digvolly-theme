@@ -16,14 +16,14 @@
 {%- unless product.handle == 'custom-6-asset-pack' or product.tags contains 'internal-bundle' or product.type == 'Bundle' or handle == 'custom-6-asset-pack' -%}
 {%- liquid
   assign card_title = title | default: product.title | default: 'Digital Creative Asset'
-  if product != blank and product.url != blank
-    assign card_url = product.url
-  elsif url != blank
+  if url != blank
     assign card_url = url
-  elsif product != blank and product.handle != blank
-    assign card_url = '/products/' | append: product.handle
   elsif handle != blank and handle != 'all' and handle != 'collection' and handle != 'index' and handle != '404'
     assign card_url = '/products/' | append: handle
+  elsif product != blank and product.url != blank
+    assign card_url = product.url
+  elsif product != blank and product.handle != blank
+    assign card_url = '/products/' | append: product.handle
   else
     assign card_url = routes.all_products_collection_url
   endif
@@ -121,31 +121,34 @@
   assign primary_img_src = ''
   assign primary_srcset = ''
   assign primary_media_obj = nil
-  if product.featured_media != blank
-    assign primary_media_obj = product.featured_media
-  elsif product.featured_image != blank
-    assign primary_media_obj = product.featured_image
-  elsif product.images.size > 0
-    assign primary_media_obj = product.images.first
-  endif
 
-  if primary_media_obj != blank
-    assign primary_img_src = primary_media_obj | image_url: width: 400, format: 'webp'
-    capture primary_srcset
-      echo primary_media_obj | image_url: width: 320, format: 'webp'
-      echo ' 320w, '
-      echo primary_media_obj | image_url: width: 400, format: 'webp'
-      echo ' 400w, '
-      echo primary_media_obj | image_url: width: 500, format: 'webp'
-      echo ' 500w, '
-      echo primary_media_obj | image_url: width: 640, format: 'webp'
-      echo ' 640w'
-    endcapture
-  elsif primary_image != blank
+  if primary_image != blank
     if primary_image contains '/' or primary_image contains 'http'
       assign primary_img_src = primary_image
     else
       assign primary_img_src = primary_image | asset_url
+    endif
+  elsif product != blank
+    if product.featured_media != blank
+      assign primary_media_obj = product.featured_media
+    elsif product.featured_image != blank
+      assign primary_media_obj = product.featured_image
+    elsif product.images.size > 0
+      assign primary_media_obj = product.images.first
+    endif
+
+    if primary_media_obj != blank
+      assign primary_img_src = primary_media_obj | image_url: width: 400, format: 'webp'
+      capture primary_srcset
+        echo primary_media_obj | image_url: width: 320, format: 'webp'
+        echo ' 320w, '
+        echo primary_media_obj | image_url: width: 400, format: 'webp'
+        echo ' 400w, '
+        echo primary_media_obj | image_url: width: 500, format: 'webp'
+        echo ' 500w, '
+        echo primary_media_obj | image_url: width: 640, format: 'webp'
+        echo ' 640w'
+      endcapture
     endif
   endif
 
@@ -156,17 +159,19 @@
   assign has_hover_image = false
   assign secondary_img_src = ''
   assign secondary_srcset = ''
-  if product != blank and product.images.size > 1 and product.images[1] != blank
-    assign secondary_img_src = product.images[1] | image_url: width: 450, format: 'webp'
-    capture secondary_srcset
-      echo product.images[1] | image_url: width: 350, format: 'webp'
-      echo ' 350w, '
-      echo product.images[1] | image_url: width: 450, format: 'webp'
-      echo ' 450w, '
-      echo product.images[1] | image_url: width: 600, format: 'webp'
-      echo ' 600w'
-    endcapture
-    assign has_hover_image = true
+  if product != blank
+    if product.images.size > 1 and product.images[1] != blank
+      assign secondary_img_src = product.images[1] | image_url: width: 450, format: 'webp'
+      capture secondary_srcset
+        echo product.images[1] | image_url: width: 350, format: 'webp'
+        echo ' 350w, '
+        echo product.images[1] | image_url: width: 450, format: 'webp'
+        echo ' 450w, '
+        echo product.images[1] | image_url: width: 600, format: 'webp'
+        echo ' 600w'
+      endcapture
+      assign has_hover_image = true
+    endif
   elsif secondary_image != blank
     if secondary_image contains '/' or secondary_image contains 'http'
       assign secondary_img_src = secondary_image
@@ -243,7 +248,7 @@
     </h3>
 
     <div class="product-card__meta">
-      {%- if product != blank and product.id != blank -%}
+      {%- if product != blank and product.id != blank and product.title == card_title -%}
         <div class="product-card__reviews js-card-reviews" data-product-id="{{ product.id }}">
           {% render 'judgeme_widgets', widget_type: 'judgeme_preview_badge', concise: true, concierge_install: true, product: product %}
         </div>
