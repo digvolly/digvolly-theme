@@ -1,0 +1,81 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400">
+  <defs>
+    <linearGradient id="ebookBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A"/>
+      <stop offset="45%" stop-color="#1E1B4B"/>
+      <stop offset="100%" stop-color="#312E81"/>
+    </linearGradient>
+    <linearGradient id="bookCover1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366F1"/>
+      <stop offset="100%" stop-color="#4338CA"/>
+    </linearGradient>
+    <linearGradient id="bookCover2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8B5CF6"/>
+      <stop offset="100%" stop-color="#6D28D9"/>
+    </linearGradient>
+    <linearGradient id="bookCover3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#EC4899"/>
+      <stop offset="100%" stop-color="#BE185D"/>
+    </linearGradient>
+    <filter id="bookShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="14" flood-color="rgba(0,0,0,0.5)"/>
+    </filter>
+    <pattern id="dots" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="10" cy="10" r="1" fill="rgba(255,255,255,0.04)"/>
+    </pattern>
+  </defs>
+  <rect width="600" height="400" fill="url(#ebookBg)"/>
+  <rect width="600" height="400" fill="url(#dots)"/>
+  <circle cx="150" cy="120" r="120" fill="rgba(99,102,241,0.12)"/>
+  <circle cx="460" cy="300" r="100" fill="rgba(139,92,246,0.1)"/>
+  <g filter="url(#bookShadow)">
+    <g transform="translate(340, 55) rotate(14)">
+      <rect x="0" y="0" width="130" height="175" rx="6" fill="url(#bookCover3)"/>
+      <rect x="0" y="0" width="14" height="175" rx="4" fill="rgba(255,255,255,0.18)"/>
+      <rect x="22" y="28" width="70" height="7" rx="3.5" fill="rgba(255,255,255,0.5)"/>
+      <rect x="22" y="42" width="50" height="5" rx="2.5" fill="rgba(255,255,255,0.25)"/>
+      <path d="M44 100 Q65 90 86 100 Q65 108 44 100Z" fill="rgba(255,255,255,0.35)" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
+      <line x1="65" y1="90" x2="65" y2="108" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
+    </g>
+    <g transform="translate(165, 45) rotate(-8)">
+      <rect x="0" y="0" width="130" height="175" rx="6" fill="url(#bookCover2)"/>
+      <rect x="0" y="0" width="14" height="175" rx="4" fill="rgba(255,255,255,0.18)"/>
+      <rect x="22" y="28" width="80" height="7" rx="3.5" fill="rgba(255,255,255,0.5)"/>
+      <rect x="22" y="42" width="60" height="5" rx="2.5" fill="rgba(255,255,255,0.25)"/>
+      <rect x="22" y="54" width="45" height="5" rx="2.5" fill="rgba(255,255,255,0.18)"/>
+      <rect x="22" y="90" width="86" height="4" rx="2" fill="rgba(255,255,255,0.2)"/>
+      <rect x="22" y="100" width="70" height="4" rx="2" fill="rgba(255,255,255,0.15)"/>
+      <rect x="22" y="110" width="78" height="4" rx="2" fill="rgba(255,255,255,0.2)"/>
+      <rect x="22" y="120" width="55" height="4" rx="2" fill="rgba(255,255,255,0.12)"/>
+    </g>
+    <g transform="translate(220, 30)">
+      <rect x="0" y="0" width="150" height="200" rx="8" fill="url(#bookCover1)"/>
+      <rect x="0" y="0" width="16" height="200" rx="6" fill="rgba(255,255,255,0.2)"/>
+      <rect x="26" y="28" width="100" height="9" rx="4.5" fill="rgba(255,255,255,0.7)"/>
+      <rect x="26" y="44" width="76" height="6" rx="3" fill="rgba(255,255,255,0.35)"/>
+      <rect x="26" y="57" width="60" height="6" rx="3" fill="rgba(255,255,255,0.25)"/>
+      <g transform="translate(75, 120)">
+        <path d="M0 0 Q-28 -5 -38 0 L-38 45 Q-28 40 0 45 Z" fill="rgba(255,255,255,0.22)" stroke="rgba(255,255,255,0.4)" stroke-width="1.2"/>
+        <path d="M0 0 Q28 -5 38 0 L38 45 Q28 40 0 45 Z" fill="rgba(255,255,255,0.22)" stroke="rgba(255,255,255,0.4)" stroke-width="1.2"/>
+        <line x1="0" y1="-6" x2="0" y2="46" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
+        <line x1="-30" y1="12" x2="-8" y2="10" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+        <line x1="-30" y1="20" x2="-8" y2="18" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+        <line x1="-30" y1="28" x2="-8" y2="26" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+        <line x1="8" y1="10" x2="30" y2="12" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+        <line x1="8" y1="18" x2="30" y2="20" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+        <line x1="8" y1="26" x2="30" y2="28" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+      </g>
+      <rect x="26" y="170" width="90" height="5" rx="2.5" fill="rgba(255,255,255,0.2)"/>
+      <rect x="26" y="181" width="65" height="5" rx="2.5" fill="rgba(255,255,255,0.14)"/>
+    </g>
+  </g>
+  <g transform="translate(100, 308)">
+    <rect width="400" height="72" rx="12" fill="rgba(15, 23, 42, 0.88)" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
+    <rect x="14" y="14" width="52" height="22" rx="11" fill="rgba(99,102,241,0.25)" stroke="rgba(99,102,241,0.5)" stroke-width="1"/>
+    <text x="40" y="29" font-family="Inter, system-ui, sans-serif" font-size="10" font-weight="700" fill="#A5B4FC" text-anchor="middle" letter-spacing="0.04em">PDF</text>
+    <rect x="74" y="14" width="58" height="22" rx="11" fill="rgba(139,92,246,0.2)" stroke="rgba(139,92,246,0.45)" stroke-width="1"/>
+    <text x="103" y="29" font-family="Inter, system-ui, sans-serif" font-size="10" font-weight="700" fill="#C4B5FD" text-anchor="middle" letter-spacing="0.04em">EPUB</text>
+    <text x="200" y="34" font-family="Inter, system-ui, sans-serif" font-size="16" font-weight="800" fill="#FFFFFF" text-anchor="middle" letter-spacing="-0.01em">eBOOKS &amp; GUIDES</text>
+    <text x="200" y="54" font-family="Inter, system-ui, sans-serif" font-size="11.5" font-weight="500" fill="#94A3B8" text-anchor="middle">Design Masterclasses &#x2022; Creative Playbooks &#x2022; Typography Guides</text>
+  </g>
+</svg>

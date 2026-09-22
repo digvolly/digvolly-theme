@@ -34,6 +34,26 @@ document.addEventListener('DOMContentLoaded', function() {
   const filterButtons = packWrapper.querySelectorAll('.js-pack-filter');
   const toastNotification = packWrapper.querySelector('.js-pack-toast');
 
+  // Dynamically compute category counts from rendered cards
+  const categoryCounts = {
+    all: cards.length,
+    eBooks: 0,
+    'Presentation Templates': 0,
+    Patterns: 0
+  };
+  cards.forEach(card => {
+    const cat = card.dataset.category;
+    if (categoryCounts[cat] !== undefined) {
+      categoryCounts[cat]++;
+    }
+  });
+  packWrapper.querySelectorAll('.js-pack-tab-count').forEach(badge => {
+    const f = badge.dataset.filter;
+    if (categoryCounts[f] !== undefined) {
+      badge.textContent = categoryCounts[f];
+    }
+  });
+
   let toastTimer = null;
   function showToast(message) {
     if (!toastNotification) return;

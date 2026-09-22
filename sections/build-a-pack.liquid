@@ -56,16 +56,16 @@
     <!-- Category Filter Tabs -->
     <nav class="pack-filter-pills" role="tablist" aria-label="Filter assets by category">
       <button type="button" class="pack-filter-pill js-pack-filter is-active" data-filter="all" role="tab" aria-selected="true">
-        All Assets (12)
+        All Assets (<span class="js-pack-tab-count" data-filter="all">86</span>)
       </button>
       <button type="button" class="pack-filter-pill js-pack-filter" data-filter="eBooks" role="tab" aria-selected="false">
-        eBooks
+        eBooks (<span class="js-pack-tab-count" data-filter="eBooks">1</span>)
       </button>
       <button type="button" class="pack-filter-pill js-pack-filter" data-filter="Presentation Templates" role="tab" aria-selected="false">
-        Presentation Templates
+        Presentation Templates (<span class="js-pack-tab-count" data-filter="Presentation Templates">23</span>)
       </button>
       <button type="button" class="pack-filter-pill js-pack-filter" data-filter="Patterns" role="tab" aria-selected="false">
-        Patterns
+        Patterns (<span class="js-pack-tab-count" data-filter="Patterns">62</span>)
       </button>
     </nav>
   </header>
@@ -74,29 +74,31 @@
   <main class="pack-grid-container">
     <h2 class="visually-hidden">Choose Your 6 Assets</h2>
     <div class="pack-items-grid" id="PackItemsGrid">
-      {%- assign all_products = collections['all'].products -%}
-      {%- if all_products != blank and all_products.size > 0 -%}
-        {%- for product in all_products limit: 17 -%}
-          {%- if product.handle == 'custom-6-asset-pack' or product.type == 'Bundle' or product.tags contains 'bundle' -%}
+      {%- paginate collections['all'].products by 250 -%}
+      {%- if collections['all'].products != blank and collections['all'].products.size > 0 -%}
+        {%- for product in collections['all'].products -%}
+          {%- if product.handle == 'custom-6-asset-pack' or product.type == 'Bundle' or product.tags contains 'bundle' or product.tags contains 'internal-bundle' -%}
             {%- continue -%}
           {%- endif -%}
+          {%- assign p_title_low = product.title | downcase -%}
+          {%- assign p_type_low = product.type | downcase -%}
           {%- assign p_cat = 'Presentation Templates' -%}
-          {%- assign p_type = product.type | downcase -%}
-          {%- if p_type contains 'ebook' or p_type contains 'book' or p_type contains 'guide' -%}
+          {%- if p_type_low == 'patterns' or p_type_low == 'pattern' -%}
+            {%- assign p_cat = 'Patterns' -%}
+          {%- elsif p_type_low == 'ebooks' or p_type_low == 'ebook' -%}
             {%- assign p_cat = 'eBooks' -%}
-          {%- elsif p_type contains 'pattern' or p_type contains 'paper' or p_type contains 'texture' -%}
+          {%- elsif p_title_low contains 'colouring book' or p_title_low contains 'ebook' or p_title_low contains 'guide' or p_title_low contains 'playbook' -%}
+            {%- assign p_cat = 'eBooks' -%}
+          {%- elsif p_title_low contains 'pattern' or p_title_low contains 'seamless' or p_title_low contains 'texture' or p_title_low contains 'paper' or p_title_low contains 'repeat' -%}
             {%- assign p_cat = 'Patterns' -%}
           {%- else -%}
             {%- for tag in product.tags -%}
               {%- assign t_low = tag | downcase -%}
-              {%- if t_low contains 'ebook' or t_low contains 'book' -%}
-                {%- assign p_cat = 'eBooks' -%}
-                {%- break -%}
-              {%- elsif t_low contains 'pattern' or t_low contains 'paper' -%}
+              {%- if t_low == 'pattern' or t_low == 'patterns' or t_low == 'seamless' or t_low == 'texture' or t_low == 'paper' -%}
                 {%- assign p_cat = 'Patterns' -%}
                 {%- break -%}
-              {%- elsif t_low contains 'presentation' or t_low contains 'template' -%}
-                {%- assign p_cat = 'Presentation Templates' -%}
+              {%- elsif t_low == 'ebook' or t_low == 'ebooks' or t_low == 'book' -%}
+                {%- assign p_cat = 'eBooks' -%}
                 {%- break -%}
               {%- endif -%}
             {%- endfor -%}
@@ -280,6 +282,7 @@
           secondary_image: 'mockup-geometric-pack.svg'
         %}
       {%- endif -%}
+      {%- endpaginate -%}
     </div>
   </main>
 
