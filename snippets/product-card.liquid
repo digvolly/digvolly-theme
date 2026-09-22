@@ -30,40 +30,10 @@
   assign card_category = ''
   if category != blank
     assign card_category = category
-  elsif product != blank
-    assign p_title_low = product.title | downcase
-    assign p_type_low = product.type | downcase
-    
-    if p_type_low == 'patterns' or p_type_low == 'pattern'
-      assign card_category = 'Patterns'
-    elsif p_type_low == 'ebooks' or p_type_low == 'ebook'
-      assign card_category = 'eBooks'
-    elsif p_title_low contains 'colouring book' or p_title_low contains 'ebook' or p_title_low contains 'guide' or p_title_low contains 'playbook'
-      assign card_category = 'eBooks'
-    elsif p_title_low contains 'pattern' or p_title_low contains 'seamless' or p_title_low contains 'texture' or p_title_low contains 'paper' or p_title_low contains 'repeat'
-      assign card_category = 'Patterns'
-    else
-      assign matched_from_tag = ''
-      for tag in product.tags
-        assign tag_lower = tag | downcase
-        if tag_lower == 'pattern' or tag_lower == 'patterns' or tag_lower == 'seamless' or tag_lower == 'texture' or tag_lower == 'paper'
-          assign matched_from_tag = 'Patterns'
-          break
-        elsif tag_lower == 'ebook' or tag_lower == 'ebooks' or tag_lower == 'book'
-          assign matched_from_tag = 'eBooks'
-          break
-        endif
-      endfor
-      if matched_from_tag != blank
-        assign card_category = matched_from_tag
-      elsif p_type_low contains 'presentation' or p_type_low contains 'template' or p_type_low contains 'deck'
-        assign card_category = 'Presentation Templates'
-      else
-        assign card_category = 'Presentation Templates'
-      endif
-    endif
+  elsif product != blank and product.type != blank
+    assign card_category = product.type
   else
-    assign card_category = 'Presentation Templates'
+    assign card_category = 'Digital Asset'
   endif
 
   if price != blank

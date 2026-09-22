@@ -42,9 +42,13 @@ document.addEventListener('DOMContentLoaded', function() {
     Patterns: 0
   };
   cards.forEach(card => {
-    const cat = card.dataset.category;
+    const cat = card.dataset.category || '';
     if (categoryCounts[cat] !== undefined) {
       categoryCounts[cat]++;
+    } else if (cat.toLowerCase().includes('ebook')) {
+      categoryCounts.eBooks++;
+    } else if (cat.toLowerCase().startsWith('pa')) {
+      categoryCounts.Patterns++;
     }
   });
   packWrapper.querySelectorAll('.js-pack-tab-count').forEach(badge => {
@@ -264,16 +268,22 @@ document.addEventListener('DOMContentLoaded', function() {
       this.classList.add('is-active');
       this.setAttribute('aria-selected', 'true');
 
-      const filter = this.dataset.filter;
+      const filter = (this.dataset.filter || '').toLowerCase();
       state.activeFilter = filter;
 
       cards.forEach(card => {
-        const category = card.dataset.category;
-        if (filter === 'all' || category === filter) {
-          card.style.display = '';
-        } else {
-          card.style.display = 'none';
+        const category = (card.dataset.category || '').toLowerCase();
+        let match = false;
+        if (filter === 'all') {
+          match = true;
+        } else if (category === filter) {
+          match = true;
+        } else if (filter === 'ebooks' && category.includes('ebook')) {
+          match = true;
+        } else if (filter === 'patterns' && category.startsWith('pa')) {
+          match = true;
         }
+        card.style.display = match ? '' : 'none';
       });
     });
   });

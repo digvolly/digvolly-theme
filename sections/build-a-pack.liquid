@@ -80,29 +80,7 @@
           {%- if product.handle == 'custom-6-asset-pack' or product.type == 'Bundle' or product.tags contains 'bundle' or product.tags contains 'internal-bundle' -%}
             {%- continue -%}
           {%- endif -%}
-          {%- assign p_title_low = product.title | downcase -%}
-          {%- assign p_type_low = product.type | downcase -%}
-          {%- assign p_cat = 'Presentation Templates' -%}
-          {%- if p_type_low == 'patterns' or p_type_low == 'pattern' -%}
-            {%- assign p_cat = 'Patterns' -%}
-          {%- elsif p_type_low == 'ebooks' or p_type_low == 'ebook' -%}
-            {%- assign p_cat = 'eBooks' -%}
-          {%- elsif p_title_low contains 'colouring book' or p_title_low contains 'ebook' or p_title_low contains 'guide' or p_title_low contains 'playbook' -%}
-            {%- assign p_cat = 'eBooks' -%}
-          {%- elsif p_title_low contains 'pattern' or p_title_low contains 'seamless' or p_title_low contains 'texture' or p_title_low contains 'paper' or p_title_low contains 'repeat' -%}
-            {%- assign p_cat = 'Patterns' -%}
-          {%- else -%}
-            {%- for tag in product.tags -%}
-              {%- assign t_low = tag | downcase -%}
-              {%- if t_low == 'pattern' or t_low == 'patterns' or t_low == 'seamless' or t_low == 'texture' or t_low == 'paper' -%}
-                {%- assign p_cat = 'Patterns' -%}
-                {%- break -%}
-              {%- elsif t_low == 'ebook' or t_low == 'ebooks' or t_low == 'book' -%}
-                {%- assign p_cat = 'eBooks' -%}
-                {%- break -%}
-              {%- endif -%}
-            {%- endfor -%}
-          {%- endif -%}
+          {%- assign p_cat = product.type | default: 'Digital Asset' -%}
           {%- if product.price > 0 -%}
             {%- assign card_price = product.price | money -%}
             {%- assign card_price_cents = product.price -%}

@@ -1,13 +1,10 @@
 <script src="{{ 'collection-filters.js' | asset_url }}" defer="defer"></script>
 
 {%- assign current_collection = collection -%}
-{%- assign force_category_filter = '' -%}
-{%- if collection.handle == 'patterns' and collection.all_products_count == 0 -%}
+{%- assign force_ebooks_fallback = false -%}
+{%- if collection.handle == 'ebooks' and collection.all_products_count == 0 -%}
   {%- assign current_collection = collections['all'] -%}
-  {%- assign force_category_filter = 'Patterns' -%}
-{%- elsif collection.handle == 'ebooks' and collection.all_products_count == 0 -%}
-  {%- assign current_collection = collections['all'] -%}
-  {%- assign force_category_filter = 'eBooks' -%}
+  {%- assign force_ebooks_fallback = true -%}
 {%- endif -%}
 
 {%- paginate current_collection.products by 48 -%}
@@ -37,14 +34,9 @@
       {%- if p.handle == 'custom-6-asset-pack' or p.tags contains 'internal-bundle' or p.type == 'Bundle' -%}
         {%- continue -%}
       {%- endif -%}
-      {%- if force_category_filter == 'Patterns' -%}
-        {%- assign p_tl = p.title | downcase -%}
-        {%- unless p_tl contains 'pattern' or p_tl contains 'seamless' or p_tl contains 'texture' or p_tl contains 'paper' or p_tl contains 'repeat' or p.tags contains 'pattern' or p.tags contains 'patterns' or p.tags contains 'seamless' -%}
-          {%- continue -%}
-        {%- endunless -%}
-      {%- elsif force_category_filter == 'eBooks' -%}
-        {%- assign p_tl = p.title | downcase -%}
-        {%- unless p_tl contains 'colouring book' or p_tl contains 'ebook' or p.tags contains 'ebook' or p.tags contains 'book' -%}
+      {%- if force_ebooks_fallback -%}
+        {%- assign p_type_down = p.type | downcase -%}
+        {%- unless p_type_down == 'ebook' or p_type_down == 'ebooks' -%}
           {%- continue -%}
         {%- endunless -%}
       {%- endif -%}
@@ -61,7 +53,7 @@
       <div class="collection-toolbar glass-panel">
         <div class="collection-toolbar__left">
           <span class="collection-results-count js-results-count">
-            {%- if paginate.pages > 1 and force_category_filter == blank -%}
+            {%- if paginate.pages > 1 and force_ebooks_fallback == false -%}
               Showing {{ paginate.current_offset | plus: 1 }}–{% if paginate.next %}{{ paginate.current_offset | plus: paginate.page_size }}{% else %}{{ total_catalog_count }}{% endif %} of {{ total_catalog_count }} assets
             {%- else -%}
               {{ visible_products_count }} asset{% if visible_products_count != 1 %}s{% endif %} found
@@ -167,14 +159,9 @@
               {%- if product.handle == 'custom-6-asset-pack' or product.tags contains 'internal-bundle' or product.type == 'Bundle' -%}
                 {%- continue -%}
               {%- endif -%}
-              {%- if force_category_filter == 'Patterns' -%}
-                {%- assign p_tl = product.title | downcase -%}
-                {%- unless p_tl contains 'pattern' or p_tl contains 'seamless' or p_tl contains 'texture' or p_tl contains 'paper' or p_tl contains 'repeat' or product.tags contains 'pattern' or product.tags contains 'patterns' or product.tags contains 'seamless' -%}
-                  {%- continue -%}
-                {%- endunless -%}
-              {%- elsif force_category_filter == 'eBooks' -%}
-                {%- assign p_tl = product.title | downcase -%}
-                {%- unless p_tl contains 'colouring book' or p_tl contains 'ebook' or product.tags contains 'ebook' or product.tags contains 'book' -%}
+              {%- if force_ebooks_fallback -%}
+                {%- assign p_type_down = product.type | downcase -%}
+                {%- unless p_type_down == 'ebook' or p_type_down == 'ebooks' -%}
                   {%- continue -%}
                 {%- endunless -%}
               {%- endif -%}
@@ -193,7 +180,7 @@
             </div>
           </div>
 
-          {%- if paginate.pages > 1 and force_category_filter == blank -%}
+          {%- if paginate.pages > 1 and force_ebooks_fallback == false -%}
             <nav class="pagination-wrapper" aria-label="Catalog pagination">
               <ul class="pagination-list" role="list">
                 {%- if paginate.previous -%}
