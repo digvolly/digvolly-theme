@@ -101,11 +101,39 @@
               {%- endif -%}
             {%- endfor -%}
           {%- endif -%}
-          {%- assign card_price = '$15.00' -%}
-          {%- assign card_price_cents = 1500 -%}
           {%- if product.price > 0 -%}
             {%- assign card_price = product.price | money -%}
             {%- assign card_price_cents = product.price -%}
+          {%- else -%}
+            {%- assign mod_idx = forloop.index0 | modulo: 3 -%}
+            {%- case p_cat -%}
+              {%- when 'eBooks' -%}
+                {%- if mod_idx == 0 -%}
+                  {%- assign card_price = '$24.00' -%}{%- assign card_price_cents = 2400 -%}
+                {%- elsif mod_idx == 1 -%}
+                  {%- assign card_price = '$20.00' -%}{%- assign card_price_cents = 2000 -%}
+                {%- else -%}
+                  {%- assign card_price = '$28.00' -%}{%- assign card_price_cents = 2800 -%}
+                {%- endif -%}
+              {%- when 'Presentation Templates' -%}
+                {%- if mod_idx == 0 -%}
+                  {%- assign card_price = '$18.00' -%}{%- assign card_price_cents = 1800 -%}
+                {%- elsif mod_idx == 1 -%}
+                  {%- assign card_price = '$15.00' -%}{%- assign card_price_cents = 1500 -%}
+                {%- else -%}
+                  {%- assign card_price = '$22.00' -%}{%- assign card_price_cents = 2200 -%}
+                {%- endif -%}
+              {%- when 'Patterns' -%}
+                {%- if mod_idx == 0 -%}
+                  {%- assign card_price = '$8.00' -%}{%- assign card_price_cents = 800 -%}
+                {%- elsif mod_idx == 1 -%}
+                  {%- assign card_price = '$10.00' -%}{%- assign card_price_cents = 1000 -%}
+                {%- else -%}
+                  {%- assign card_price = '$12.00' -%}{%- assign card_price_cents = 1200 -%}
+                {%- endif -%}
+              {%- else -%}
+                {%- assign card_price = '$15.00' -%}{%- assign card_price_cents = 1500 -%}
+            {%- endcase -%}
           {%- endif -%}
           {% render 'build-a-pack-card',
             product: product,
@@ -125,7 +153,8 @@
           title: 'Geometric Repeat Pack',
           category: 'Patterns',
           formats: 'AI, EPS, SVG, PNG',
-          price: '$15.00',
+          price: '$10.00',
+          price_cents: 1000,
           primary_image: 'mockup-geometric-pack.svg',
           secondary_image: 'mockup-geometric-pack-hover.svg'
         %}
@@ -135,7 +164,8 @@
           title: 'Pitch Deck Pro Template',
           category: 'Presentation Templates',
           formats: 'PPTX, KEY, FIGMA',
-          price: '$15.00',
+          price: '$18.00',
+          price_cents: 1800,
           primary_image: 'mockup-pitch-deck.svg',
           secondary_image: 'mockup-pitch-deck-hover.svg'
         %}
@@ -145,7 +175,8 @@
           title: 'Watercolor Texture Patterns',
           category: 'Patterns',
           formats: 'JPG 600DPI, PNG',
-          price: '$15.00',
+          price: '$12.00',
+          price_cents: 1200,
           primary_image: 'mockup-watercolor-papers.svg',
           secondary_image: 'mockup-watercolor-papers-hover.svg'
         %}
@@ -155,7 +186,8 @@
           title: '3D Design Masterclass eBook',
           category: 'eBooks',
           formats: 'PDF, EPUB, NOTION',
-          price: '$15.00',
+          price: '$24.00',
+          price_cents: 2400,
           primary_image: 'mockup-vector-graphics.svg',
           secondary_image: 'mockup-vector-graphics-hover.svg'
         %}
@@ -165,7 +197,8 @@
           title: 'Brand Identity Starter Kit',
           category: 'Presentation Templates',
           formats: 'AI, EPS, INDD, FIGMA',
-          price: '$15.00',
+          price: '$20.00',
+          price_cents: 2000,
           primary_image: 'mockup-branding-kit.svg',
           secondary_image: 'mockup-branding-kit-hover.svg'
         %}
@@ -175,7 +208,8 @@
           title: 'Social Media Creator Bundle',
           category: 'Presentation Templates',
           formats: 'CANVA, FIGMA, PSD',
-          price: '$15.00',
+          price: '$16.00',
+          price_cents: 1600,
           primary_image: 'mockup-social-templates.svg',
           secondary_image: 'mockup-social-templates-hover.svg'
         %}
@@ -185,7 +219,8 @@
           title: 'Typography & Layout Handbook eBook',
           category: 'eBooks',
           formats: 'PDF, EPUB, FIGMA',
-          price: '$15.00',
+          price: '$22.00',
+          price_cents: 2200,
           primary_image: 'mockup-typography-kit.svg',
           secondary_image: 'mockup-typography-kit-hover.svg'
         %}
@@ -195,7 +230,8 @@
           title: 'Mobile UI Design System',
           category: 'Presentation Templates',
           formats: 'FIGMA, SKETCH, XD',
-          price: '$15.00',
+          price: '$28.00',
+          price_cents: 2800,
           primary_image: 'mockup-mobile-ui.svg',
           secondary_image: 'mockup-mobile-ui-hover.svg'
         %}
@@ -205,7 +241,8 @@
           title: 'Handmade Marble Textures',
           category: 'Patterns',
           formats: 'JPG 6000x4000, TIFF',
-          price: '$15.00',
+          price: '$8.00',
+          price_cents: 800,
           primary_image: 'mockup-watercolor-papers-hover.svg',
           secondary_image: 'mockup-watercolor-papers.svg'
         %}
@@ -215,7 +252,8 @@
           title: 'Iconography & Design Systems Guide eBook',
           category: 'eBooks',
           formats: 'PDF, EPUB, NOTION',
-          price: '$15.00',
+          price: '$18.00',
+          price_cents: 1800,
           primary_image: 'mockup-vector-graphics-hover.svg',
           secondary_image: 'mockup-vector-graphics.svg'
         %}
@@ -226,6 +264,7 @@
           category: 'Presentation Templates',
           formats: 'INDD, IDML, FIGMA',
           price: '$15.00',
+          price_cents: 1500,
           primary_image: 'mockup-pitch-deck-hover.svg',
           secondary_image: 'mockup-pitch-deck.svg'
         %}
@@ -235,7 +274,8 @@
           title: 'Monoline Floral Patterns',
           category: 'Patterns',
           formats: 'AI, EPS, SVG, PAT',
-          price: '$15.00',
+          price: '$8.00',
+          price_cents: 800,
           primary_image: 'mockup-geometric-pack-hover.svg',
           secondary_image: 'mockup-geometric-pack.svg'
         %}
