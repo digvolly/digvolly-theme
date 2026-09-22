@@ -11,11 +11,19 @@
   "sections": {
     "hero": {
       "type": "hero",
-      "settings": {}
+      "settings": {
+        "heading": "Premium Digital Assets for Creators",
+        "subtitle": "Download instantly. Create without limits.",
+        "button_label": "Browse Collection",
+        "button_link": "shopify://collections"
+      }
     },
     "featured_products": {
       "type": "featured-products",
-      "settings": {}
+      "settings": {
+        "collection": "",
+        "products_to_show": 8
+      }
     },
     "how_it_works": {
       "type": "how-it-works",
