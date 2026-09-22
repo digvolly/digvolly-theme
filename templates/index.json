@@ -35,7 +35,26 @@
     },
     "browse_categories": {
       "type": "browse-categories",
-      "settings": {}
+      "settings": {
+        "tag": "Curated Collections",
+        "title": "Browse by Category",
+        "subtitle": "Find the exact design toolkit you need for your next creative project.",
+        "card_1_image": "shopify://shop_images/Colorful_vector_patterns_on_fabr__2K_20260922165249.jpg",
+        "card_1_badge": "60+ Patterns",
+        "card_1_title": "Patterns",
+        "card_1_desc": "Seamless vector pattern repeats, modern abstract textures, and handcrafted holiday motifs in AI, EPS & SVG.",
+        "card_1_url": "shopify://collections/patterns",
+        "card_2_image": "shopify://shop_images/Presentation_slide_deck_illustra__2K_20260922165712.jpg",
+        "card_2_badge": "Editable Slides",
+        "card_2_title": "Presentation Templates",
+        "card_2_desc": "Investor pitch decks, Keynote templates, and Figma slide toolkits designed to convert stakeholders and audiences.",
+        "card_2_url": "shopify://collections/presentation-templates",
+        "card_3_image": "shopify://shop_images/Stacked_digital_books_floating_2K_20260922165802.jpg",
+        "card_3_badge": "PDF & EPUB",
+        "card_3_title": "eBooks & Guides",
+        "card_3_desc": "Actionable design playbooks, editorial typography guides, and 3D masterclasses with exercises and source files.",
+        "card_3_url": "shopify://collections/ebooks"
+      }
     },
     "home_faq": {
       "type": "home-faq",
