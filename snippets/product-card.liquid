@@ -32,8 +32,6 @@
     assign card_category = category
   elsif product != blank and product.type != blank
     assign card_category = product.type
-  else
-    assign card_category = 'Digital Asset'
   endif
 
   if price != blank
@@ -212,8 +210,9 @@
           </picture>
         {%- endif -%}
       </div>
-    </a>
-    <span class="product-card__category-badge">{{ card_category }}</span>
+    {%- if card_category != blank -%}
+      <span class="product-card__category-badge">{{ card_category }}</span>
+    {%- endif -%}
   </div>
 
   <div class="product-card__content">
