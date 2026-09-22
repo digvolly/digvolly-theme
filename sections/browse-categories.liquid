@@ -1,84 +1,162 @@
+{%- liquid
+  assign section_tag = section.settings.tag | default: 'Curated Collections'
+  assign section_title = section.settings.title | default: 'Browse by Category'
+  assign section_subtitle = section.settings.subtitle | default: 'Find the exact design toolkit you need for your next creative project.'
+
+  assign card_1_image = section.settings.card_1_image
+  assign card_1_badge = section.settings.card_1_badge | default: '60+ Patterns'
+  assign card_1_title = section.settings.card_1_title | default: 'Patterns'
+  assign card_1_desc = section.settings.card_1_desc | default: 'Seamless vector pattern repeats, modern abstract textures, and handcrafted holiday motifs in AI, EPS & SVG.'
+  assign card_1_url = section.settings.card_1_url | default: '/collections/patterns'
+
+  assign card_2_image = section.settings.card_2_image
+  assign card_2_badge = section.settings.card_2_badge | default: 'Editable Slides'
+  assign card_2_title = section.settings.card_2_title | default: 'Presentation Templates'
+  assign card_2_desc = section.settings.card_2_desc | default: 'Investor pitch decks, Keynote templates, and Figma slide toolkits designed to convert stakeholders and audiences.'
+  assign card_2_url = section.settings.card_2_url | default: '/collections/presentation-templates'
+
+  assign card_3_image = section.settings.card_3_image
+  assign card_3_badge = section.settings.card_3_badge | default: 'PDF & EPUB'
+  assign card_3_title = section.settings.card_3_title | default: 'eBooks & Guides'
+  assign card_3_desc = section.settings.card_3_desc | default: 'Actionable design playbooks, editorial typography guides, and 3D masterclasses with exercises and source files.'
+  assign card_3_url = section.settings.card_3_url | default: '/collections/ebooks'
+-%}
+
 <section class="browse-categories-section" aria-label="Browse Digital Asset Categories">
   <div class="homepage-section-container">
     <div class="section-header text-center">
-      <span class="hero-tag">Curated Collections</span>
-      <h2 class="section-title">Browse by Category</h2>
-      <p class="section-subtitle">Find the exact design toolkit you need for your next creative project.</p>
+      {%- if section_tag != blank -%}
+        <span class="hero-tag">{{ section_tag }}</span>
+      {%- endif -%}
+      {%- if section_title != blank -%}
+        <h2 class="section-title">{{ section_title }}</h2>
+      {%- endif -%}
+      {%- if section_subtitle != blank -%}
+        <p class="section-subtitle">{{ section_subtitle }}</p>
+      {%- endif -%}
     </div>
 
     <div class="browse-categories-grid">
       <!-- Category 1: Patterns -->
-      <a href="{{ routes.collections_url }}/patterns" class="category-showcase-card card glass-panel" aria-label="Browse Patterns Collection">
+      <a href="{{ card_1_url }}" class="category-showcase-card card glass-panel" aria-label="Browse {{ card_1_title }} Collection">
         <div class="category-showcase-card__img-wrap">
-          <img 
-            src="{{ 'mockup-geometric-pack.svg' | asset_url }}" 
-            alt="Seamless Vector Patterns — repeatable geometric and floral swatches preview" 
-            class="category-showcase-card__img" 
-            width="600" 
-            height="400" 
-            loading="lazy"
-            decoding="async"
-          >
-          <span class="category-showcase-card__badge">60+ Patterns</span>
+          {%- if card_1_image != blank -%}
+            <img 
+              src="{{ card_1_image | image_url: width: 600 }}" 
+              srcset="{{ card_1_image | image_url: width: 350 }} 350w, {{ card_1_image | image_url: width: 450 }} 450w, {{ card_1_image | image_url: width: 600 }} 600w, {{ card_1_image | image_url: width: 800 }} 800w"
+              sizes="(max-width: 768px) calc(100vw - 40px), (max-width: 1024px) 45vw, 380px"
+              alt="{{ card_1_image.alt | default: card_1_title | escape }}" 
+              class="category-showcase-card__img" 
+              width="{{ card_1_image.width | default: 600 }}" 
+              height="{{ card_1_image.height | default: 400 }}" 
+              loading="lazy"
+              decoding="async"
+            >
+          {%- else -%}
+            <img 
+              src="{{ 'mockup-geometric-pack.svg' | asset_url }}" 
+              alt="Seamless Vector Patterns — repeatable geometric and floral swatches preview" 
+              class="category-showcase-card__img" 
+              width="600" 
+              height="400" 
+              loading="lazy"
+              decoding="async"
+            >
+          {%- endif -%}
+          {%- if card_1_badge != blank -%}
+            <span class="category-showcase-card__badge">{{ card_1_badge }}</span>
+          {%- endif -%}
         </div>
         <div class="category-showcase-card__content">
           <div class="category-showcase-card__header">
-            <h3 class="category-showcase-card__title">Patterns</h3>
+            <h3 class="category-showcase-card__title">{{ card_1_title }}</h3>
             <span class="category-showcase-card__arrow" aria-hidden="true">&rarr;</span>
           </div>
-          <p class="category-showcase-card__desc">
-            Seamless vector pattern repeats, modern abstract textures, and handcrafted holiday motifs in AI, EPS &amp; SVG.
-          </p>
+          {%- if card_1_desc != blank -%}
+            <p class="category-showcase-card__desc">{{ card_1_desc }}</p>
+          {%- endif -%}
         </div>
       </a>
 
       <!-- Category 2: Presentation Templates -->
-      <a href="{{ routes.collections_url }}/presentation-templates" class="category-showcase-card card glass-panel" aria-label="Browse Presentation Templates Collection">
+      <a href="{{ card_2_url }}" class="category-showcase-card card glass-panel" aria-label="Browse {{ card_2_title }} Collection">
         <div class="category-showcase-card__img-wrap">
-          <img 
-            src="{{ 'mockup-pitch-deck.svg' | asset_url }}" 
-            alt="Presentation Templates — editable PowerPoint, Keynote, and Figma slide decks preview" 
-            class="category-showcase-card__img" 
-            width="600" 
-            height="400" 
-            loading="lazy"
-            decoding="async"
-          >
-          <span class="category-showcase-card__badge">Editable Slides</span>
+          {%- if card_2_image != blank -%}
+            <img 
+              src="{{ card_2_image | image_url: width: 600 }}" 
+              srcset="{{ card_2_image | image_url: width: 350 }} 350w, {{ card_2_image | image_url: width: 450 }} 450w, {{ card_2_image | image_url: width: 600 }} 600w, {{ card_2_image | image_url: width: 800 }} 800w"
+              sizes="(max-width: 768px) calc(100vw - 40px), (max-width: 1024px) 45vw, 380px"
+              alt="{{ card_2_image.alt | default: card_2_title | escape }}" 
+              class="category-showcase-card__img" 
+              width="{{ card_2_image.width | default: 600 }}" 
+              height="{{ card_2_image.height | default: 400 }}" 
+              loading="lazy"
+              decoding="async"
+            >
+          {%- else -%}
+            <img 
+              src="{{ 'mockup-pitch-deck.svg' | asset_url }}" 
+              alt="Presentation Templates — editable PowerPoint, Keynote, and Figma slide decks preview" 
+              class="category-showcase-card__img" 
+              width="600" 
+              height="400" 
+              loading="lazy"
+              decoding="async"
+            >
+          {%- endif -%}
+          {%- if card_2_badge != blank -%}
+            <span class="category-showcase-card__badge">{{ card_2_badge }}</span>
+          {%- endif -%}
         </div>
         <div class="category-showcase-card__content">
           <div class="category-showcase-card__header">
-            <h3 class="category-showcase-card__title">Presentation Templates</h3>
+            <h3 class="category-showcase-card__title">{{ card_2_title }}</h3>
             <span class="category-showcase-card__arrow" aria-hidden="true">&rarr;</span>
           </div>
-          <p class="category-showcase-card__desc">
-            Investor pitch decks, Keynote templates, and Figma slide toolkits designed to convert stakeholders and audiences.
-          </p>
+          {%- if card_2_desc != blank -%}
+            <p class="category-showcase-card__desc">{{ card_2_desc }}</p>
+          {%- endif -%}
         </div>
       </a>
 
       <!-- Category 3: eBooks -->
-      <a href="{{ routes.collections_url }}/ebooks" class="category-showcase-card card glass-panel" aria-label="Browse eBooks Collection">
+      <a href="{{ card_3_url }}" class="category-showcase-card card glass-panel" aria-label="Browse {{ card_3_title }} Collection">
         <div class="category-showcase-card__img-wrap">
-          <img 
-            src="{{ 'mockup-ebooks.svg' | asset_url }}" 
-            alt="eBooks &amp; Design Guides — searchable PDF and EPUB digital handbooks preview" 
-            class="category-showcase-card__img" 
-            width="600" 
-            height="400" 
-            loading="lazy"
-            decoding="async"
-          >
-          <span class="category-showcase-card__badge">PDF &amp; EPUB</span>
+          {%- if card_3_image != blank -%}
+            <img 
+              src="{{ card_3_image | image_url: width: 600 }}" 
+              srcset="{{ card_3_image | image_url: width: 350 }} 350w, {{ card_3_image | image_url: width: 450 }} 450w, {{ card_3_image | image_url: width: 600 }} 600w, {{ card_3_image | image_url: width: 800 }} 800w"
+              sizes="(max-width: 768px) calc(100vw - 40px), (max-width: 1024px) 45vw, 380px"
+              alt="{{ card_3_image.alt | default: card_3_title | escape }}" 
+              class="category-showcase-card__img" 
+              width="{{ card_3_image.width | default: 600 }}" 
+              height="{{ card_3_image.height | default: 400 }}" 
+              loading="lazy"
+              decoding="async"
+            >
+          {%- else -%}
+            <img 
+              src="{{ 'mockup-ebooks.svg' | asset_url }}" 
+              alt="eBooks &amp; Design Guides — searchable PDF and EPUB digital handbooks preview" 
+              class="category-showcase-card__img" 
+              width="600" 
+              height="400" 
+              loading="lazy"
+              decoding="async"
+            >
+          {%- endif -%}
+          {%- if card_3_badge != blank -%}
+            <span class="category-showcase-card__badge">{{ card_3_badge }}</span>
+          {%- endif -%}
         </div>
         <div class="category-showcase-card__content">
           <div class="category-showcase-card__header">
-            <h3 class="category-showcase-card__title">eBooks &amp; Guides</h3>
+            <h3 class="category-showcase-card__title">{{ card_3_title }}</h3>
             <span class="category-showcase-card__arrow" aria-hidden="true">&rarr;</span>
           </div>
-          <p class="category-showcase-card__desc">
-            Actionable design playbooks, editorial typography guides, and 3D masterclasses with exercises and source files.
-          </p>
+          {%- if card_3_desc != blank -%}
+            <p class="category-showcase-card__desc">{{ card_3_desc }}</p>
+          {%- endif -%}
         </div>
       </a>
     </div>
@@ -88,7 +166,126 @@
 {% schema %}
 {
   "name": "Browse Categories",
-  "settings": [],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Header"
+    },
+    {
+      "type": "text",
+      "id": "tag",
+      "label": "Eyebrow Tag",
+      "default": "Curated Collections"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Browse by Category"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Find the exact design toolkit you need for your next creative project."
+    },
+    {
+      "type": "header",
+      "content": "Card 1: Patterns"
+    },
+    {
+      "type": "image_picker",
+      "id": "card_1_image",
+      "label": "Card 1 Image"
+    },
+    {
+      "type": "text",
+      "id": "card_1_badge",
+      "label": "Card 1 Badge Text",
+      "default": "60+ Patterns"
+    },
+    {
+      "type": "text",
+      "id": "card_1_title",
+      "label": "Card 1 Heading",
+      "default": "Patterns"
+    },
+    {
+      "type": "textarea",
+      "id": "card_1_desc",
+      "label": "Card 1 Description",
+      "default": "Seamless vector pattern repeats, modern abstract textures, and handcrafted holiday motifs in AI, EPS & SVG."
+    },
+    {
+      "type": "url",
+      "id": "card_1_url",
+      "label": "Card 1 Link"
+    },
+    {
+      "type": "header",
+      "content": "Card 2: Presentation Templates"
+    },
+    {
+      "type": "image_picker",
+      "id": "card_2_image",
+      "label": "Card 2 Image"
+    },
+    {
+      "type": "text",
+      "id": "card_2_badge",
+      "label": "Card 2 Badge Text",
+      "default": "Editable Slides"
+    },
+    {
+      "type": "text",
+      "id": "card_2_title",
+      "label": "Card 2 Heading",
+      "default": "Presentation Templates"
+    },
+    {
+      "type": "textarea",
+      "id": "card_2_desc",
+      "label": "Card 2 Description",
+      "default": "Investor pitch decks, Keynote templates, and Figma slide toolkits designed to convert stakeholders and audiences."
+    },
+    {
+      "type": "url",
+      "id": "card_2_url",
+      "label": "Card 2 Link"
+    },
+    {
+      "type": "header",
+      "content": "Card 3: eBooks & Guides"
+    },
+    {
+      "type": "image_picker",
+      "id": "card_3_image",
+      "label": "Card 3 Image"
+    },
+    {
+      "type": "text",
+      "id": "card_3_badge",
+      "label": "Card 3 Badge Text",
+      "default": "PDF & EPUB"
+    },
+    {
+      "type": "text",
+      "id": "card_3_title",
+      "label": "Card 3 Heading",
+      "default": "eBooks & Guides"
+    },
+    {
+      "type": "textarea",
+      "id": "card_3_desc",
+      "label": "Card 3 Description",
+      "default": "Actionable design playbooks, editorial typography guides, and 3D masterclasses with exercises and source files."
+    },
+    {
+      "type": "url",
+      "id": "card_3_url",
+      "label": "Card 3 Link"
+    }
+  ],
   "presets": [
     {
       "name": "Browse Categories"
