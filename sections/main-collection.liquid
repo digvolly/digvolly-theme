@@ -61,7 +61,7 @@
       <div class="collection-toolbar glass-panel">
         <div class="collection-toolbar__left">
           <span class="collection-results-count js-results-count">
-            {%- if paginate.pages > 1 -%}
+            {%- if paginate.pages > 1 and force_category_filter == blank -%}
               Showing {{ paginate.current_offset | plus: 1 }}–{% if paginate.next %}{{ paginate.current_offset | plus: paginate.page_size }}{% else %}{{ total_catalog_count }}{% endif %} of {{ total_catalog_count }} assets
             {%- else -%}
               {{ visible_products_count }} asset{% if visible_products_count != 1 %}s{% endif %} found
@@ -193,7 +193,7 @@
             </div>
           </div>
 
-          {%- if paginate.pages > 1 -%}
+          {%- if paginate.pages > 1 and force_category_filter == blank -%}
             <nav class="pagination-wrapper" aria-label="Catalog pagination">
               <ul class="pagination-list" role="list">
                 {%- if paginate.previous -%}
