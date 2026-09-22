@@ -99,6 +99,7 @@
   data-category="{{ category | escape }}" 
   data-formats="{{ formats | escape }}"
   data-price="{{ price | default: '$15.00' | escape }}"
+  data-price-cents="{{ price_cents | default: 1500 }}"
   role="checkbox" 
   aria-checked="false"
   tabindex="0"

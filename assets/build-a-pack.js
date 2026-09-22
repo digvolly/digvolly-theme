@@ -6,8 +6,17 @@ document.addEventListener('DOMContentLoaded', function() {
   if (!packWrapper) return;
 
   const TARGET_COUNT = 6;
-  const UNIT_PRICE = 15.00;
-  const BUNDLE_PRICE = 29.00;
+
+  function parseItemPrice(card) {
+    if (!card) return 15.00;
+    if (card.dataset.priceCents) {
+      const cents = parseInt(card.dataset.priceCents, 10);
+      if (!isNaN(cents) && cents > 0) return cents / 100;
+    }
+    const raw = card.dataset.price || '';
+    const num = parseFloat(raw.replace(/[^0-9.]/g, ''));
+    return (!isNaN(num) && num > 0) ? num : 15.00;
+  }
 
   const state = {
     selected: new Map(),
@@ -46,20 +55,33 @@ document.addEventListener('DOMContentLoaded', function() {
     const remaining = TARGET_COUNT - count;
     const percent = Math.min(100, Math.round((count / TARGET_COUNT) * 100));
 
+    // Calculate sum of selected item prices
+    let totalOriginalVal = 0;
+    state.selected.forEach(item => {
+      totalOriginalVal += item.price;
+    });
+    const discountedPackPrice = totalOriginalVal * 0.5;
+
     // Update Counter Badges
     countDisplays.forEach(el => el.textContent = count);
 
-    // Update Price Comparison
-    const totalOriginalVal = count * UNIT_PRICE;
+    // Update Price Comparison Displays
     originalValDisplays.forEach(el => {
-      el.textContent = count > 0 ? `$${totalOriginalVal.toFixed(2)} value` : '$0 value';
-      if (count === TARGET_COUNT) {
+      if (count === 0) {
+        el.textContent = '$0.00 value';
+      } else if (count === TARGET_COUNT) {
         el.innerHTML = `<s>$${totalOriginalVal.toFixed(2)} value</s>`;
+      } else {
+        el.textContent = `$${totalOriginalVal.toFixed(2)} value`;
       }
     });
 
     finalPriceDisplays.forEach(el => {
-      el.textContent = `$${BUNDLE_PRICE.toFixed(2)} Pack Price`;
+      if (count === 0) {
+        el.textContent = '$0.00 Pack Price';
+      } else {
+        el.textContent = `$${discountedPackPrice.toFixed(2)} Pack Price`;
+      }
     });
 
     // Update Progress Bar
@@ -70,13 +92,18 @@ document.addEventListener('DOMContentLoaded', function() {
       progressTrack.setAttribute('aria-valuenow', count);
     }
 
-    const CTA_TEXT = `Add Pack to Cart — $${BUNDLE_PRICE.toFixed(2)}`;
+    // Dynamic CTA Price Label
+    let ctaPriceText = '$0.00';
+    if (count > 0) {
+      ctaPriceText = `$${discountedPackPrice.toFixed(2)}`;
+    }
+    const CTA_TEXT = `Add Pack to Cart — ${ctaPriceText}`;
 
-    // State: Under 6 items vs Exactly 6 items
+    // Under 6 items state vs Exactly 6 items state
     if (count < TARGET_COUNT) {
       // Progress message
       if (progressMessage) {
-        progressMessage.textContent = `Select ${remaining} more asset${remaining === 1 ? '' : 's'} to unlock your $${BUNDLE_PRICE} pack price`;
+        progressMessage.textContent = `Select ${remaining} more asset${remaining === 1 ? '' : 's'} to unlock 50% bundle savings`;
       }
 
       // Progress bar styling
@@ -110,7 +137,7 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
       // EXACTLY 6 ITEMS (TARGET ACHIEVED)
       if (progressMessage) {
-        progressMessage.innerHTML = `<strong>🎉 Pack Complete!</strong> 6 assets unlocked for $${BUNDLE_PRICE.toFixed(2)} flat price (Save 68%)`;
+        progressMessage.innerHTML = `<strong>🎉 Pack Complete!</strong> 6 assets unlocked for $${discountedPackPrice.toFixed(2)} (Save 50%)`;
       }
 
       // Green success look on progress bar
@@ -158,8 +185,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function toggleCard() {
       const id = card.dataset.id;
       const variantId = card.dataset.variantId || id;
-      const title = card.dataset.title;
-      const price = card.dataset.price;
+      const title = card.dataset.title || '';
+      const price = parseItemPrice(card);
 
       if (state.selected.has(id)) {
         // Deselect item
@@ -188,7 +215,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     card.addEventListener('click', function(e) {
-      // If clicking button or card body
       toggleCard();
     });
 
@@ -232,7 +258,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // AJAX Add Pack to Cart
+  // AJAX Add 6-Pack to Cart (Option A: 6 separate line items with shared _BundleGroup)
   checkoutButtons.forEach(btn => {
     btn.addEventListener('click', async function(e) {
       e.preventDefault();
@@ -248,27 +274,19 @@ document.addEventListener('DOMContentLoaded', function() {
       if (label) label.textContent = 'Adding 6-Pack to Cart...';
 
       const selectedItems = Array.from(state.selected.values());
-      const bundleVariantId = packWrapper.dataset.bundleVariantId || '55438049608022';
-
-      const properties = {
-        'Tier': 'Custom 6-Asset Pack',
-        'Asset 1': selectedItems[0]?.title || '',
-        'Asset 2': selectedItems[1]?.title || '',
-        'Asset 3': selectedItems[2]?.title || '',
-        'Asset 4': selectedItems[3]?.title || '',
-        'Asset 5': selectedItems[4]?.title || '',
-        'Asset 6': selectedItems[5]?.title || '',
-        '_BundleGroup': `Pack-${Date.now()}`,
-        '_SelectedVariants': selectedItems.map(i => i.variantId).join(','),
-        '_SelectedIDs': selectedItems.map(i => i.id).join(',')
-      };
+      const bundleGroupId = `Pack-${Date.now()}`;
 
       const payload = {
-        items: [{
-          id: bundleVariantId,
+        items: selectedItems.map((item, index) => ({
+          id: item.variantId,
           quantity: 1,
-          properties: properties
-        }]
+          properties: {
+            '_BundleGroup': bundleGroupId,
+            '_PackType': 'Custom 6-Asset Pack',
+            '_PackIndex': `${index + 1} of 6`,
+            'Bundle': 'Custom 6-Asset Pack (50% Off)'
+          }
+        }))
       };
 
       try {
@@ -287,11 +305,7 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
           const errorData = await res.json().catch(() => ({}));
           console.error('Cart add error:', errorData);
-          if (errorData.description && errorData.description.includes('variant')) {
-            showToast('Bundle setup: Please publish "Custom 6-Asset Pack" to Online Store in Shopify Admin.');
-          } else {
-            showToast(errorData.description || 'Could not add pack to cart. Please try again.');
-          }
+          showToast(errorData.description || 'Could not add pack to cart. Please try again.');
         }
       } catch (err) {
         console.error('AJAX add to cart error:', err);

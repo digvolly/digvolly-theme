@@ -19,7 +19,7 @@
             Explore All Assets
           </a>
           <a href="/pages/build-a-pack" class="button button--secondary cart-empty__btn">
-            Build a Pack ($29)
+            Build a Pack (Save 50%)
           </a>
         </div>
 
@@ -131,6 +131,16 @@
                       {%- endif -%}
                     {%- endfor -%}
 
+                    {%- if item.line_level_discount_allocations.size > 0 -%}
+                      <ul class="cart-item__discounts" style="list-style: none; padding: 0; margin: 6px 0 0; font-size: 13px; color: #059669; font-weight: 600;">
+                        {%- for discount_allocation in item.line_level_discount_allocations -%}
+                          <li class="cart-item__discount">
+                            🎉 {{ discount_allocation.discount_application.title }}: -{{ discount_allocation.amount | money }}
+                          </li>
+                        {%- endfor -%}
+                      </ul>
+                    {%- endif -%}
+
                     <!-- Mobile-Only Price & Subtotal -->
                     <div class="cart-item__mobile-price-row">
                       <span class="cart-item__mobile-unit">{{ item.final_price | money }}</span>
@@ -191,6 +201,9 @@
                   <!-- Item Line Total Price -->
                   <div class="cart-item__line-total">
                     <strong class="cart-item__total-val js-cart-line-total">{{ item.final_line_price | money }}</strong>
+                    {%- if item.original_line_price != item.final_line_price -%}
+                      <s class="cart-item__compare-price" style="display: block; font-size: 13px; color: #9CA3AF;">{{ item.original_line_price | money }}</s>
+                    {%- endif -%}
                   </div>
                 </article>
               {%- endfor -%}

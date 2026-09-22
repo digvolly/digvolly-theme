@@ -38,9 +38,9 @@
   {%- liquid
     assign meta_desc = page_description
     if template.name == 'index' and meta_desc == blank
-      assign meta_desc = 'Shop premium seamless patterns, presentation templates & eBooks. Instant download, commercial license included. Build your own 6-pack from $29.'
+      assign meta_desc = 'Shop premium seamless patterns, presentation templates & eBooks. Instant download, commercial license included. Build your own 6-pack and save 50%.'
     elsif request.path == '/pages/build-a-pack' and meta_desc == blank
-      assign meta_desc = 'Build your own custom 6-asset pack from $29. Choose from seamless vector patterns, presentation decks, and eBooks. Commercial license included.'
+      assign meta_desc = 'Build your own custom 6-asset pack and save 50%. Choose from seamless vector patterns, presentation decks, and eBooks. Commercial license included.'
     elsif template.name == 'collection' and meta_desc == blank
       assign meta_desc = 'Explore ' | append: collection.title | append: ' at Digvolly. Handcrafted digital design assets with commercial license and instant download.'
     elsif template.name == 'product' and meta_desc == blank and product != blank
