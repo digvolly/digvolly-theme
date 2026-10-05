@@ -34,26 +34,41 @@ document.addEventListener('DOMContentLoaded', function() {
   const filterButtons = packWrapper.querySelectorAll('.js-pack-filter');
   const toastNotification = packWrapper.querySelector('.js-pack-toast');
 
+  function normalizeCategory(cat) {
+    if (!cat) return '';
+    const c = cat.toLowerCase().trim();
+    if (c === 'flyer' || c === 'flyers' || c.includes('flyer') || c.includes('poster')) return 'flyer & posters';
+    if (c.startsWith('pa') || c.includes('pattern')) return 'patterns';
+    if (c.includes('ebook') || c.includes('e-book')) return 'ebooks';
+    if (c.includes('presentation')) return 'presentation templates';
+    if (c.includes('wedding')) return 'wedding invitations';
+    if (c.includes('menu')) return 'menus';
+    if (c.includes('invoice')) return 'invoices';
+    return c;
+  }
+
   // Dynamically compute category counts from rendered cards
   const categoryCounts = {
     all: cards.length,
-    eBooks: 0,
-    'Presentation Templates': 0,
-    Patterns: 0
+    ebooks: 0,
+    'presentation templates': 0,
+    patterns: 0,
+    'flyer & posters': 0,
+    'wedding invitations': 0,
+    menus: 0,
+    invoices: 0
   };
   cards.forEach(card => {
-    const cat = card.dataset.category || '';
-    if (categoryCounts[cat] !== undefined) {
-      categoryCounts[cat]++;
-    } else if (cat.toLowerCase().includes('ebook')) {
-      categoryCounts.eBooks++;
-    } else if (cat.toLowerCase().startsWith('pa')) {
-      categoryCounts.Patterns++;
+    const norm = normalizeCategory(card.dataset.category || '');
+    if (categoryCounts[norm] !== undefined) {
+      categoryCounts[norm]++;
     }
   });
   packWrapper.querySelectorAll('.js-pack-tab-count').forEach(badge => {
-    const f = badge.dataset.filter;
-    if (categoryCounts[f] !== undefined) {
+    const f = normalizeCategory(badge.dataset.filter || '');
+    if (badge.dataset.filter === 'all') {
+      badge.textContent = categoryCounts.all;
+    } else if (categoryCounts[f] !== undefined) {
       badge.textContent = categoryCounts[f];
     }
   });
@@ -268,19 +283,16 @@ document.addEventListener('DOMContentLoaded', function() {
       this.classList.add('is-active');
       this.setAttribute('aria-selected', 'true');
 
-      const filter = (this.dataset.filter || '').toLowerCase();
+      const filter = normalizeCategory(this.dataset.filter || '');
       state.activeFilter = filter;
 
       cards.forEach(card => {
-        const category = (card.dataset.category || '').toLowerCase();
+        const rawCat = (card.dataset.category || '').toLowerCase().trim();
+        const normCat = normalizeCategory(rawCat);
         let match = false;
-        if (filter === 'all') {
+        if (!filter || filter === 'all') {
           match = true;
-        } else if (category === filter) {
-          match = true;
-        } else if (filter === 'ebooks' && category.includes('ebook')) {
-          match = true;
-        } else if (filter === 'patterns' && category.startsWith('pa')) {
+        } else if (normCat === filter || rawCat === filter) {
           match = true;
         }
         card.style.display = match ? '' : 'none';

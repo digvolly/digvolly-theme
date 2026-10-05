@@ -94,6 +94,19 @@ document.addEventListener('DOMContentLoaded', function() {
     return active;
   }
 
+  function normalizeCategory(cat) {
+    if (!cat) return '';
+    const c = cat.toLowerCase().trim();
+    if (c === 'flyer' || c === 'flyers' || c.includes('flyer') || c.includes('poster')) return 'flyer & posters';
+    if (c.startsWith('pa') || c.includes('pattern')) return 'patterns';
+    if (c.includes('ebook') || c.includes('e-book')) return 'ebooks';
+    if (c.includes('presentation')) return 'presentation templates';
+    if (c.includes('wedding')) return 'wedding invitations';
+    if (c.includes('menu')) return 'menus';
+    if (c.includes('invoice')) return 'invoices';
+    return c;
+  }
+
   function applyFilters() {
     const filters = getActiveFilters();
     const totalActive = filters.category.length;
@@ -141,8 +154,12 @@ document.addEventListener('DOMContentLoaded', function() {
     let visibleCount = 0;
 
     cards.forEach(card => {
-      const cardCategory = (card.dataset.category || '').toLowerCase();
-      const matchCategory = filters.category.length === 0 || filters.category.includes(cardCategory);
+      const rawCardCat = (card.dataset.category || '').toLowerCase().trim();
+      const normCardCat = normalizeCategory(rawCardCat);
+      const matchCategory = filters.category.length === 0 || filters.category.some(f => {
+        const normF = normalizeCategory(f);
+        return normF === normCardCat || f === rawCardCat || normF === rawCardCat || f === normCardCat;
+      });
 
       if (matchCategory) {
         card.style.display = '';

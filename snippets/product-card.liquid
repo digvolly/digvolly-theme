@@ -36,6 +36,23 @@
     assign card_category = product.type
   endif
 
+  assign card_cat_down = card_category | downcase | strip
+  if card_cat_down == 'flyer' or card_cat_down == 'flyers' or card_cat_down contains 'poster'
+    assign card_category = 'Flyer & Posters'
+  elsif card_cat_down == 'patterns' or card_cat_down == 'pattern'
+    assign card_category = 'Patterns'
+  elsif card_cat_down contains 'wedding'
+    assign card_category = 'Wedding Invitations'
+  elsif card_cat_down contains 'menu'
+    assign card_category = 'Menus'
+  elsif card_cat_down contains 'invoice'
+    assign card_category = 'Invoices'
+  elsif card_cat_down contains 'ebook'
+    assign card_category = 'eBooks'
+  elsif card_cat_down contains 'presentation'
+    assign card_category = 'Presentation Templates'
+  endif
+
   if price != blank
     assign card_price = price
     assign card_compare_price = compare_at_price | default: '$25.00'

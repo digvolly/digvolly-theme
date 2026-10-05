@@ -56,16 +56,28 @@
     <!-- Category Filter Tabs -->
     <nav class="pack-filter-pills" role="tablist" aria-label="Filter assets by category">
       <button type="button" class="pack-filter-pill js-pack-filter is-active" data-filter="all" role="tab" aria-selected="true">
-        All Assets (<span class="js-pack-tab-count" data-filter="all">86</span>)
+        All Assets (<span class="js-pack-tab-count" data-filter="all">0</span>)
       </button>
       <button type="button" class="pack-filter-pill js-pack-filter" data-filter="eBooks" role="tab" aria-selected="false">
-        eBooks (<span class="js-pack-tab-count" data-filter="eBooks">1</span>)
+        eBooks (<span class="js-pack-tab-count" data-filter="eBooks">0</span>)
       </button>
       <button type="button" class="pack-filter-pill js-pack-filter" data-filter="Presentation Templates" role="tab" aria-selected="false">
-        Presentation Templates (<span class="js-pack-tab-count" data-filter="Presentation Templates">23</span>)
+        Presentation Templates (<span class="js-pack-tab-count" data-filter="Presentation Templates">0</span>)
       </button>
       <button type="button" class="pack-filter-pill js-pack-filter" data-filter="Patterns" role="tab" aria-selected="false">
-        Patterns (<span class="js-pack-tab-count" data-filter="Patterns">62</span>)
+        Patterns (<span class="js-pack-tab-count" data-filter="Patterns">0</span>)
+      </button>
+      <button type="button" class="pack-filter-pill js-pack-filter" data-filter="Flyer & Posters" role="tab" aria-selected="false">
+        Flyer & Posters (<span class="js-pack-tab-count" data-filter="Flyer & Posters">0</span>)
+      </button>
+      <button type="button" class="pack-filter-pill js-pack-filter" data-filter="Wedding Invitations" role="tab" aria-selected="false">
+        Wedding Invitations (<span class="js-pack-tab-count" data-filter="Wedding Invitations">0</span>)
+      </button>
+      <button type="button" class="pack-filter-pill js-pack-filter" data-filter="Menus" role="tab" aria-selected="false">
+        Menus (<span class="js-pack-tab-count" data-filter="Menus">0</span>)
+      </button>
+      <button type="button" class="pack-filter-pill js-pack-filter" data-filter="Invoices" role="tab" aria-selected="false">
+        Invoices (<span class="js-pack-tab-count" data-filter="Invoices">0</span>)
       </button>
     </nav>
   </header>
@@ -81,6 +93,22 @@
             {%- continue -%}
           {%- endif -%}
           {%- assign p_cat = product.type | default: 'Digital Asset' -%}
+          {%- assign p_type_down = p_cat | downcase | strip -%}
+          {%- if p_type_down == 'flyer' or p_type_down == 'flyers' or p_type_down contains 'poster' -%}
+            {%- assign p_cat = 'Flyer & Posters' -%}
+          {%- elsif p_type_down == 'patterns' or p_type_down == 'pattern' -%}
+            {%- assign p_cat = 'Patterns' -%}
+          {%- elsif p_type_down contains 'wedding' -%}
+            {%- assign p_cat = 'Wedding Invitations' -%}
+          {%- elsif p_type_down contains 'menu' -%}
+            {%- assign p_cat = 'Menus' -%}
+          {%- elsif p_type_down contains 'invoice' -%}
+            {%- assign p_cat = 'Invoices' -%}
+          {%- elsif p_type_down contains 'ebook' -%}
+            {%- assign p_cat = 'eBooks' -%}
+          {%- elsif p_type_down contains 'presentation' -%}
+            {%- assign p_cat = 'Presentation Templates' -%}
+          {%- endif -%}
           {%- if product.price > 0 -%}
             {%- assign card_price = product.price | money -%}
             {%- assign card_price_cents = product.price -%}
@@ -111,6 +139,14 @@
                 {%- else -%}
                   {%- assign card_price = '$12.00' -%}{%- assign card_price_cents = 1200 -%}
                 {%- endif -%}
+              {%- when 'Flyer & Posters' -%}
+                {%- assign card_price = '$14.00' -%}{%- assign card_price_cents = 1400 -%}
+              {%- when 'Wedding Invitations' -%}
+                {%- assign card_price = '$16.00' -%}{%- assign card_price_cents = 1600 -%}
+              {%- when 'Menus' -%}
+                {%- assign card_price = '$12.00' -%}{%- assign card_price_cents = 1200 -%}
+              {%- when 'Invoices' -%}
+                {%- assign card_price = '$10.00' -%}{%- assign card_price_cents = 1000 -%}
               {%- else -%}
                 {%- assign card_price = '$15.00' -%}{%- assign card_price_cents = 1500 -%}
             {%- endcase -%}
