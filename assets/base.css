@@ -2089,10 +2089,38 @@ body.mobile-nav-open {
   color: #4B5563;
   margin-bottom: 8px;
   cursor: pointer;
+  transition: color 0.15s ease;
 }
 
 .filter-checkbox-label input { accent-color: #6366F1; width: 16px; height: 16px; cursor: pointer; }
 .filter-checkbox-label:hover { color: #111827; }
+
+.filter-checkbox-label.is-current {
+  color: #4F46E5;
+  font-weight: 600;
+  cursor: default;
+}
+
+.filter-checkbox-label.is-current input {
+  cursor: default;
+  opacity: 0.9;
+}
+
+.filter-current-tag {
+  display: inline-flex;
+  align-items: center;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #4F46E5;
+  background: #EEF2FF;
+  padding: 2px 7px;
+  border-radius: 999px;
+  margin-left: auto;
+  line-height: 1.4;
+  border: 1px solid rgba(99, 102, 241, 0.2);
+}
 
 .products-container--grid {
   display: grid;

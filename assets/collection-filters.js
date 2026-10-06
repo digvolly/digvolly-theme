@@ -76,120 +76,181 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  function getActiveFilters() {
-    const active = {
-      category: []
-    };
+  const currentPath = window.location.pathname.replace(/\/+$/, '');
+  const isAllCollection = collectionWrapper.dataset.isAll === 'true' || 
+                          collectionWrapper.dataset.collectionHandle === 'all' || 
+                          currentPath === '/collections/all' || 
+                          currentPath === '/collections';
 
+  if (!isAllCollection) {
+    // SPECIFIC CATEGORY COLLECTION PAGE:
+    // 1. Current category checkbox: locked in checked state, cannot be toggled
     filterCheckboxes.forEach(cb => {
-      if (cb.checked) {
-        const group = cb.dataset.group;
-        const val = cb.value.toLowerCase();
-        if (active[group]) {
-          active[group].push(val);
-        }
+      if (cb.dataset.current === 'true' || cb.disabled) {
+        cb.checked = true;
+        cb.addEventListener('click', function(e) {
+          e.preventDefault();
+          return false;
+        });
+        cb.addEventListener('change', function(e) {
+          this.checked = true;
+          e.preventDefault();
+          return false;
+        });
+      } else {
+        // 2. Different category checkboxes: clicking navigates to that category's real collection URL
+        cb.addEventListener('click', function(e) {
+          const targetUrl = this.dataset.url;
+          if (targetUrl) {
+            e.preventDefault();
+            window.location.href = targetUrl;
+          }
+        });
+        cb.addEventListener('change', function() {
+          const targetUrl = this.dataset.url;
+          if (targetUrl) {
+            window.location.href = targetUrl;
+          }
+        });
       }
     });
 
-    return active;
-  }
+    // Also attach to non-current category labels so clicking text navigates smoothly
+    const nonCurrentLabels = collectionWrapper.querySelectorAll('.filter-checkbox-label:not(.is-current)');
+    nonCurrentLabels.forEach(label => {
+      label.addEventListener('click', function(e) {
+        if (e.target && e.target.tagName.toLowerCase() === 'input') return;
+        const input = this.querySelector('.js-filter-checkbox');
+        if (input && input.dataset.url && input.dataset.current !== 'true') {
+          e.preventDefault();
+          window.location.href = input.dataset.url;
+        }
+      });
+    });
 
-  function normalizeCategory(cat) {
-    if (!cat) return '';
-    const c = cat.toLowerCase().trim();
-    if (c === 'flyer' || c === 'flyers' || c.includes('flyer') || c.includes('poster')) return 'flyer & posters';
-    if (c.startsWith('pa') || c.includes('pattern')) return 'patterns';
-    if (c.includes('ebook') || c.includes('e-book')) return 'ebooks';
-    if (c.includes('presentation')) return 'presentation templates';
-    if (c.includes('wedding')) return 'wedding invitations';
-    if (c.includes('menu')) return 'menus';
-    if (c.includes('invoice')) return 'invoices';
-    return c;
-  }
-
-  function applyFilters() {
-    const filters = getActiveFilters();
-    const totalActive = filters.category.length;
-
-    // Desktop clear button text
-    if (activeCountEl) {
-      activeCountEl.textContent = totalActive > 0 ? `(${totalActive})` : '';
-    }
-
+    // Clear filters button redirects to the full catalog
     clearFiltersBtns.forEach(btn => {
-      if (btn.classList.contains('clear-filters-btn')) {
-        btn.style.display = totalActive > 0 ? 'inline-block' : 'none';
-      }
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        window.location.href = '/collections/all';
+      });
     });
 
-    // Mobile trigger button count badge
-    if (mobileFilterBadge) {
-      if (totalActive > 0) {
-        mobileFilterBadge.textContent = `(${totalActive})`;
-        mobileFilterBadge.style.display = 'inline-flex';
-        if (openDrawerBtn) {
-          openDrawerBtn.classList.add('has-active');
-          openDrawerBtn.setAttribute('aria-label', `Filters (${totalActive} active)`);
+  } else {
+    // /collections/all PAGE: Client-side multi-facet filtering across full catalog
+    function getActiveFilters() {
+      const active = {
+        category: []
+      };
+
+      filterCheckboxes.forEach(cb => {
+        if (cb.checked) {
+          const group = cb.dataset.group;
+          const val = cb.value.toLowerCase();
+          if (active[group]) {
+            active[group].push(val);
+          }
         }
-      } else {
-        mobileFilterBadge.textContent = '';
-        mobileFilterBadge.style.display = 'none';
-        if (openDrawerBtn) {
-          openDrawerBtn.classList.remove('has-active');
-          openDrawerBtn.setAttribute('aria-label', 'Open filter options');
-        }
-      }
-    }
-
-    // Mobile sheet active pill
-    if (sheetActivePill) {
-      if (totalActive > 0) {
-        sheetActivePill.textContent = `${totalActive} active`;
-        sheetActivePill.style.display = 'inline-block';
-      } else {
-        sheetActivePill.style.display = 'none';
-      }
-    }
-
-    let visibleCount = 0;
-
-    cards.forEach(card => {
-      const rawCardCat = (card.dataset.category || '').toLowerCase().trim();
-      const normCardCat = normalizeCategory(rawCardCat);
-      const matchCategory = filters.category.length === 0 || filters.category.some(f => {
-        const normF = normalizeCategory(f);
-        return normF === normCardCat || f === rawCardCat || normF === rawCardCat || f === normCardCat;
       });
 
-      if (matchCategory) {
-        card.style.display = '';
-        visibleCount++;
-      } else {
-        card.style.display = 'none';
+      return active;
+    }
+
+    function normalizeCategory(cat) {
+      if (!cat) return '';
+      let c = cat.toLowerCase().replace(/&amp;/g, '&').trim();
+      if (c === 'flyer' || c === 'flyers' || c.includes('flyer') || c.includes('poster')) return 'flyer & posters';
+      if (c.startsWith('pa') || c.includes('pattern')) return 'patterns';
+      if (c.includes('ebook') || c.includes('e-book')) return 'ebooks';
+      if (c.includes('presentation')) return 'presentation templates';
+      if (c.includes('wedding')) return 'wedding invitations';
+      if (c.includes('menu')) return 'menus';
+      if (c.includes('invoice')) return 'invoices';
+      return c;
+    }
+
+    function applyFilters() {
+      const filters = getActiveFilters();
+      const totalActive = filters.category.length;
+
+      // Desktop clear button text
+      if (activeCountEl) {
+        activeCountEl.textContent = totalActive > 0 ? `(${totalActive})` : '';
       }
+
+      clearFiltersBtns.forEach(btn => {
+        if (btn.classList.contains('clear-filters-btn')) {
+          btn.style.display = totalActive > 0 ? 'inline-block' : 'none';
+        }
+      });
+
+      // Mobile trigger button count badge
+      if (mobileFilterBadge) {
+        if (totalActive > 0) {
+          mobileFilterBadge.textContent = `(${totalActive})`;
+          mobileFilterBadge.style.display = 'inline-flex';
+          if (openDrawerBtn) {
+            openDrawerBtn.classList.add('has-active');
+            openDrawerBtn.setAttribute('aria-label', `Filters (${totalActive} active)`);
+          }
+        } else {
+          mobileFilterBadge.textContent = '';
+          mobileFilterBadge.style.display = 'none';
+        }
+      }
+
+      // Mobile sheet active pill
+      if (sheetActivePill) {
+        if (totalActive > 0) {
+          sheetActivePill.textContent = `${totalActive} active`;
+          sheetActivePill.style.display = 'inline-block';
+        } else {
+          sheetActivePill.style.display = 'none';
+        }
+      }
+
+      let visibleCount = 0;
+
+      cards.forEach(card => {
+        const rawCardCat = (card.dataset.category || '').toLowerCase().trim();
+        const normCardCat = normalizeCategory(rawCardCat);
+        const matchCategory = filters.category.length === 0 || filters.category.some(f => {
+          const normF = normalizeCategory(f);
+          return normF === normCardCat || f === rawCardCat || normF === rawCardCat || f === normCardCat;
+        });
+
+        if (matchCategory) {
+          card.style.display = '';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      if (resultsCountEl) {
+        resultsCountEl.textContent = `${visibleCount} asset${visibleCount === 1 ? '' : 's'} found`;
+      }
+
+      const noResultsEl = collectionWrapper.querySelector('.js-no-results');
+      if (noResultsEl) {
+        noResultsEl.style.display = (visibleCount === 0 && cards.length > 0) ? 'block' : 'none';
+      }
+    }
+
+    filterCheckboxes.forEach(cb => {
+      cb.addEventListener('change', applyFilters);
     });
 
-    if (resultsCountEl) {
-      resultsCountEl.textContent = `${visibleCount} asset${visibleCount === 1 ? '' : 's'} found`;
-    }
+    clearFiltersBtns.forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        filterCheckboxes.forEach(cb => cb.checked = false);
+        applyFilters();
+      });
+    });
 
-    const noResultsEl = collectionWrapper.querySelector('.js-no-results');
-    if (noResultsEl) {
-      noResultsEl.style.display = (visibleCount === 0 && cards.length > 0) ? 'block' : 'none';
-    }
+    applyFilters();
   }
-
-  filterCheckboxes.forEach(cb => {
-    cb.addEventListener('change', applyFilters);
-  });
-
-  clearFiltersBtns.forEach(btn => {
-    btn.addEventListener('click', function(e) {
-      e.preventDefault();
-      filterCheckboxes.forEach(cb => cb.checked = false);
-      applyFilters();
-    });
-  });
 
   // Layout View Switcher: Grid vs Masonry
   if (viewGridBtn && viewMasonryBtn && productsContainer) {
@@ -207,6 +268,4 @@ document.addEventListener('DOMContentLoaded', function() {
       productsContainer.classList.add('products-container--masonry');
     });
   }
-
-  applyFilters();
 });

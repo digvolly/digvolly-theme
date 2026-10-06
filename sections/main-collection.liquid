@@ -7,8 +7,14 @@
   {%- assign force_ebooks_fallback = true -%}
 {%- endif -%}
 
+{%- assign current_handle = collection.handle -%}
+{%- assign is_all_collection = false -%}
+{%- if current_handle == 'all' or current_handle == blank -%}
+  {%- assign is_all_collection = true -%}
+{%- endif -%}
+
 {%- paginate current_collection.products by 48 -%}
-<section class="collection-wrapper" aria-label="Digital Assets Collection">
+<section class="collection-wrapper" data-collection-handle="{{ current_handle | escape }}" data-is-all="{% if is_all_collection %}true{% else %}false{% endif %}" aria-label="Digital Assets Collection">
   <div class="collection-header text-center">
     <span class="hero-tag">Creative Studio Vault</span>
     <h1 class="collection-title">{{ collection.title | default: 'All Creative Digital Assets' }}</h1>
@@ -125,34 +131,34 @@
                   </svg>
                 </button>
                 <div class="filter-group__content">
-                  <label class="filter-checkbox-label">
-                    <input type="checkbox" class="js-filter-checkbox" data-group="category" value="eBooks">
-                    <span>eBooks</span>
-                  </label>
-                  <label class="filter-checkbox-label">
-                    <input type="checkbox" class="js-filter-checkbox" data-group="category" value="Presentation Templates">
-                    <span>Presentation Templates</span>
-                  </label>
-                  <label class="filter-checkbox-label">
-                    <input type="checkbox" class="js-filter-checkbox" data-group="category" value="Patterns">
-                    <span>Patterns</span>
-                  </label>
-                  <label class="filter-checkbox-label">
-                    <input type="checkbox" class="js-filter-checkbox" data-group="category" value="Flyer & Posters">
-                    <span>Flyer & Posters</span>
-                  </label>
-                  <label class="filter-checkbox-label">
-                    <input type="checkbox" class="js-filter-checkbox" data-group="category" value="Wedding Invitations">
-                    <span>Wedding Invitations</span>
-                  </label>
-                  <label class="filter-checkbox-label">
-                    <input type="checkbox" class="js-filter-checkbox" data-group="category" value="Menus">
-                    <span>Menus</span>
-                  </label>
-                  <label class="filter-checkbox-label">
-                    <input type="checkbox" class="js-filter-checkbox" data-group="category" value="Invoices">
-                    <span>Invoices</span>
-                  </label>
+                  {%- comment -%}
+                    7 Canonical Asset Categories: Title | Handle
+                  {%- endcomment -%}
+                  {%- assign category_list = "eBooks:ebooks,Presentation Templates:presentation-templates,Patterns:patterns,Flyer & Posters:flyer,Wedding Invitations:wedding-invitations,Menus:menus,Invoices:invoices" | split: "," -%}
+                  {%- for item in category_list -%}
+                    {%- assign parts = item | split: ":" -%}
+                    {%- assign cat_title = parts[0] -%}
+                    {%- assign cat_handle = parts[1] -%}
+                    {%- assign cat_url = routes.collections_url | append: '/' | append: cat_handle -%}
+                    {%- assign is_current_cat = false -%}
+                    {%- if is_all_collection == false and current_handle == cat_handle -%}
+                      {%- assign is_current_cat = true -%}
+                    {%- endif -%}
+                    <label class="filter-checkbox-label{% if is_current_cat %} is-current{% endif %}">
+                      <input 
+                        type="checkbox" 
+                        class="js-filter-checkbox" 
+                        data-group="category" 
+                        value="{{ cat_title }}" 
+                        data-url="{{ cat_url }}"
+                        {% if is_current_cat %} checked disabled data-current="true" aria-current="page"{% endif %}
+                      >
+                      <span>{{ cat_title }}</span>
+                      {%- if is_current_cat -%}
+                        <span class="filter-current-tag">Current</span>
+                      {%- endif -%}
+                    </label>
+                  {%- endfor -%}
                 </div>
               </div>
             </div>
