@@ -1,15 +1,12 @@
 /**
- * Digvolly Collection Multi-Facet Filtering, Mobile Drawer & View Toggle
+ * Digvolly Collection Navigation, Mobile Drawer & View Toggle
  */
 function initCollectionFilters() {
   const collectionWrapper = document.querySelector('.collection-wrapper');
   if (!collectionWrapper) return;
 
-  const cards = collectionWrapper.querySelectorAll('.js-collection-item');
   const filterCheckboxes = collectionWrapper.querySelectorAll('.js-filter-checkbox');
   const clearFiltersBtns = collectionWrapper.querySelectorAll('.js-clear-filters');
-  const activeCountEl = collectionWrapper.querySelector('.js-active-filter-count');
-  const resultsCountEl = collectionWrapper.querySelector('.js-results-count');
   const viewGridBtn = collectionWrapper.querySelector('.js-view-grid');
   const viewMasonryBtn = collectionWrapper.querySelector('.js-view-masonry');
   const productsContainer = collectionWrapper.querySelector('.js-products-container');
@@ -18,8 +15,6 @@ function initCollectionFilters() {
   const filterDrawer = collectionWrapper.querySelector('.js-collection-sidebar');
   const openDrawerBtn = collectionWrapper.querySelector('.js-open-filter-drawer');
   const closeDrawerBtns = collectionWrapper.querySelectorAll('.js-close-filter-drawer');
-  const mobileFilterBadge = collectionWrapper.querySelector('.js-mobile-filter-count');
-  const sheetActivePill = collectionWrapper.querySelector('.js-sheet-active-pill');
   const accordionToggles = collectionWrapper.querySelectorAll('.js-filter-accordion-toggle');
 
   function openDrawer() {
@@ -85,287 +80,85 @@ function initCollectionFilters() {
                           currentPath === '/collections/all' || 
                           currentPath === '/collections';
 
-  if (!isAllCollection) {
-    // SPECIFIC CATEGORY COLLECTION PAGE:
-    // 1. Current category checkbox: locked in checked state, cannot be toggled
-    filterCheckboxes.forEach(cb => {
-      if (cb.dataset.current === 'true' || cb.disabled) {
-        cb.checked = true;
-        cb.addEventListener('click', function(e) {
-          e.preventDefault();
-          return false;
-        });
-        cb.addEventListener('change', function(e) {
-          this.checked = true;
-          e.preventDefault();
-          return false;
-        });
-      } else {
-        // 2. Different category checkboxes: clicking navigates to that category's real collection URL
-        cb.addEventListener('click', function(e) {
-          const targetUrl = this.dataset.url;
-          if (targetUrl) {
-            e.preventDefault();
-            window.location.href = targetUrl;
-          }
-        });
-        cb.addEventListener('change', function() {
-          const targetUrl = this.dataset.url;
-          if (targetUrl) {
-            window.location.href = targetUrl;
-          }
-        });
-      }
-    });
+  // Category Checkbox Navigation:
+  // On both specific collection pages and /collections/all, selecting a category
+  // redirects the browser to that category's real collection URL (e.g. /collections/menus).
+  filterCheckboxes.forEach(cb => {
+    const isCurrent = cb.dataset.current === 'true' || (!isAllCollection && cb.disabled);
 
-    // Also attach to non-current category labels so clicking text navigates smoothly
-    const nonCurrentLabels = collectionWrapper.querySelectorAll('.filter-checkbox-label:not(.is-current)');
-    nonCurrentLabels.forEach(label => {
-      label.addEventListener('click', function(e) {
-        if (e.target && e.target.tagName.toLowerCase() === 'input') return;
-        const input = this.querySelector('.js-filter-checkbox');
-        if (input && input.dataset.url && input.dataset.current !== 'true') {
-          e.preventDefault();
-          window.location.href = input.dataset.url;
-        }
-      });
-    });
-
-    // Clear filters button redirects to the full catalog
-    clearFiltersBtns.forEach(btn => {
-      btn.addEventListener('click', function(e) {
+    if (isCurrent) {
+      // Locked in checked state for the current category page
+      cb.checked = true;
+      cb.addEventListener('click', function(e) {
         e.preventDefault();
-        window.location.href = '/collections/all';
+        return false;
       });
-    });
-
-  } else {
-    // /collections/all PAGE: Client-side multi-facet filtering across full catalog
-    const paginationWrapper = collectionWrapper.querySelector('.pagination-wrapper');
-    const initialResultsText = resultsCountEl ? resultsCountEl.textContent.trim() : '';
-    const collectionDescEl = collectionWrapper.querySelector('.js-collection-desc');
-    const initialCollectionDesc = collectionDescEl ? collectionDescEl.textContent.trim() : '';
-
-    const categoryDescriptions = {
-      'ebooks': 'Comprehensive creator eBooks, actionable typography guides, and design playbooks.',
-      'presentation templates': 'High-converting presentation decks, keynote templates, and multi-format slide toolkits.',
-      'patterns': 'Seamless vector patterns, abstract repeats, and handcrafted background packs.',
-      'flyer & posters': 'High-impact promotional flyers, event posters, and print-ready visual templates.',
-      'wedding invitations': 'Elegant wedding invitation suites, RSVP cards, and customizable celebration stationery.',
-      'menus': 'Modern restaurant, café, and bar menu layouts with customizable typography and styling.',
-      'invoices': 'Professional invoice templates, billing sheets, and client estimate layouts.'
-    };
-
-    function normalizeCategory(cat) {
-      if (!cat) return '';
-      let c = cat.toLowerCase().replace(/&amp;/g, '&').trim();
-      if (c === 'flyer' || c === 'flyers' || c.includes('flyer') || c.includes('poster')) return 'flyer & posters';
-      if (c.startsWith('pa') || c.includes('pattern')) return 'patterns';
-      if (c.includes('ebook') || c.includes('e-book')) return 'ebooks';
-      if (c.includes('presentation')) return 'presentation templates';
-      if (c.includes('wedding')) return 'wedding invitations';
-      if (c.includes('menu')) return 'menus';
-      if (c.includes('invoice')) return 'invoices';
-      return c;
-    }
-
-    // Always inspect URL query parameters:
-    // If no filter query parameters exist (e.g. landing on /collections/all fresh or clicking "Browse Collection"),
-    // confirm ALL checkboxes are completely unchecked by default.
-    function initFiltersFromUrl() {
-      const searchParams = new URLSearchParams(window.location.search);
-      const categoryParam = searchParams.get('category') || searchParams.get('filter');
-
-      if (!categoryParam) {
-        filterCheckboxes.forEach(cb => {
-          cb.checked = false;
-          if (cb.removeAttribute) cb.removeAttribute('checked');
-        });
-        return;
-      }
-
-      const activeCategories = categoryParam.split(',').map(s => s.trim().toLowerCase()).filter(Boolean);
-      filterCheckboxes.forEach(cb => {
-        const cbVal = cb.value.toLowerCase();
-        const cbNorm = normalizeCategory(cbVal);
-        const shouldBeChecked = activeCategories.some(req => {
-          const reqNorm = normalizeCategory(req);
-          return reqNorm === cbNorm || reqNorm === cbVal || req === cbNorm || req === cbVal;
-        });
-        cb.checked = shouldBeChecked;
+      cb.addEventListener('change', function(e) {
+        this.checked = true;
+        e.preventDefault();
+        return false;
       });
-    }
+    } else {
+      // Unchecked by default on /collections/all and non-current category pages
+      cb.checked = false;
+      if (cb.removeAttribute) cb.removeAttribute('checked');
 
-    function syncUrlWithFilters(activeCategories) {
-      if (typeof window === 'undefined' || !window.history || !window.history.replaceState) return;
-      try {
-        const url = new URL(window.location.href);
-        if (activeCategories && activeCategories.length > 0) {
-          url.searchParams.set('category', activeCategories.join(','));
-        } else {
-          url.searchParams.delete('category');
-          url.searchParams.delete('filter');
-        }
-        const newQuery = url.searchParams.toString();
-        const newUrl = url.pathname + (newQuery ? '?' + newQuery : '');
-        window.history.replaceState(null, '', newUrl);
-      } catch (e) {
-        // Fallback for older browsers
-      }
-    }
-
-    function getActiveFilters() {
-      const active = {
-        category: []
-      };
-
-      filterCheckboxes.forEach(cb => {
-        if (cb.checked) {
-          const group = cb.dataset.group;
-          const val = cb.value.toLowerCase();
-          if (active[group]) {
-            active[group].push(val);
-          }
+      cb.addEventListener('click', function(e) {
+        const targetUrl = this.dataset.url;
+        if (targetUrl) {
+          e.preventDefault();
+          window.location.href = targetUrl;
         }
       });
 
-      return active;
-    }
-
-    function applyFilters(shouldSyncUrl) {
-      const filters = getActiveFilters();
-      const totalActive = filters.category.length;
-
-      if (shouldSyncUrl) {
-        syncUrlWithFilters(filters.category);
-      }
-
-      // Desktop clear button text
-      if (activeCountEl) {
-        activeCountEl.textContent = totalActive > 0 ? `(${totalActive})` : '';
-      }
-
-      clearFiltersBtns.forEach(btn => {
-        if (btn.classList.contains('clear-filters-btn')) {
-          btn.style.display = totalActive > 0 ? 'inline-block' : 'none';
-        }
-      });
-
-      // Mobile trigger button count badge
-      if (mobileFilterBadge) {
-        if (totalActive > 0) {
-          mobileFilterBadge.textContent = `(${totalActive})`;
-          mobileFilterBadge.style.display = 'inline-flex';
-          if (openDrawerBtn) {
-            openDrawerBtn.classList.add('has-active');
-            openDrawerBtn.setAttribute('aria-label', `Filters (${totalActive} active)`);
-          }
-        } else {
-          mobileFilterBadge.textContent = '';
-          mobileFilterBadge.style.display = 'none';
-        }
-      }
-
-      // Mobile sheet active pill
-      if (sheetActivePill) {
-        if (totalActive > 0) {
-          sheetActivePill.textContent = `${totalActive} active`;
-          sheetActivePill.style.display = 'inline-block';
-        } else {
-          sheetActivePill.style.display = 'none';
-        }
-      }
-
-      // Filter product cards in DOM
-      let visibleCount = 0;
-
-      cards.forEach(card => {
-        const rawCardCat = (card.dataset.category || '').toLowerCase().trim();
-        const normCardCat = normalizeCategory(rawCardCat);
-        const matchCategory = filters.category.length === 0 || filters.category.some(f => {
-          const normF = normalizeCategory(f);
-          return normF === normCardCat || f === rawCardCat || normF === rawCardCat || f === normCardCat;
-        });
-
-        if (matchCategory) {
-          card.style.display = '';
-          visibleCount++;
-        } else {
-          card.style.display = 'none';
-        }
-      });
-
-      // Update results count display
-      if (resultsCountEl) {
-        if (totalActive > 0) {
-          resultsCountEl.textContent = `${visibleCount} asset${visibleCount === 1 ? '' : 's'} found`;
-        } else {
-          resultsCountEl.textContent = initialResultsText || `${visibleCount} asset${visibleCount === 1 ? '' : 's'} found`;
-        }
-      }
-
-      // Update collection subtitle when filtering by a specific category
-      if (collectionDescEl) {
-        if (totalActive === 1) {
-          const singleNorm = normalizeCategory(filters.category[0]);
-          if (categoryDescriptions[singleNorm]) {
-            collectionDescEl.textContent = categoryDescriptions[singleNorm];
-          } else {
-            collectionDescEl.textContent = initialCollectionDesc;
-          }
-        } else {
-          collectionDescEl.textContent = initialCollectionDesc;
-        }
-      }
-
-      // No results message
-      const noResultsEl = collectionWrapper.querySelector('.js-no-results');
-      if (noResultsEl) {
-        noResultsEl.style.display = (visibleCount === 0 && cards.length > 0) ? 'block' : 'none';
-      }
-
-      // Pagination display: hide pagination when 0 results or when filtering is active
-      if (paginationWrapper) {
-        if (totalActive > 0 || visibleCount === 0) {
-          paginationWrapper.style.display = 'none';
-        } else {
-          paginationWrapper.style.display = '';
-        }
-      }
-    }
-
-    filterCheckboxes.forEach(cb => {
       cb.addEventListener('change', function() {
-        applyFilters(true);
-      });
-    });
-
-    clearFiltersBtns.forEach(btn => {
-      btn.addEventListener('click', function(e) {
-        e.preventDefault();
-        filterCheckboxes.forEach(cb => cb.checked = false);
-        if (window.history && window.history.replaceState) {
-          window.history.replaceState(null, '', window.location.pathname);
+        const targetUrl = this.dataset.url;
+        if (targetUrl) {
+          window.location.href = targetUrl;
         }
-        applyFilters(false);
       });
-    });
+    }
+  });
 
-    // Guard against bfcache (back/forward navigation) carrying over stale checkbox states
-    window.addEventListener('pageshow', function() {
-      initFiltersFromUrl();
-      applyFilters(false);
+  // Attach to non-current category labels so clicking text navigates smoothly
+  const nonCurrentLabels = collectionWrapper.querySelectorAll('.filter-checkbox-label:not(.is-current)');
+  nonCurrentLabels.forEach(label => {
+    label.addEventListener('click', function(e) {
+      if (e.target && e.target.tagName.toLowerCase() === 'input') return;
+      const input = this.querySelector('.js-filter-checkbox');
+      if (input && input.dataset.url && input.dataset.current !== 'true') {
+        e.preventDefault();
+        window.location.href = input.dataset.url;
+      }
     });
+  });
 
-    // Also guard on window load in case browser restored form controls after DOMContentLoaded
-    window.addEventListener('load', function() {
-      initFiltersFromUrl();
-      applyFilters(false);
+  // Clear filters button redirects to the full catalog (/collections/all)
+  clearFiltersBtns.forEach(btn => {
+    if (!isAllCollection && btn.classList.contains('clear-filters-btn')) {
+      btn.style.display = 'inline-block';
+    } else if (isAllCollection && btn.classList.contains('clear-filters-btn')) {
+      btn.style.display = 'none';
+    }
+
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      window.location.href = '/collections/all';
     });
+  });
 
-    // Initial load: parse URL (clears checkboxes if no URL params present) and apply
-    initFiltersFromUrl();
-    applyFilters(false);
+  // On /collections/all: ensure all checkboxes stay unchecked on load and back/forward cache
+  if (isAllCollection) {
+    function resetAllCheckboxes() {
+      filterCheckboxes.forEach(cb => {
+        cb.checked = false;
+        if (cb.removeAttribute) cb.removeAttribute('checked');
+      });
+    }
+
+    resetAllCheckboxes();
+    window.addEventListener('pageshow', resetAllCheckboxes);
+    window.addEventListener('load', resetAllCheckboxes);
   }
 
   // Layout View Switcher: Grid vs Masonry
