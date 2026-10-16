@@ -138,6 +138,78 @@ document.addEventListener('DOMContentLoaded', function() {
 
   } else {
     // /collections/all PAGE: Client-side multi-facet filtering across full catalog
+    const paginationWrapper = collectionWrapper.querySelector('.pagination-wrapper');
+    const initialResultsText = resultsCountEl ? resultsCountEl.textContent.trim() : '';
+    const collectionDescEl = collectionWrapper.querySelector('.js-collection-desc');
+    const initialCollectionDesc = collectionDescEl ? collectionDescEl.textContent.trim() : '';
+
+    const categoryDescriptions = {
+      'ebooks': 'Comprehensive creator eBooks, actionable typography guides, and design playbooks.',
+      'presentation templates': 'High-converting presentation decks, keynote templates, and multi-format slide toolkits.',
+      'patterns': 'Seamless vector patterns, abstract repeats, and handcrafted background packs.',
+      'flyer & posters': 'High-impact promotional flyers, event posters, and print-ready visual templates.',
+      'wedding invitations': 'Elegant wedding invitation suites, RSVP cards, and customizable celebration stationery.',
+      'menus': 'Modern restaurant, café, and bar menu layouts with customizable typography and styling.',
+      'invoices': 'Professional invoice templates, billing sheets, and client estimate layouts.'
+    };
+
+    function normalizeCategory(cat) {
+      if (!cat) return '';
+      let c = cat.toLowerCase().replace(/&amp;/g, '&').trim();
+      if (c === 'flyer' || c === 'flyers' || c.includes('flyer') || c.includes('poster')) return 'flyer & posters';
+      if (c.startsWith('pa') || c.includes('pattern')) return 'patterns';
+      if (c.includes('ebook') || c.includes('e-book')) return 'ebooks';
+      if (c.includes('presentation')) return 'presentation templates';
+      if (c.includes('wedding')) return 'wedding invitations';
+      if (c.includes('menu')) return 'menus';
+      if (c.includes('invoice')) return 'invoices';
+      return c;
+    }
+
+    // Always inspect URL query parameters:
+    // If no filter query parameters exist (e.g. landing on /collections/all fresh or clicking "Browse Collection"),
+    // confirm ALL checkboxes are completely unchecked by default.
+    function initFiltersFromUrl() {
+      const searchParams = new URLSearchParams(window.location.search);
+      const categoryParam = searchParams.get('category') || searchParams.get('filter');
+
+      if (!categoryParam) {
+        filterCheckboxes.forEach(cb => {
+          cb.checked = false;
+        });
+        return;
+      }
+
+      const activeCategories = categoryParam.split(',').map(s => s.trim().toLowerCase()).filter(Boolean);
+      filterCheckboxes.forEach(cb => {
+        const cbVal = cb.value.toLowerCase();
+        const cbNorm = normalizeCategory(cbVal);
+        const shouldBeChecked = activeCategories.some(req => {
+          const reqNorm = normalizeCategory(req);
+          return reqNorm === cbNorm || reqNorm === cbVal || req === cbNorm || req === cbVal;
+        });
+        cb.checked = shouldBeChecked;
+      });
+    }
+
+    function syncUrlWithFilters(activeCategories) {
+      if (typeof window === 'undefined' || !window.history || !window.history.replaceState) return;
+      try {
+        const url = new URL(window.location.href);
+        if (activeCategories && activeCategories.length > 0) {
+          url.searchParams.set('category', activeCategories.join(','));
+        } else {
+          url.searchParams.delete('category');
+          url.searchParams.delete('filter');
+        }
+        const newQuery = url.searchParams.toString();
+        const newUrl = url.pathname + (newQuery ? '?' + newQuery : '');
+        window.history.replaceState(null, '', newUrl);
+      } catch (e) {
+        // Fallback for older browsers
+      }
+    }
+
     function getActiveFilters() {
       const active = {
         category: []
@@ -156,22 +228,13 @@ document.addEventListener('DOMContentLoaded', function() {
       return active;
     }
 
-    function normalizeCategory(cat) {
-      if (!cat) return '';
-      let c = cat.toLowerCase().replace(/&amp;/g, '&').trim();
-      if (c === 'flyer' || c === 'flyers' || c.includes('flyer') || c.includes('poster')) return 'flyer & posters';
-      if (c.startsWith('pa') || c.includes('pattern')) return 'patterns';
-      if (c.includes('ebook') || c.includes('e-book')) return 'ebooks';
-      if (c.includes('presentation')) return 'presentation templates';
-      if (c.includes('wedding')) return 'wedding invitations';
-      if (c.includes('menu')) return 'menus';
-      if (c.includes('invoice')) return 'invoices';
-      return c;
-    }
-
-    function applyFilters() {
+    function applyFilters(shouldSyncUrl) {
       const filters = getActiveFilters();
       const totalActive = filters.category.length;
+
+      if (shouldSyncUrl) {
+        syncUrlWithFilters(filters.category);
+      }
 
       // Desktop clear button text
       if (activeCountEl) {
@@ -209,6 +272,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       }
 
+      // Filter product cards in DOM
       let visibleCount = 0;
 
       cards.forEach(card => {
@@ -227,29 +291,71 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       });
 
+      // Update results count display
       if (resultsCountEl) {
-        resultsCountEl.textContent = `${visibleCount} asset${visibleCount === 1 ? '' : 's'} found`;
+        if (totalActive > 0) {
+          resultsCountEl.textContent = `${visibleCount} asset${visibleCount === 1 ? '' : 's'} found`;
+        } else {
+          resultsCountEl.textContent = initialResultsText || `${visibleCount} asset${visibleCount === 1 ? '' : 's'} found`;
+        }
       }
 
+      // Update collection subtitle when filtering by a specific category
+      if (collectionDescEl) {
+        if (totalActive === 1) {
+          const singleNorm = normalizeCategory(filters.category[0]);
+          if (categoryDescriptions[singleNorm]) {
+            collectionDescEl.textContent = categoryDescriptions[singleNorm];
+          } else {
+            collectionDescEl.textContent = initialCollectionDesc;
+          }
+        } else {
+          collectionDescEl.textContent = initialCollectionDesc;
+        }
+      }
+
+      // No results message
       const noResultsEl = collectionWrapper.querySelector('.js-no-results');
       if (noResultsEl) {
         noResultsEl.style.display = (visibleCount === 0 && cards.length > 0) ? 'block' : 'none';
       }
+
+      // Pagination display: hide pagination when 0 results or when filtering is active
+      if (paginationWrapper) {
+        if (totalActive > 0 || visibleCount === 0) {
+          paginationWrapper.style.display = 'none';
+        } else {
+          paginationWrapper.style.display = '';
+        }
+      }
     }
 
     filterCheckboxes.forEach(cb => {
-      cb.addEventListener('change', applyFilters);
+      cb.addEventListener('change', function() {
+        applyFilters(true);
+      });
     });
 
     clearFiltersBtns.forEach(btn => {
       btn.addEventListener('click', function(e) {
         e.preventDefault();
         filterCheckboxes.forEach(cb => cb.checked = false);
-        applyFilters();
+        if (window.history && window.history.replaceState) {
+          window.history.replaceState(null, '', window.location.pathname);
+        }
+        applyFilters(false);
       });
     });
 
-    applyFilters();
+    // Guard against bfcache (back/forward navigation) carrying over stale checkbox states
+    window.addEventListener('pageshow', function() {
+      initFiltersFromUrl();
+      applyFilters(false);
+    });
+
+    // Initial load: parse URL (clears checkboxes if no URL params present) and apply
+    initFiltersFromUrl();
+    applyFilters(false);
   }
 
   // Layout View Switcher: Grid vs Masonry

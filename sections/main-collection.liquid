@@ -17,9 +17,17 @@
 <section class="collection-wrapper" data-collection-handle="{{ current_handle | escape }}" data-is-all="{% if is_all_collection %}true{% else %}false{% endif %}" aria-label="Digital Assets Collection">
   <div class="collection-header text-center">
     <span class="hero-tag">Creative Studio Vault</span>
-    <h1 class="collection-title">{{ collection.title | default: 'All Creative Digital Assets' }}</h1>
-    <p class="collection-desc">
-      {%- if collection.description != blank -%}
+    <h1 class="collection-title">
+      {%- if is_all_collection -%}
+        All Creative Digital Assets
+      {%- else -%}
+        {{ collection.title | default: 'Creative Digital Assets' }}
+      {%- endif -%}
+    </h1>
+    <p class="collection-desc js-collection-desc">
+      {%- if is_all_collection -%}
+        Explore high-converting presentation templates, comprehensive creator eBooks, and seamless vector pattern packs. Instant commercial licensing on all packs.
+      {%- elsif collection.description != blank -%}
         {{ collection.description }}
       {%- elsif collection.handle == 'ebooks' -%}
         Comprehensive creator eBooks, actionable typography guides, and design playbooks.
@@ -27,8 +35,16 @@
         High-converting presentation decks, keynote templates, and multi-format slide toolkits.
       {%- elsif collection.handle == 'patterns' -%}
         Seamless vector patterns, abstract repeats, and handcrafted background packs.
+      {%- elsif collection.handle == 'flyer' -%}
+        High-impact promotional flyers, event posters, and print-ready visual templates.
+      {%- elsif collection.handle == 'wedding-invitations' -%}
+        Elegant wedding invitation suites, RSVP cards, and customizable celebration stationery.
+      {%- elsif collection.handle == 'menus' -%}
+        Modern restaurant, café, and bar menu layouts with customizable typography and styling.
+      {%- elsif collection.handle == 'invoices' -%}
+        Professional invoice templates, billing sheets, and client estimate layouts.
       {%- else -%}
-        Explore high-converting presentation templates, comprehensive creator eBooks, and seamless vector pattern packs. Instant commercial licensing on all packs.
+        High-converting digital design assets, templates, and creative toolkits with instant commercial licensing.
       {%- endif -%}
     </p>
   </div>
@@ -151,6 +167,7 @@
                         data-group="category" 
                         value="{{ cat_title }}" 
                         data-url="{{ cat_url }}"
+                        autocomplete="off"
                         {% if is_current_cat %} checked disabled data-current="true" aria-current="page"{% endif %}
                       >
                       <span>{{ cat_title }}</span>
@@ -280,6 +297,16 @@
             New eBooks Coming Soon
           {%- elsif collection.handle == 'presentation-templates' -%}
             New Presentation Templates Coming Soon
+          {%- elsif collection.handle == 'patterns' -%}
+            New Patterns Coming Soon
+          {%- elsif collection.handle == 'flyer' -%}
+            New Flyer &amp; Posters Coming Soon
+          {%- elsif collection.handle == 'wedding-invitations' -%}
+            New Wedding Invitations Coming Soon
+          {%- elsif collection.handle == 'menus' -%}
+            New Menus Coming Soon
+          {%- elsif collection.handle == 'invoices' -%}
+            New Invoices Coming Soon
           {%- else -%}
             New {{ collection.title | default: 'Assets' }} Coming Soon
           {%- endif -%}
@@ -290,6 +317,16 @@
             We are currently curating and formatting brand new comprehensive creator eBooks, design guides, and actionable toolkits. Check back soon or explore our available design asset vault!
           {%- elsif collection.handle == 'presentation-templates' -%}
             High-converting pitch decks, slide frameworks, and keynote presentation templates are currently in final development. Check back soon or explore our available design assets!
+          {%- elsif collection.handle == 'patterns' -%}
+            Handcrafted seamless vector patterns and abstract backgrounds are currently being added. Check back soon or explore our available design assets!
+          {%- elsif collection.handle == 'flyer' -%}
+            High-impact promotional flyers and event poster layouts are currently in development. Check back soon or explore our available design assets!
+          {%- elsif collection.handle == 'wedding-invitations' -%}
+            Elegant wedding invitation suites and stationery templates are currently being designed. Check back soon or explore our available design assets!
+          {%- elsif collection.handle == 'menus' -%}
+            Modern restaurant, café, and bar menu layouts are currently being formatted. Check back soon or explore our available design assets!
+          {%- elsif collection.handle == 'invoices' -%}
+            Professional invoice templates and billing sheets are currently in design. Check back soon or explore our available design assets!
           {%- else -%}
             New digital asset packs are currently being prepared for this collection. Browse our full creative catalog in the meantime!
           {%- endif -%}
