@@ -1,4 +1,4 @@
-<script src="{{ 'collection-filters.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'collection-filters.js' | asset_url }}&v=20261016_v4" defer="defer"></script>
 
 {%- assign current_collection = collection -%}
 {%- assign force_ebooks_fallback = false -%}
@@ -176,9 +176,26 @@
                       {%- endif -%}
                     </label>
                   {%- endfor -%}
-                </div>
               </div>
             </div>
+
+            <script>
+              (function() {
+                try {
+                  var isAll = {% if is_all_collection %}true{% else %}false{% endif %};
+                  if (isAll) {
+                    var sp = new URLSearchParams(window.location.search);
+                    var hasFilter = sp.get('category') || sp.get('filter');
+                    if (!hasFilter) {
+                      var cbs = document.querySelectorAll('.js-filter-checkbox');
+                      for (var i = 0; i < cbs.length; i++) {
+                        cbs[i].checked = false;
+                      }
+                    }
+                  }
+                } catch(e) {}
+              })();
+            </script>
 
             <!-- Mobile Bottom Sheet Sticky Footer (hidden on desktop) -->
             <div class="collection-filter-sheet__footer">

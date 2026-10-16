@@ -1,7 +1,7 @@
 /**
  * Digvolly Collection Multi-Facet Filtering, Mobile Drawer & View Toggle
  */
-document.addEventListener('DOMContentLoaded', function() {
+function initCollectionFilters() {
   const collectionWrapper = document.querySelector('.collection-wrapper');
   if (!collectionWrapper) return;
 
@@ -79,6 +79,9 @@ document.addEventListener('DOMContentLoaded', function() {
   const currentPath = window.location.pathname.replace(/\/+$/, '');
   const isAllCollection = collectionWrapper.dataset.isAll === 'true' || 
                           collectionWrapper.dataset.collectionHandle === 'all' || 
+                          currentPath.endsWith('/collections/all') || 
+                          currentPath.endsWith('/collections') ||
+                          currentPath.indexOf('/collections/all') !== -1 ||
                           currentPath === '/collections/all' || 
                           currentPath === '/collections';
 
@@ -176,6 +179,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (!categoryParam) {
         filterCheckboxes.forEach(cb => {
           cb.checked = false;
+          if (cb.removeAttribute) cb.removeAttribute('checked');
         });
         return;
       }
@@ -353,6 +357,12 @@ document.addEventListener('DOMContentLoaded', function() {
       applyFilters(false);
     });
 
+    // Also guard on window load in case browser restored form controls after DOMContentLoaded
+    window.addEventListener('load', function() {
+      initFiltersFromUrl();
+      applyFilters(false);
+    });
+
     // Initial load: parse URL (clears checkboxes if no URL params present) and apply
     initFiltersFromUrl();
     applyFilters(false);
@@ -374,4 +384,10 @@ document.addEventListener('DOMContentLoaded', function() {
       productsContainer.classList.add('products-container--masonry');
     });
   }
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initCollectionFilters);
+} else {
+  initCollectionFilters();
+}
