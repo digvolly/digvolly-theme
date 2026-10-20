@@ -974,6 +974,15 @@ body.mobile-nav-open {
   border-color: #4F46E5;
 }
 
+/* Product Card Button Label Toggle */
+.product-card__btn-text--desktop {
+  display: inline;
+}
+
+.product-card__btn-text--mobile {
+  display: none;
+}
+
 /* --- Curated Bundle Landing Pages --- */
 .bundle-hero-section {
   padding: 80px 40px;
@@ -6398,6 +6407,52 @@ body.mobile-nav-open {
   .pagination-link--prev,
   .pagination-link--next {
     padding: 0 10px;
+  }
+}
+
+/* ==========================================================================
+   Mobile-Only Product Card Fixes (Screens up to 767px wide)
+   ========================================================================== */
+@media (max-width: 767px) {
+  /* 1. Category Badge: completely hide on product images across all categories */
+  .product-card__category-badge {
+    display: none !important;
+  }
+
+  /* Preserve product buy box category badge if PDP uses this class */
+  .product-info-column .product-card__category-badge,
+  .product-buy-box .product-card__category-badge {
+    display: inline-flex !important;
+  }
+
+  /* 2. "View Pack Details" button on product cards on mobile */
+  .product-card__btn-text--desktop {
+    display: none !important;
+  }
+
+  .product-card__btn-text--mobile {
+    display: inline !important;
+  }
+
+  .product-card__button {
+    width: 100% !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    font-size: 13px !important;
+    padding: 9px 8px !important;
+    box-sizing: border-box !important;
+    text-decoration: none !important;
+    line-height: 1.3 !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .product-card__button {
+    padding: 8px 4px !important;
+    font-size: 12.5px !important;
   }
 }
 

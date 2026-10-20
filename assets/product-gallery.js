@@ -237,7 +237,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 <span>Commercial License Included</span>
               </div>
             </div>
-            <a href="/products/${p.handle}" class="product-card__button">View Pack Details</a>
+            <a href="/products/${p.handle}" class="product-card__button">
+              <span class="product-card__btn-text--desktop">View Pack Details</span>
+              <span class="product-card__btn-text--mobile">View Details</span>
+            </a>
           </div>
         </div>
       `;
