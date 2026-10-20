@@ -1,0 +1,58 @@
+{%- liquid
+  assign enable_bar = true
+  if section.settings.show_announcement == false
+    assign enable_bar = false
+  elsif settings.bogo_enable == false or settings.bogo_show_announcement == false
+    assign enable_bar = false
+  endif
+
+  assign bar_text = section.settings.text | default: settings.bogo_announcement_text | default: "Buy 1, Get 4 FREE — add 5 templates, pay for 1 (automatic at checkout)"
+  assign bar_link = section.settings.link | default: settings.bogo_announcement_link | default: "/collections/all"
+-%}
+
+{%- if enable_bar and bar_text != blank -%}
+  <div class="announcement-bar" role="region" aria-label="Store announcement">
+    <div class="announcement-bar__inner">
+      {%- if bar_link != blank -%}
+        <a href="{{ bar_link }}" class="announcement-bar__link">
+          <span class="announcement-bar__pill">Limited Time</span>
+          <span class="announcement-bar__text">{{ bar_text }}</span>
+          <svg class="announcement-bar__arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </a>
+      {%- else -%}
+        <div class="announcement-bar__content">
+          <span class="announcement-bar__pill">Limited Time</span>
+          <span class="announcement-bar__text">{{ bar_text }}</span>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Announcement Bar",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_announcement",
+      "label": "Show announcement bar",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Announcement text",
+      "default": "Buy 1, Get 4 FREE — add 5 templates, pay for 1 (automatic at checkout)"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Link",
+      "default": "/collections/all"
+    }
+  ]
+}
+{% endschema %}

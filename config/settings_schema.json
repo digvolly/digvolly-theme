@@ -6,5 +6,98 @@
     "theme_author": "Digvolly",
     "theme_documentation_url": "https://digvolly.com",
     "theme_support_url": "https://digvolly.com"
+  },
+  {
+    "name": "Buy 1 Get 4 Free Promotion",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Master Toggle"
+      },
+      {
+        "type": "checkbox",
+        "id": "bogo_enable",
+        "label": "Enable Promotion Messaging",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "Announcement Bar"
+      },
+      {
+        "type": "checkbox",
+        "id": "bogo_show_announcement",
+        "label": "Show Announcement Bar",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "bogo_announcement_text",
+        "label": "Announcement Text",
+        "default": "Buy 1, Get 4 FREE — add 5 templates, pay for 1 (automatic at checkout)"
+      },
+      {
+        "type": "url",
+        "id": "bogo_announcement_link",
+        "label": "Announcement Link",
+        "default": "/collections/all"
+      },
+      {
+        "type": "header",
+        "content": "Product Page"
+      },
+      {
+        "type": "checkbox",
+        "id": "bogo_show_product_msg",
+        "label": "Show Product Page Promo Line",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "bogo_product_msg",
+        "label": "Product Page Promo Line",
+        "default": "Buy 1 Get 4 FREE — add 5 templates, the 4 cheapest are free"
+      },
+      {
+        "type": "header",
+        "content": "Cart Messaging"
+      },
+      {
+        "type": "checkbox",
+        "id": "bogo_show_cart_msg",
+        "label": "Show Cart Promotion Messages",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "bogo_cart_msg_1",
+        "label": "1 Eligible Item Message",
+        "default": "Add 4 more templates — they're FREE! Browse the collection"
+      },
+      {
+        "type": "text",
+        "id": "bogo_cart_btn_text",
+        "label": "1 Item Button Text",
+        "default": "Browse the collection"
+      },
+      {
+        "type": "url",
+        "id": "bogo_cart_btn_url",
+        "label": "1 Item Button Link",
+        "default": "/collections/all"
+      },
+      {
+        "type": "text",
+        "id": "bogo_cart_msg_range",
+        "label": "2 to 4 Eligible Items Message ({N} = remaining count)",
+        "default": "Add {N} more to get all 4 FREE"
+      },
+      {
+        "type": "text",
+        "id": "bogo_cart_msg_5",
+        "label": "5+ Eligible Items Message",
+        "default": "Congratulations! You got 4 FREE templates 🎉"
+      }
+    ]
   }
 ]

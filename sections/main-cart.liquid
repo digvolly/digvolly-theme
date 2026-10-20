@@ -54,6 +54,8 @@
         </div>
       </header>
 
+      {% render 'cart-bogo-message' %}
+
       <div class="cart-layout-grid">
         <!-- Main Cart Items Column -->
         <main class="cart-items-column">
@@ -67,7 +69,17 @@
 
             <div class="cart-items-list">
               {%- for item in cart.items -%}
-                <article class="cart-item js-cart-item" data-key="{{ item.key }}" data-line="{{ forloop.index }}">
+                {%- assign is_bundle = false -%}
+                {%- if item.product.handle == 'custom-6-asset-pack' or item.product.title contains 'Custom 6-Asset Pack' or item.handle == 'custom-6-asset-pack' or item.title contains 'Custom 6-Asset Pack' -%}
+                  {%- assign is_bundle = true -%}
+                {%- endif -%}
+                {%- if item.product.tags contains 'internal-bundle' or item.product.type == 'Bundle' -%}
+                  {%- assign is_bundle = true -%}
+                {%- endif -%}
+                {%- if item.properties['_PackType'] != blank -%}
+                  {%- assign is_bundle = true -%}
+                {%- endif -%}
+                <article class="cart-item js-cart-item" data-key="{{ item.key }}" data-line="{{ forloop.index }}" data-eligible="{% if is_bundle %}false{% else %}true{% endif %}" data-quantity="{{ item.quantity }}">
                   <!-- Item Thumbnail -->
                   <a href="{{ item.url }}" class="cart-item__thumb-link" aria-label="View {{ item.product.title | escape }}">
                     {%- if item.image != blank -%}
@@ -143,7 +155,12 @@
 
                     <!-- Mobile-Only Price & Subtotal -->
                     <div class="cart-item__mobile-price-row">
-                      <span class="cart-item__mobile-unit">{{ item.final_price | money }}</span>
+                      <span class="cart-item__mobile-unit">
+                        {{ item.final_price | money }}
+                        {%- if item.original_price != item.final_price -%}
+                          <s class="cart-item__compare-price" style="margin-left: 6px; font-size: 13px; color: #9CA3AF;">{{ item.original_price | money }}</s>
+                        {%- endif -%}
+                      </span>
                     </div>
                   </div>
 
@@ -255,7 +272,13 @@
 
             <div class="cart-summary__row">
               <span class="cart-summary__label">Subtotal ({{ cart.item_count }} {% if cart.item_count == 1 %}item{% else %}items{% endif %})</span>
-              <span class="cart-summary__value js-cart-subtotal">{{ cart.total_price | money }}</span>
+              <span class="cart-summary__value js-cart-subtotal">
+                {%- if cart.total_discount > 0 -%}
+                  {{ cart.original_total_price | money }}
+                {%- else -%}
+                  {{ cart.total_price | money }}
+                {%- endif -%}
+              </span>
             </div>
 
             <div class="cart-summary__row">
@@ -273,9 +296,16 @@
                 {%- for discount in cart.cart_level_discount_applications -%}
                   <div class="cart-summary__row cart-summary__discount-row">
                     <span class="cart-summary__label">🎉 {{ discount.title }}</span>
-                    <span class="cart-summary__value">-{{ discount.total_allocated_amount | money }}</span>
+                    <span class="cart-summary__value" style="color: #059669; font-weight: 700;">-{{ discount.total_allocated_amount | money }}</span>
                   </div>
                 {%- endfor -%}
+              </div>
+            {%- elsif cart.total_discount > 0 -%}
+              <div class="cart-summary__discounts">
+                <div class="cart-summary__row cart-summary__discount-row">
+                  <span class="cart-summary__label">🎉 Total Savings</span>
+                  <span class="cart-summary__value" style="color: #059669; font-weight: 700;">-{{ cart.total_discount | money }}</span>
+                </div>
               </div>
             {%- endif -%}
 
@@ -399,13 +429,121 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   }
+  // Client-side helper for dynamic BOGO banner update
+  function updateBogoBanner() {
+    const banner = document.querySelector('.js-cart-bogo-banner');
+    if (!banner) return;
+    
+    let eligibleCount = 0;
+    document.querySelectorAll('.js-cart-item').forEach(item => {
+      const isEligible = item.dataset.eligible !== 'false';
+      const qtyInput = item.querySelector('.js-cart-qty-input');
+      const qty = qtyInput ? (parseInt(qtyInput.value, 10) || 0) : (parseInt(item.dataset.quantity, 10) || 0);
+      if (isEligible) {
+        eligibleCount += qty;
+      }
+    });
+
+    const msg1 = banner.dataset.msg1 || "Add 4 more templates — they're FREE! Browse the collection";
+    const msgRange = banner.dataset.msgRange || "Add {N} more to get all 4 FREE";
+    const msg5 = banner.dataset.msg5 || "Congratulations! You got 4 FREE templates 🎉";
+    const msgEl = banner.querySelector('.js-bogo-message');
+    const actionsEl = banner.querySelector('.js-bogo-actions');
+    const progressFill = banner.querySelector('.js-bogo-progress-fill');
+    const iconEl = banner.querySelector('.cart-bogo-banner__icon');
+    const pillEl = banner.querySelector('.cart-bogo-banner__pill');
+    const steps = banner.querySelectorAll('.cart-bogo-banner__progress-step');
+
+    if (eligibleCount <= 0) {
+      banner.style.display = 'none';
+      return;
+    }
+
+    banner.style.display = '';
+    const remaining = Math.max(0, 5 - eligibleCount);
+    const progressPercent = Math.min(100, (eligibleCount / 5) * 100);
+
+    if (progressFill) progressFill.style.width = progressPercent + '%';
+
+    if (steps) {
+      steps.forEach((step, idx) => {
+        if (eligibleCount >= idx + 1) {
+          step.classList.add('is-reached');
+        } else {
+          step.classList.remove('is-reached');
+        }
+      });
+    }
+
+    if (eligibleCount === 1) {
+      banner.classList.remove('is-unlocked');
+      banner.classList.add('is-active');
+      if (msgEl) msgEl.textContent = msg1;
+      if (actionsEl) actionsEl.style.display = '';
+      if (iconEl) iconEl.textContent = '🎁';
+      if (pillEl) pillEl.textContent = 'Buy 1 Get 4 FREE Deal';
+    } else if (eligibleCount >= 2 && eligibleCount <= 4) {
+      banner.classList.remove('is-unlocked');
+      banner.classList.add('is-active');
+      if (msgEl) msgEl.textContent = msgRange.replace('{N}', remaining);
+      if (actionsEl) actionsEl.style.display = 'none';
+      if (iconEl) iconEl.textContent = '🎁';
+      if (pillEl) pillEl.textContent = 'Buy 1 Get 4 FREE Deal';
+    } else if (eligibleCount >= 5) {
+      banner.classList.remove('is-active');
+      banner.classList.add('is-unlocked');
+      if (msgEl) msgEl.textContent = msg5;
+      if (actionsEl) actionsEl.style.display = 'none';
+      if (iconEl) iconEl.textContent = '🎉';
+      if (pillEl) pillEl.textContent = 'Special Offer Applied';
+    }
+  }
+
+  window.updateBogoCartBanner = updateBogoBanner;
 });
 </script>
 
 {% schema %}
 {
   "name": "Shopping Cart",
-  "settings": [],
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_bogo_message",
+      "label": "Show Buy 1 Get 4 Free promotion banner",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "bogo_msg_1",
+      "label": "1 eligible item message",
+      "default": "Add 4 more templates — they're FREE! Browse the collection"
+    },
+    {
+      "type": "text",
+      "id": "bogo_btn_text",
+      "label": "Button text for 1 eligible item",
+      "default": "Browse the collection"
+    },
+    {
+      "type": "url",
+      "id": "bogo_btn_url",
+      "label": "Button link",
+      "default": "/collections/all"
+    },
+    {
+      "type": "text",
+      "id": "bogo_msg_range",
+      "label": "2 to 4 eligible items message ({N} = remaining count)",
+      "default": "Add {N} more to get all 4 FREE"
+    },
+    {
+      "type": "text",
+      "id": "bogo_msg_5",
+      "label": "5+ eligible items message",
+      "default": "Congratulations! You got 4 FREE templates 🎉"
+    }
+  ],
   "presets": [
     {
       "name": "Shopping Cart"

@@ -590,7 +590,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const closeToastBtn = document.querySelector('.js-close-toast');
   let toastTimeout = null;
 
-  function showCartToast(itemTitle, itemPrice, itemThumb) {
+  function showCartToast(itemTitle, itemPrice, itemThumb, cartData) {
     if (!cartToast) return;
 
     if (itemTitle) {
@@ -604,6 +604,37 @@ document.addEventListener('DOMContentLoaded', function() {
     if (itemThumb) {
       const img = cartToast.querySelector('.js-toast-thumb');
       if (img) img.src = itemThumb;
+    }
+
+    // Dynamic BOGO Messaging in Toast
+    const bogoEl = cartToast.querySelector('.js-toast-bogo');
+    if (bogoEl) {
+      if (cartData && cartData.items) {
+        const eligibleCount = cartData.items.reduce((total, item) => {
+          const title = (item.product_title || item.title || '').toLowerCase();
+          const handle = (item.handle || '').toLowerCase();
+          const isCustomPack = handle === 'custom-6-asset-pack' || title.includes('custom 6-asset pack');
+          const isPackType = item.properties && item.properties['_PackType'];
+          const isBundle = isCustomPack || isPackType || (item.product_type === 'Bundle');
+          return isBundle ? total : total + item.quantity;
+        }, 0);
+
+        if (eligibleCount === 1) {
+          bogoEl.innerHTML = `<span class="toast-bogo-tag">Deal</span> Add 4 more templates — they're FREE! <a href="/collections/all" class="toast-bogo-link">Browse &rarr;</a>`;
+          bogoEl.style.display = 'block';
+        } else if (eligibleCount >= 2 && eligibleCount <= 4) {
+          const n = 5 - eligibleCount;
+          bogoEl.innerHTML = `<span class="toast-bogo-tag">Deal</span> Add ${n} more to get all 4 FREE`;
+          bogoEl.style.display = 'block';
+        } else if (eligibleCount >= 5) {
+          bogoEl.innerHTML = `<span class="toast-bogo-tag toast-bogo-tag--win">Unlocked</span> Congratulations! You got 4 FREE templates 🎉`;
+          bogoEl.style.display = 'block';
+        } else {
+          bogoEl.style.display = 'none';
+        }
+      } else {
+        bogoEl.style.display = 'none';
+      }
     }
 
     cartToast.removeAttribute('hidden');
@@ -658,29 +689,29 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       });
 
-      // Update cart count badge in header
-      try {
-        const cartRes = await fetch('/cart.js');
-        const cartData = await cartRes.json();
-        const countBadges = document.querySelectorAll('.cart-count, .js-cart-count');
-        countBadges.forEach(b => {
-          b.textContent = cartData.item_count;
-          b.style.display = cartData.item_count > 0 ? 'inline-flex' : 'none';
-        });
-      } catch (err) {
-        console.warn('Could not refresh cart count', err);
-      }
+        let cartData = null;
+        try {
+          const cartRes = await fetch('/cart.js');
+          cartData = await cartRes.json();
+          const countBadges = document.querySelectorAll('.cart-count, .js-cart-count');
+          countBadges.forEach(b => {
+            b.textContent = cartData.item_count;
+            b.style.display = cartData.item_count > 0 ? 'inline-flex' : 'none';
+          });
+        } catch (err) {
+          console.warn('Could not refresh cart count', err);
+        }
 
-      // Show confirmation toast
-      const activeInfo = getActiveProductInfo();
-      showCartToast(activeInfo.title, activeInfo.price, activeInfo.thumb);
+        // Show confirmation toast with dynamic BOGO status
+        const activeInfo = getActiveProductInfo();
+        showCartToast(activeInfo.title, activeInfo.price, activeInfo.thumb, cartData);
 
-    } catch (e) {
-      console.error('Add to cart failed', e);
-      // Fallback: show toast anyway for demo
-      const activeInfo = getActiveProductInfo();
-      showCartToast(activeInfo.title, activeInfo.price, activeInfo.thumb);
-    } finally {
+      } catch (e) {
+        console.error('Add to cart failed', e);
+        // Fallback: show toast anyway for demo
+        const activeInfo = getActiveProductInfo();
+        showCartToast(activeInfo.title, activeInfo.price, activeInfo.thumb, null);
+      } finally {
       if (btnText && btnLoading) {
         btnText.style.display = '';
         btnLoading.style.display = 'none';

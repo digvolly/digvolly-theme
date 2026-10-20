@@ -258,6 +258,27 @@
             <span class="product-info__save-chip js-product-save-chip">Save 40%</span>
           </div>
 
+          {%- liquid
+            assign show_product_bogo = true
+            if section.settings.enable_bogo_message == false
+              assign show_product_bogo = false
+            elsif settings.bogo_enable == false or settings.bogo_show_product_msg == false
+              assign show_product_bogo = false
+            endif
+            assign product_bogo_text = section.settings.bogo_message_text | default: settings.bogo_product_msg | default: "Buy 1 Get 4 FREE — add 5 templates, the 4 cheapest are free"
+          -%}
+          {%- if show_product_bogo and product_bogo_text != blank -%}
+            <div class="product-info__bogo-promo">
+              <span class="product-info__bogo-icon" aria-hidden="true">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+                  <line x1="7" y1="7" x2="7.01" y2="7"></line>
+                </svg>
+              </span>
+              <span class="product-info__bogo-text">{{ product_bogo_text }}</span>
+            </div>
+          {%- endif -%}
+
           <!-- Commercial License on its own clean line -->
           <div class="product-info__license-line">
             <svg class="license-check-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -386,6 +407,7 @@
           <span class="mini-cart-toast__p-price js-toast-price">{{ p_price }} &bull; Commercial License</span>
         </div>
       </div>
+      <div class="mini-cart-toast__bogo js-toast-bogo" style="display: none;"></div>
       <div class="mini-cart-toast__actions">
         <a href="{{ routes.cart_url }}" class="button button--secondary mini-cart-toast__btn-cart">View Cart</a>
         <a href="/checkout" class="button button--primary mini-cart-toast__btn-checkout">Checkout</a>
@@ -700,7 +722,20 @@
 {% schema %}
 {
   "name": "Product Main",
-  "settings": [],
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_bogo_message",
+      "label": "Show Buy 1 Get 4 Free promotion line",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "bogo_message_text",
+      "label": "Promotion line text",
+      "default": "Buy 1 Get 4 FREE — add 5 templates, the 4 cheapest are free"
+    }
+  ],
   "blocks": [
     {
       "type": "@app"
