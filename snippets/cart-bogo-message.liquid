@@ -6,17 +6,17 @@
 
 {%- liquid
   assign enable_banner = true
-  if section.settings.enable_bogo_message == false
+  if enable_bogo_message == false or section.settings.enable_bogo_message == false
     assign enable_banner = false
   elsif settings.bogo_enable == false or settings.bogo_show_cart_msg == false
     assign enable_banner = false
   endif
 
-  assign msg_1 = section.settings.bogo_msg_1 | default: settings.bogo_cart_msg_1 | default: "Add 4 more templates — they're FREE! Browse the collection"
-  assign btn_text = section.settings.bogo_btn_text | default: settings.bogo_cart_btn_text | default: "Browse the collection"
-  assign btn_url = section.settings.bogo_btn_url | default: settings.bogo_cart_btn_url | default: "/collections/all"
-  assign msg_range = section.settings.bogo_msg_range | default: settings.bogo_cart_msg_range | default: "Add {N} more to get all 4 FREE"
-  assign msg_5 = section.settings.bogo_msg_5 | default: settings.bogo_cart_msg_5 | default: "Congratulations! You got 4 FREE templates 🎉"
+  assign msg_1 = bogo_msg_1 | default: section.settings.bogo_msg_1 | default: settings.bogo_cart_msg_1 | default: "Add 4 more templates — they're FREE! Browse the collection"
+  assign btn_text = bogo_btn_text | default: section.settings.bogo_btn_text | default: settings.bogo_cart_btn_text | default: "Browse the collection"
+  assign btn_url = bogo_btn_url | default: section.settings.bogo_btn_url | default: settings.bogo_cart_btn_url | default: "/collections/all"
+  assign msg_range = bogo_msg_range | default: section.settings.bogo_msg_range | default: settings.bogo_cart_msg_range | default: "Add {N} more to get all 4 FREE"
+  assign msg_5 = bogo_msg_5 | default: section.settings.bogo_msg_5 | default: settings.bogo_cart_msg_5 | default: "Congratulations! You got 4 FREE templates 🎉"
 
   assign eligible_count = 0
   for item in cart.items

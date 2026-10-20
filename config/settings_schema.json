@@ -39,8 +39,7 @@
       {
         "type": "url",
         "id": "bogo_announcement_link",
-        "label": "Announcement Link",
-        "default": "/collections/all"
+        "label": "Announcement Link"
       },
       {
         "type": "header",
@@ -83,8 +82,7 @@
       {
         "type": "url",
         "id": "bogo_cart_btn_url",
-        "label": "1 Item Button Link",
-        "default": "/collections/all"
+        "label": "1 Item Button Link"
       },
       {
         "type": "text",
