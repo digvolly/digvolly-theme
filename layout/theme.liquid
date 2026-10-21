@@ -52,28 +52,7 @@
   {% endif %}
   
   {%- comment -%} Prioritize LCP image fetch in head with responsive imagesrcset & imagesizes {%- endcomment -%}
-  {%- if template.name == 'collection' and collection.products.size > 0 -%}
-    {%- assign lcp_product = nil -%}
-    {%- for p in collection.products -%}
-      {%- unless p.handle == 'custom-6-asset-pack' or p.tags contains 'internal-bundle' or p.type == 'Bundle' -%}
-        {%- assign lcp_product = p -%}
-        {%- break -%}
-      {%- endunless -%}
-    {%- endfor -%}
-    {%- if lcp_product != blank -%}
-      {%- assign lcp_img = lcp_product.featured_media | default: lcp_product.featured_image -%}
-      {%- if lcp_img != blank -%}
-        {%- capture lcp_srcset -%}
-          {{ lcp_img | image_url: width: 360, format: 'webp' }} 360w,
-          {{ lcp_img | image_url: width: 540, format: 'webp' }} 540w,
-          {{ lcp_img | image_url: width: 720, format: 'webp' }} 720w,
-          {{ lcp_img | image_url: width: 900, format: 'webp' }} 900w,
-          {{ lcp_img | image_url: width: 1200, format: 'webp' }} 1200w
-        {%- endcapture -%}
-        <link rel="preload" as="image" href="{{ lcp_img | image_url: width: 540, format: 'webp' }}" imagesrcset="{{ lcp_srcset | strip_newlines }}" imagesizes="(max-width: 480px) calc(100vw - 40px), (max-width: 768px) 350px, (max-width: 1024px) 45vw, 300px" fetchpriority="high" type="image/webp">
-      {%- endif -%}
-    {%- endif -%}
-  {%- elsif template.name == 'product' and product != blank -%}
+  {%- if template.name == 'product' and product != blank -%}
     {%- assign prod_img = product.featured_media | default: product.featured_image -%}
     {%- if prod_img != blank -%}
       {%- capture prod_srcset -%}
@@ -92,6 +71,7 @@
     *, *::before, *::after { box-sizing: border-box; }
     html { -webkit-text-size-adjust: 100%; width: 100%; max-width: 100%; overflow-x: hidden; }
     body { margin: 0; padding: 0; width: 100%; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important; background: #fff; color: #1a1a1a; }
+    .text-center { text-align: center; }
     .announcement-bar { background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); color: #fff; text-align: center; padding: 8px 16px; font-size: 13px; font-weight: 600; }
     .announcement-bar a { color: #fff; text-decoration: none; }
     .header-wrapper { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; background: rgba(255,255,255,0.92); border-bottom: 1px solid rgba(0,0,0,0.06); }
@@ -102,13 +82,15 @@
     .digvolly-hero__title { font-size: clamp(28px, 6vw, 48px); font-weight: 800; line-height: 1.15; color: #111827; margin: 0 0 12px; letter-spacing: -0.03em; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
     .digvolly-hero__subtitle { font-size: 16px; line-height: 1.5; color: #4b5563; margin: 0 0 20px; }
     .digvolly-hero__button { display: inline-flex; align-items: center; justify-content: center; padding: 12px 24px; font-size: 15px; font-weight: 600; color: #fff; background: #4f46e5; border-radius: 10px; text-decoration: none; }
-    .collection-header { padding: 32px 16px 16px; max-width: 1280px; margin: 0 auto; }
-    .collection-title { font-size: clamp(24px, 5vw, 36px); font-weight: 800; color: #111827; margin: 0 0 8px; }
-    .collection-desc { font-size: 15px; color: #4b5563; line-height: 1.5; margin: 0 0 16px; }
+    .collection-wrapper { padding: 36px 16px 60px; background: #fff; }
+    .collection-header { padding: 0 0 16px; max-width: 800px; margin: 0 auto 24px; text-align: center; }
+    .collection-title { font-size: clamp(24px, 5vw, 36px); font-weight: 800; line-height: 1.2; color: #111827; margin: 0 0 8px; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important; }
+    .collection-desc { font-size: 15px; color: #4b5563; line-height: 1.5; margin: 0 0 16px; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important; max-width: 800px; margin-left: auto; margin-right: auto; }
     .products-container--grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
     @media (max-width: 640px) {
       .products-container--grid { grid-template-columns: 1fr; }
       .digvolly-hero { padding: 28px 16px 20px; }
+      .collection-wrapper { padding: 24px 16px 40px; }
     }
     .product-card { background: #fff; border-radius: 12px; border: 1px solid #e5e7eb; overflow: hidden; display: flex; flex-direction: column; }
     .product-card__image-box { position: relative; width: 100%; aspect-ratio: 3 / 2; overflow: hidden; background: #f3f4f6; }

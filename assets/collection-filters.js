@@ -179,8 +179,31 @@ function initCollectionFilters() {
   }
 }
 
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initCollectionFilters);
-} else {
+let filtersInitialized = false;
+function safeInitFilters() {
+  if (filtersInitialized) return;
+  filtersInitialized = true;
   initCollectionFilters();
+}
+
+// Early interaction trigger
+['click', 'touchstart', 'scroll'].forEach(evt => {
+  window.addEventListener(evt, safeInitFilters, { passive: true, once: true });
+});
+
+// Defer until idle or DOMContentLoaded
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(safeInitFilters, { timeout: 1500 });
+    } else {
+      setTimeout(safeInitFilters, 300);
+    }
+  });
+} else {
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(safeInitFilters, { timeout: 1500 });
+  } else {
+    setTimeout(safeInitFilters, 300);
+  }
 }

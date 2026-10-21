@@ -213,7 +213,7 @@
           width="600" 
           height="400" 
           loading="{% if is_lcp or is_eager %}eager{% else %}lazy{% endif %}"
-          {% if is_lcp or is_eager %}fetchpriority="high"{% endif %}
+          {% if is_lcp %}fetchpriority="high"{% endif %}
           decoding="async"
           style="object-fit: cover;"
         >
