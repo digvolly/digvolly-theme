@@ -34,8 +34,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  // Hydrate DOM if handle exists in catalog
-  if (productData) {
+  // Hydrate DOM only if handle exists in catalog AND section was not already server-rendered by Liquid
+  const isServerRendered = Boolean(mainProductSection && mainProductSection.dataset.currentHandle);
+  if (productData && !isServerRendered) {
     hydrateProductPage(productData);
   } else {
     const mainImg = document.querySelector('.js-gallery-main-img');
@@ -135,7 +136,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const totalThumbs = (prod.thumbnails && prod.thumbnails.length) || 0;
 
-    if (slidesContainer && totalThumbs > 0) {
+    if (slidesContainer && totalThumbs > 0 && slidesContainer.querySelectorAll('.gallery-slide').length === 0) {
       slidesContainer.innerHTML = prod.thumbnails.map((src, idx) => `
         <div class="gallery-slide ${idx === 0 ? 'is-active' : ''}" data-index="${idx}">
           <img 
