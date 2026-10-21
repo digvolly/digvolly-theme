@@ -206,7 +206,7 @@
               {%- endif -%}
               {%- assign card_idx = card_idx | plus: 1 -%}
               {%- assign is_eager_card = false -%}
-              {%- if card_idx <= 2 -%}
+              {%- if card_idx == 1 -%}
                 {%- assign is_eager_card = true -%}
               {%- endif -%}
               {% render 'product-card', product: product, is_lcp: false, is_eager: is_eager_card %}
