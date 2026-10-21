@@ -59,11 +59,12 @@
               {%- for image in current_product.images -%}
                 <div class="gallery-slide {% if forloop.first %}is-active{% endif %}" data-index="{{ forloop.index0 }}">
                   <img 
-                    src="{{ image | image_url: width: 700, format: 'webp' }}" 
-                    srcset="{{ image | image_url: width: 380, format: 'webp' }} 380w,
-                            {{ image | image_url: width: 550, format: 'webp' }} 550w,
-                            {{ image | image_url: width: 700, format: 'webp' }} 700w,
-                            {{ image | image_url: width: 1000, format: 'webp' }} 1000w"
+                    src="{{ image | image_url: width: 720, format: 'webp' }}" 
+                    srcset="{{ image | image_url: width: 360, format: 'webp' }} 360w,
+                            {{ image | image_url: width: 540, format: 'webp' }} 540w,
+                            {{ image | image_url: width: 720, format: 'webp' }} 720w,
+                            {{ image | image_url: width: 900, format: 'webp' }} 900w,
+                            {{ image | image_url: width: 1200, format: 'webp' }} 1200w"
                     sizes="(max-width: 640px) 92vw, (max-width: 1024px) 48vw, 600px"
                     alt="{{ p_title }} — {{ p_cat | default: 'digital design asset' }} slide preview {{ forloop.index }}" 
                     class="{% if forloop.first %}product-gallery-main__img js-gallery-main-img{% else %}gallery-slide__img{% endif %}"

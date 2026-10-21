@@ -224,10 +224,14 @@
               {%- endif -%}
               {%- assign card_idx = card_idx | plus: 1 -%}
               {%- assign is_lcp_card = false -%}
+              {%- assign is_eager_card = false -%}
               {%- if card_idx == 1 -%}
                 {%- assign is_lcp_card = true -%}
+                {%- assign is_eager_card = true -%}
+              {%- elsif card_idx <= 4 -%}
+                {%- assign is_eager_card = true -%}
               {%- endif -%}
-              {% render 'product-card', product: product, is_lcp: is_lcp_card %}
+              {% render 'product-card', product: product, is_lcp: is_lcp_card, is_eager: is_eager_card %}
             {%- endfor -%}
 
             <div class="collection-no-results js-no-results" style="display: none;">

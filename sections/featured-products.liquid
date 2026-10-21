@@ -16,10 +16,14 @@
           {%- endif -%}
           {%- assign rendered_cards = rendered_cards | plus: 1 -%}
           {%- assign is_first_card = false -%}
+          {%- assign is_eager_card = false -%}
           {%- if rendered_cards == 1 -%}
             {%- assign is_first_card = true -%}
+            {%- assign is_eager_card = true -%}
+          {%- elsif rendered_cards <= 4 -%}
+            {%- assign is_eager_card = true -%}
           {%- endif -%}
-          {% render 'product-card', product: product, is_lcp: is_first_card %}
+          {% render 'product-card', product: product, is_lcp: is_first_card, is_eager: is_eager_card %}
         {%- endfor -%}
       {%- elsif collections['all'] != blank and collections['all'].products.size > 0 -%}
         {%- assign rendered_cards = 0 -%}
@@ -29,10 +33,14 @@
           {%- endif -%}
           {%- assign rendered_cards = rendered_cards | plus: 1 -%}
           {%- assign is_first_card = false -%}
+          {%- assign is_eager_card = false -%}
           {%- if rendered_cards == 1 -%}
             {%- assign is_first_card = true -%}
+            {%- assign is_eager_card = true -%}
+          {%- elsif rendered_cards <= 4 -%}
+            {%- assign is_eager_card = true -%}
           {%- endif -%}
-          {% render 'product-card', product: product, is_lcp: is_first_card %}
+          {% render 'product-card', product: product, is_lcp: is_first_card, is_eager: is_eager_card %}
         {%- endfor -%}
       {%- else -%}
         {% render 'product-card',
