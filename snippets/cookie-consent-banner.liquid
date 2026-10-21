@@ -69,19 +69,8 @@
     const existingConsent = localStorage.getItem(STORAGE_KEY);
 
     if (!existingConsent) {
-      let triggered = false;
-      function triggerBanner() {
-        if (triggered) return;
-        triggered = true;
-        window.removeEventListener('scroll', triggerBanner);
-        window.removeEventListener('touchstart', triggerBanner);
-        window.removeEventListener('click', triggerBanner);
-        showBanner();
-      }
-      window.addEventListener('scroll', triggerBanner, { passive: true, once: true });
-      window.addEventListener('touchstart', triggerBanner, { passive: true, once: true });
-      window.addEventListener('click', triggerBanner, { passive: true, once: true });
-      setTimeout(triggerBanner, 4000);
+      // Show after short delay on initial visit
+      setTimeout(showBanner, 600);
     } else {
       // Sync with Shopify Customer Privacy API on subsequent page loads
       const consentGiven = (existingConsent === 'accepted');
