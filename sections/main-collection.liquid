@@ -178,6 +178,24 @@
                   {%- endfor -%}
               </div>
             </div>
+
+            <script>
+              (function() {
+                try {
+                  var isAll = {% if is_all_collection %}true{% else %}false{% endif %};
+                  if (isAll) {
+                    var sp = new URLSearchParams(window.location.search);
+                    var hasFilter = sp.get('category') || sp.get('filter');
+                    if (!hasFilter) {
+                      var cbs = document.querySelectorAll('.js-filter-checkbox');
+                      for (var i = 0; i < cbs.length; i++) {
+                        cbs[i].checked = false;
+                      }
+                    }
+                  }
+                } catch(e) {}
+              })();
+            </script>
           </div>
 
             <!-- Mobile Bottom Sheet Sticky Footer (hidden on desktop) -->
@@ -205,11 +223,15 @@
                 {%- endunless -%}
               {%- endif -%}
               {%- assign card_idx = card_idx | plus: 1 -%}
+              {%- assign is_lcp_card = false -%}
               {%- assign is_eager_card = false -%}
-              {%- if card_idx <= 2 -%}
+              {%- if card_idx == 1 -%}
+                {%- assign is_lcp_card = true -%}
+                {%- assign is_eager_card = true -%}
+              {%- elsif card_idx <= 4 -%}
                 {%- assign is_eager_card = true -%}
               {%- endif -%}
-              {% render 'product-card', product: product, is_lcp: false, is_eager: is_eager_card %}
+              {% render 'product-card', product: product, is_lcp: is_lcp_card, is_eager: is_eager_card %}
             {%- endfor -%}
 
             <div class="collection-no-results js-no-results" style="display: none;">

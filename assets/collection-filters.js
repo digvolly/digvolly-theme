@@ -80,31 +80,57 @@ function initCollectionFilters() {
                           currentPath === '/collections/all' || 
                           currentPath === '/collections';
 
-  // Category Checkbox Navigation via delegation
-  collectionWrapper.addEventListener('change', function(e) {
-    const cb = e.target.closest('.js-filter-checkbox');
-    if (!cb) return;
-    if (cb.dataset.current === 'true' || (!isAllCollection && cb.disabled)) {
+  // Category Checkbox Navigation:
+  // On both specific collection pages and /collections/all, selecting a category
+  // redirects the browser to that category's real collection URL (e.g. /collections/menus).
+  filterCheckboxes.forEach(cb => {
+    const isCurrent = cb.dataset.current === 'true' || (!isAllCollection && cb.disabled);
+
+    if (isCurrent) {
+      // Locked in checked state for the current category page
       cb.checked = true;
-      e.preventDefault();
-      return;
-    }
-    const targetUrl = cb.dataset.url;
-    if (targetUrl) {
-      window.location.href = targetUrl;
+      cb.addEventListener('click', function(e) {
+        e.preventDefault();
+        return false;
+      });
+      cb.addEventListener('change', function(e) {
+        this.checked = true;
+        e.preventDefault();
+        return false;
+      });
+    } else {
+      // Unchecked by default on /collections/all and non-current category pages
+      cb.checked = false;
+      if (cb.removeAttribute) cb.removeAttribute('checked');
+
+      cb.addEventListener('click', function(e) {
+        const targetUrl = this.dataset.url;
+        if (targetUrl) {
+          e.preventDefault();
+          window.location.href = targetUrl;
+        }
+      });
+
+      cb.addEventListener('change', function() {
+        const targetUrl = this.dataset.url;
+        if (targetUrl) {
+          window.location.href = targetUrl;
+        }
+      });
     }
   });
 
-  // Attach to non-current category labels via delegation
-  collectionWrapper.addEventListener('click', function(e) {
-    const label = e.target.closest('.filter-checkbox-label:not(.is-current)');
-    if (label && (!e.target || e.target.tagName.toLowerCase() !== 'input')) {
-      const input = label.querySelector('.js-filter-checkbox');
+  // Attach to non-current category labels so clicking text navigates smoothly
+  const nonCurrentLabels = collectionWrapper.querySelectorAll('.filter-checkbox-label:not(.is-current)');
+  nonCurrentLabels.forEach(label => {
+    label.addEventListener('click', function(e) {
+      if (e.target && e.target.tagName.toLowerCase() === 'input') return;
+      const input = this.querySelector('.js-filter-checkbox');
       if (input && input.dataset.url && input.dataset.current !== 'true') {
         e.preventDefault();
         window.location.href = input.dataset.url;
       }
-    }
+    });
   });
 
   // Clear filters button redirects to the full catalog (/collections/all)
@@ -120,6 +146,20 @@ function initCollectionFilters() {
       window.location.href = '/collections/all';
     });
   });
+
+  // On /collections/all: ensure all checkboxes stay unchecked on load and back/forward cache
+  if (isAllCollection) {
+    function resetAllCheckboxes() {
+      filterCheckboxes.forEach(cb => {
+        cb.checked = false;
+        if (cb.removeAttribute) cb.removeAttribute('checked');
+      });
+    }
+
+    resetAllCheckboxes();
+    window.addEventListener('pageshow', resetAllCheckboxes);
+    window.addEventListener('load', resetAllCheckboxes);
+  }
 
   // Layout View Switcher: Grid vs Masonry
   if (viewGridBtn && viewMasonryBtn && productsContainer) {
