@@ -10,9 +10,33 @@
 {
   "current": {
     "shop_name": "Digvolly",
+    "sections": {
+      "announcement-bar": {
+        "type": "announcement-bar",
+        "settings": {
+          "show_announcement": true,
+          "text": "Buy 1, Get 4 FREE — add 5 templates, pay for 1 (automatic at checkout)",
+          "link": ""
+        }
+      },
+      "header": {
+        "type": "header",
+        "settings": {}
+      },
+      "footer": {
+        "type": "footer",
+        "settings": {}
+      }
+    },
+    "content_for_index": [],
     "blocks": {
       "5134484470793087125": {
         "type": "shopify://apps/vitals/blocks/app-embed/aeb48102-2a5a-4f39-bdbd-d8d49f4e20b8",
+        "disabled": false,
+        "settings": {}
+      },
+      "8669066016853369741": {
+        "type": "shopify://apps/hotjar-install/blocks/global/2903e4ea-7615-463e-8b60-582f487dac4f",
         "disabled": false,
         "settings": {}
       }
